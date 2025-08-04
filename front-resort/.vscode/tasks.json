@@ -1,0 +1,59 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+    {
+      "label": "Check Typescript errors (all project)",
+      "type": "shell",
+      "command": "pnpm",
+      "args": ["exec", "tsc", "--noEmit", "--skipLibCheck", "--project", "./tsconfig.json"],
+      "problemMatcher": "$tsc"
+    },
+    {
+      "label": "Sort package.json",
+      "type": "shell",
+      "command": "pnpm",
+      "args": ["exec", "sort-package-json"],
+      "problemMatcher": "$tsc",
+    },
+    {	
+			"label": ".) Fetch submodules recursively",
+			"type": "shell",
+			"command": "git submodule update --init --recursive",
+      "problemMatcher": "$tsc"
+		},
+    {
+      "label": "..) pnpm install (smartend & children)",
+      "type": "shell",
+      "command": "pnpm install",
+      "options": {
+        "cwd": "./smartend"
+      },
+      "problemMatcher": "$tsc"
+    },
+    {
+			"label": "Configure : dApp",
+			"type": "shell",
+			"command": "pnpm exec tsx env/smartendWatcher.ts",
+      "detail": "Helper script with hooks that configures the dApp",
+      "problemMatcher": "$tsc"
+		},
+		{
+			"label": "Hardhat : deploy w/ .env files",
+			"type": "shell",
+			"command": "pnpm deployDev --network localhost",
+      "options": {
+          "cwd": "./smartend"
+      },
+      "problemMatcher": "$tsc"
+		},
+    {
+      "label": "Database : Reset",
+      "type": "shell",
+      "command": "pnpm resetDbDev",
+      "options": {
+          "cwd": "./smartend/offchain-service"
+      },
+      "problemMatcher": "$tsc"
+    }
+	]
+}

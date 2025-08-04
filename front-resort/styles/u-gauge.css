@@ -1,0 +1,56 @@
+@keyframes u-gauge-blinking {
+    0% {
+        opacity: .75;
+    }
+
+    100% {
+        opacity: .35;
+    }
+}
+
+.u-gauge {
+    align-self: stretch;
+    min-height: 1rem;
+    flex: 1;
+    border: 1px solid rgba(255, 255, 255, 0.119);
+    border-radius: 15px;
+}
+
+.u-gauge *:first-child, .u-gauge *:first-child::before {
+    border-radius: 15px 0 0 15px;
+}
+
+.u-gauge *:last-child, .u-gauge *:last-child::before {
+    border-radius: 0 15px 15px 0;
+}
+
+.u-gauge *, .u-gauge *::before {
+    box-shadow: inset 0px 0px 3px 0px #fcfcfc96;
+}
+
+.u-gauge * {
+    flex: 1;
+    margin: 1px;
+    transition: transform .2s;
+    position: relative;
+}
+
+.u-gauge *::before {
+    content: "";
+    position: absolute;
+    width: var(--gw);
+    height: 100%;
+    background-color: var(--bgc);
+    transition: width .2s;
+}
+
+
+.u-gauge *.withTooltip:hover {
+    transform: scale(.97);
+    cursor: pointer;
+}
+
+.u-gauge *.blinking {
+    background-color: rgba(255, 0, 0, 0.5);
+    animation: u-gauge-blinking .5s ease-in-out infinite alternate;
+}

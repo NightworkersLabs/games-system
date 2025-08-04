@@ -1,0 +1,82 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+    {
+      "label": "Bundle w/ esbuild",
+      "type": "shell",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "command": "pnpm i && pnpm build",
+      "problemMatcher": []
+    },
+    {
+      "label": "Run stack",
+      "type": "shell",
+      "command": "docker",
+      "dependsOn": "Bundle w/ esbuild", // required to generate fresh sourcemaps
+      "args": ["compose", "up", "-d", "--wait", "--build"],
+      "problemMatcher": [],
+      "options": {
+        "env": {
+          "COMPOSE_FILE": "docker-compose.debug2.yml",
+        }
+      }
+    },
+    {
+      "label": "Shutdown Compose stack",
+      "type": "shell",
+      "command": "docker",
+      "args": ["compose", "down", "-v"], // -v also removes volumes
+      "problemMatcher": [],
+      "options": {
+        "env": {
+          "COMPOSE_FILE": "docker-compose.debug.yml",
+        }
+      }
+    },
+    {
+      "label": "Build image",
+      "type": "shell",
+      "command": "docker",
+      "args": ["build", ".", "--progress=plain"],
+      "problemMatcher": []
+    },
+    {
+      "label": "Check Typescript errors (all project)",
+      "type": "shell",
+      "command": "pnpm",
+      "args": ["exec", "tsc", "--noEmit", "--skipLibCheck", "--project", "./tsconfig.json"],
+      "problemMatcher": "$tsc"
+    },
+    {
+      "label": "Check circular dependencies",
+      "type": "shell",
+      "command": "pnpm",
+      "args": ["exec", "dpdm-fast", "--no-warning", "--no-tree", 
+        "./src/scripts/server.ts", 
+        "./src/scripts/scraper.ts", 
+        "./src/scripts/data.ts",
+        ".src/scripts/_bts.ts"
+      ],
+      "problemMatcher": "$tsc"
+    },
+    {
+      "label": "eslint - autofix (all project)",
+      "type": "shell",
+      "command": "pnpm",
+      "args": ["exec", "eslint", "--fix", "src/**"],
+      "problemMatcher": "$tsc",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      }
+    },
+    {
+      "label": "Sort package.json",
+      "type": "shell",
+      "command": "pnpm",
+      "args": ["exec", "sort-package-json"],
+      "problemMatcher": "$tsc",
+    },
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Bundled",
+      "program": "${workspaceFolder}/dist/index.js",
+      "sourceMaps": true,
+      "outFiles": ["${workspaceFolder}/dist/**/*.js"],
+      "internalConsoleOptions": "neverOpen",
+      "console": "integratedTerminal",
+      "preLaunchTask": "Bundle w/ esbuild",
+    },
+    {
+      "type": "node-terminal",
+      "request": "launch",
+      "name": "Bundled w/in Stack",
+      "internalConsoleOptions": "neverOpen",
+      "preLaunchTask": "Run stack",
+      "postDebugTask": "Shutdown Compose stack",
+      "command": "docker compose logs -f",
+      "serverReadyAction":{
+        "action": "startDebugging",
+        "pattern": ".*",
+        "name": "Attach to Docker",
+        "killOnServerStop": false
+      },
+      "env": {
+        "COMPOSE_FILE": "docker-compose.debug.yml",
+      }
+    },
+    {
+      "type": "node",
+      "request": "attach",
+      "name": "Attach to Docker",
+      "presentation": {
+        "hidden": true,
+        "order": 99
+      },
+      "continueOnAttach": true,
+      "sourceMaps": true,
+      "localRoot": "${workspaceFolder}/dist",
+      "remoteRoot": "/home/node/app/dist"
+    }
+  ]
+}

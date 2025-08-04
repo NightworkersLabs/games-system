@@ -1,0 +1,41 @@
+.bet-tracker {
+    position: relative;
+    flex: 0;
+    flex-direction: column;
+}
+
+.bet-tracker::after {
+    content: 'Bet Tracker';
+    font-size: .65rem;
+    font-family: "Press Start 2P", cursive;
+    font-weight: bold;
+    color: #e8f33e;
+    position: absolute;
+    top: -.7rem;
+    left: .75rem;
+    z-index: 50;
+}
+
+.bet-tracker .container {
+    flex: 1;
+    width: 100%;
+    position: absolute;
+    transition: max-height .2s ease-in-out;
+}
+
+.bet-tracker .container .content {
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    z-index: 30;
+    transition: background-color .2s ease-in-out;
+}
+
+.bet-tracker .expander {
+    position: absolute;
+    right: .40rem;
+    top: -1.2rem;
+    font-size: .75rem;
+    z-index: 40;
+}

@@ -1,0 +1,55 @@
+{
+  "Backroom": {
+    "fuji": [
+      "0xB9C27ec0a5a042A4F906460B6460Af6698b54f96"
+    ],
+    "hardhat": [
+      "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0"
+    ]
+  },
+  "TableGames": {
+    "fuji": [
+      "0x2C5c11E28050c531184fd32BC0A254A7c2c07e1d"
+    ],
+    "hardhat": [
+      "0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9"
+    ]
+  },
+  "Lottery": {
+    "fuji": [
+      "0x9E2E7822C4f6f87F5F608C4a56b319ec0aDcfCf6"
+    ],
+    "hardhat": [
+      "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9"
+    ]
+  },
+  "RedLightDistrict": {
+    "fuji": [
+      "0xf99c6A37d8f9DD261e0C8784e2B55860d16bD670"
+    ],
+    "hardhat": [
+      "0x5FC8d32690cc91D4c39d9d3abcBD16989F875707"
+    ]
+  },
+  "NightworkersGame": {
+    "fuji": [
+      "0xf015B4Bb2f96fBf7a732C062aC9d54e47bD09fb9"
+    ],
+    "hardhat": [
+      "0x0165878A594ca255338adfa4d48449f69242Eb8F"
+    ]
+  },
+  "LOLLY": {
+    "fuji": [
+      "0x06215f669e44b82922A58D786Ea1C53627386a76"
+    ],
+    "hardhat": [
+      "0x5FbDB2315678afecb367f032d93F642f64180aa3"
+    ]
+  },
+  "CandyMachine": {
+    "hardhat": [
+      "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512"
+    ]
+  }
+}

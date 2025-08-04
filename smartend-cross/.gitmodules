@@ -1,0 +1,8 @@
+[submodule "offchain-service"]
+	path = offchain-service
+	url = https://github.com/Nightworkers-P2E/offchain-service
+	branch = cross
+[submodule "owner-guide"]
+	path = doc/owner-guide
+	url = https://github.com/NightworkersLabs/owner-guide
+	branch = main

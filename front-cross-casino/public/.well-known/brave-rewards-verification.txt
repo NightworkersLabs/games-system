@@ -1,0 +1,4 @@
+This is a Brave Rewards publisher verification file.
+
+Domain: nightworkers.vercel.app
+Token: 4f22a2cb932dffc072712b7711c228858e0d4125107d30e39a12972221f68b01

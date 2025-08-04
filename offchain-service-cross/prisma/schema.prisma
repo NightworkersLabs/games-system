@@ -1,0 +1,111 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/prisma/client"
+}
+
+datasource db {
+  provider = "cockroachdb"
+  url      = env("DATABASE_URL")
+}
+
+// model Account {
+//   address           String      @id @db.Char(42)
+//   nextNonce         Int         @default(1)
+// }
+
+model ChipsBalance {
+  chainId           Int
+  address           String      @db.Char(42)
+  updatedAt         DateTime    @updatedAt
+  //
+  tBought           Int         @default(0)
+  tAirdropped       Int         @default(0)
+  tWithdrawed       Int         @default(0)
+  //
+  withdrawable      Int         @default(0)
+  sluggish          Int         @default(0)
+  //
+  playsWithoutWD    Int         @default(0)
+  @@id([chainId, address])
+}
+
+model CoinflipPlays {
+  id                BigInt      @id @default(autoincrement())
+  chainId           Int
+  address           String      @db.Char(42)
+  ts                DateTime    @default(now())
+  betted            Int
+  bettedOn          CoinBet
+  won               Int
+  pf                Boolean
+  @@index([chainId])
+}
+
+model RoulettePlays {
+  id                BigInt      @id @default(autoincrement())
+  chainId           Int
+  address           String      @db.Char(42)
+  ts                DateTime    @default(now())
+  betted            Int
+  bettedOn          ColorBet
+  got               ColorBet
+  gotNumber         Int         @db.Int2
+  won               Int
+  pf                Boolean
+  @@index([chainId])
+}
+
+model CasinoBank_ChipsBought {
+  chainId           Int
+  block             Int
+  bts               DateTime
+  buyer             String      @db.Char(42)
+  trackerId         Int         @db.Int2
+  amount            Int         @db.Int4
+  taxes             Decimal     @db.Decimal(40, 0)
+  @@id([chainId, block, buyer])
+  @@index([trackerId])
+}
+
+model CasinoBank_ChipsConverted {
+  chainId           Int
+  block             Int
+  bts               DateTime
+  grantedTo         String      @db.Char(42)
+  coinsAmount       Int         @db.Int4
+  convertedAmount   Decimal     @db.Decimal(40, 0)
+  @@id([chainId, block, grantedTo])
+}
+
+model CasinoBank_TaxRevenueTransfered {
+  chainId           Int
+  block             Int
+  bts               DateTime
+  receiver          String      @db.Char(42)
+  sponsorId         Int         @db.Int2
+  amount            Decimal     @db.Decimal(40, 0)
+  @@id([chainId, block, receiver])
+  @@index([sponsorId])
+}
+
+model CasinoBank__sync {
+  chainId           Int
+  eventName         String
+  blockCreated      Int
+  blockSync         Int
+  @@id([chainId, eventName])
+}
+
+enum CoinBet {
+  Tails
+  Heads
+}
+
+enum ColorBet {
+  Green
+  Red
+  Black
+}

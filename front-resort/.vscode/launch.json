@@ -1,0 +1,93 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "1) Hardhat : Run EVM",
+        "type": "node-terminal",
+        "request": "launch",
+        "command": "pnpm exec hardhat node",
+        "cwd": "${workspaceFolder}/smartend",
+        "serverReadyAction": {
+            "pattern": "Started HTTP and WebSocket JSON-RPC server at",
+            "action": "startDebugging",
+            "name": "A*) Off-chain services"
+        },
+        "presentation": {
+            "hidden": true,
+            "group": "smartend",
+            "order": 1
+        },
+        "cascadeTerminateToConfigurations": ["1++) Nightworkers : Run Server"]
+      },
+      {
+        "name": "1++) Nightworkers : Run Server",
+        "type": "node-terminal",
+        "request": "launch",
+        "command": "pnpm serverDev",
+        "cwd": "${workspaceFolder}/smartend/offchain-service",
+        "presentation": {
+            "hidden": true,
+            "group": "smartend",
+            "order": 3
+        }
+      },
+      {
+        "name": "2) Next.js : Run",
+        "type": "node-terminal",
+        "request": "launch",
+        "command": "pnpm dev",
+        "serverReadyAction": {
+          "pattern": "Local:        (https?://.+)",
+          "action": "startDebugging",
+          "name": "2+) Chrome : Attach to Next.js"
+        },
+        "preLaunchTask": "Configure : dApp",
+        "presentation": {
+            "hidden": true,
+            "group": "frontend",
+            "order": 1
+        },
+        "cascadeTerminateToConfigurations": ["2+) Chrome : Attach to Next.js"]
+      },
+      {
+        "name": "2+) Chrome : Attach to Next.js",
+        "request": "launch",
+        "type": "chrome",
+        "url": "http://127.0.0.1:3000",
+        "userDataDir": "${workspaceRoot}/.chrome-vscode-debug-profile",
+        "presentation": {
+            "hidden": false,
+            "group": "frontend",
+            "order": 2
+        }
+      }
+    ],
+    "compounds": [
+      {
+        "name": "A) Full-stack",
+        "presentation": {
+            "hidden": false,
+            "group": "default",
+            "order": 1
+        },
+        "configurations": [
+          "1) Hardhat : Run EVM", 
+          "2) Next.js : Run"
+        ],
+        "stopAll": true
+      },
+      {
+        "name": "A*) Off-chain services",
+        "presentation": {
+            "hidden": true,
+            "group": "offchain",
+            "order": 1
+        },
+        "configurations": [
+          "1++) Nightworkers : Run Server"
+        ],
+        "preLaunchTask": "Hardhat : deploy w/ .env files",
+        "stopAll": true
+      }
+    ]
+  }

@@ -1,0 +1,145 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "1) Hardhat : Run EVM",
+        "type": "node-terminal",
+        "request": "launch",
+        "command": "npx hardhat node --hostname 127.0.0.1",
+        "cwd": "${workspaceFolder}/smartend",
+        "serverReadyAction": {
+            "pattern": "Started HTTP and WebSocket JSON-RPC server at",
+            "action": "startDebugging",
+            "name": "1+) Nightworkers : Run Database"
+        },
+        "presentation": {
+            "hidden": true,
+            "group": "smartend",
+            "order": 1
+        },
+        "cascadeTerminateToConfigurations": ["1++) Nightworkers : Run Server", "1++*) Nightworkers : Run Scraper"]
+      },
+      {
+        "name": "1+) Nightworkers : Run Database",
+        "type": "node-terminal",
+        "request": "launch",
+        "cwd": "${workspaceFolder}/smartend/offchain-service",
+        "command": "pnpm debugDb",
+        "preLaunchTask": "Hardhat : deploy w/ .env files",
+        "serverReadyAction": {
+            "pattern": "CockroachDB node starting at",
+            "action": "startDebugging",
+            "name": "A*) Off-chain services"
+        },
+        "presentation": {
+            "hidden": true,
+            "group": "smartend",
+            "order": 2
+        },
+        "cascadeTerminateToConfigurations": ["1) Hardhat : Run EVM"]
+      },
+      {
+        "name": "1++) Nightworkers : Run Server",
+        "type": "node-terminal",
+        "request": "launch",
+        "command": "pnpm serverDev",
+        "cwd": "${workspaceFolder}/smartend/offchain-service",
+        "presentation": {
+            "hidden": true,
+            "group": "smartend",
+            "order": 3
+        },
+        "cascadeTerminateToConfigurations": ["1+) Nightworkers : Run Database", "1++*) Nightworkers : Run Scraper", "1++**) Nightworkers : Run Data Provider"]
+      },
+      {
+        "name": "1++*) Nightworkers : Run Scraper",
+        "type": "node-terminal",
+        "request": "launch",
+        "command": "pnpm scraperDev",
+        "cwd": "${workspaceFolder}/smartend/offchain-service",
+        "presentation": {
+            "hidden": true,
+            "group": "smartend",
+            "order": 4
+        },
+        "cascadeTerminateToConfigurations": [
+          "1+) Nightworkers : Run Database", 
+          "1++) Nightworkers : Run Server"
+        ]
+      },
+      {
+        "name": "1++**) Nightworkers : Run Data Provider",
+        "type": "node-terminal",
+        "request": "launch",
+        "command": "pnpm dataDev",
+        "cwd": "${workspaceFolder}/smartend/offchain-service",
+        "presentation": {
+            "hidden": true,
+            "group": "smartend",
+            "order": 5
+        }
+      },
+      {
+        "name": "2) Next.js : Run",
+        "type": "node-terminal",
+        "request": "launch",
+        "command": "pnpm dev",
+        "serverReadyAction": {
+          "pattern": "started server on .+, url: (https?://.+)",
+          "action": "startDebugging",
+          "name": "2+) Chrome : Attach to Next.js"
+        },
+        "preLaunchTask": "Configure : dApp",
+        "presentation": {
+            "hidden": true,
+            "group": "frontend",
+            "order": 1
+        },
+        "cascadeTerminateToConfigurations": ["2+) Chrome : Attach to Next.js"]
+      },
+      {
+        "name": "2+) Chrome : Attach to Next.js",
+        "type": "chrome",
+        "request": "launch",
+        "url": "http://127.0.0.1:3000",
+
+        "userDataDir": "${workspaceRoot}/.chrome-vscode-debug-profile",
+
+        "presentation": {
+            "hidden": false,
+            "group": "frontend",
+            "order": 2
+        }
+      }
+    ],
+    "compounds": [
+      {
+        "name": "A) Full-stack",
+        "presentation": {
+            "hidden": false,
+            "group": "default",
+            "order": 1
+        },
+        "configurations": [
+          "1) Hardhat : Run EVM", 
+          "2) Next.js : Run"
+        ],
+        "stopAll": true
+      },
+      {
+        "name": "A*) Off-chain services",
+        "presentation": {
+            "hidden": true,
+            "group": "offchain",
+            "order": 1
+        },
+        "configurations": [
+           "1++) Nightworkers : Run Server", 
+           "1++*) Nightworkers : Run Scraper",
+           "1++**) Nightworkers : Run Data Provider"
+        ],
+        "stopAll": true,
+        "preLaunchTask": "Database : Reset"
+      }
+    ]
+  }

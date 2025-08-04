@@ -1,0 +1,134 @@
+import { Flex, Image } from '@chakra-ui/react'
+import { useMemo } from 'react'
+import { BetBox, BaseBetButton, OutcomeDisplayerFunc } from './base'
+
+import { motion, Variants } from 'framer-motion'
+import { CoinBet } from 'lib/store/slices/_/bet'
+
+export const coinBetOutcomeDisplayer : OutcomeDisplayerFunc<CoinBet> = outcome => ({
+  descr: CoinBet[outcome],
+  color: outcome === CoinBet.Heads ? '#bb71ef' : '#0066ff'
+})
+
+const coinAnimations : Variants = {
+  Idle: {
+    rotateY: [0, 360],
+    transition: {
+      rotateY: {
+        duration: 8,
+        ease: 'linear',
+        repeat: Infinity
+      }
+    }
+  },
+  Flipping: {
+    rotateY: [0, 360],
+    y: [0, -30],
+    transition: {
+      rotateY: {
+        duration: 0.3,
+        ease: 'linear',
+        repeat: Infinity
+      },
+      y: {
+        duration: 0.2,
+        ease: 'easeInOut',
+        repeat: 1,
+        repeatType: 'reverse'
+      }
+    }
+  },
+  Heads: {
+    rotateY: 360 + 360,
+    transition: {
+      rotateY: {
+        duration: 0.66,
+        ease: 'easeOut'
+      }
+    }
+  },
+  Tails: {
+    rotateY: 360 + 180,
+    transition: {
+      rotateY: {
+        duration: 0.66,
+        ease: 'easeOut'
+      }
+    }
+  }
+}
+
+//
+export function Coin (props: {
+    history: { outcome?: CoinBet, hasFailed?: boolean }[]
+}) {
+  //
+  const currentState = useMemo(() => {
+    //
+    if (props.history.length === 0) {
+      return 'Idle'
+    }
+
+    //
+    const latestCoinState = props.history[props.history.length - 1]
+
+    //
+    if (latestCoinState.hasFailed) {
+      return 'Idle'
+    } else if (latestCoinState.outcome == null) {
+      return 'Flipping'
+    }
+
+    //
+    return latestCoinState.outcome === CoinBet.Heads ? 'Heads' : 'Tails'
+    //
+  }, [props.history])
+
+  //
+  return (
+    <motion.div
+      style={{
+        transformStyle: 'preserve-3d',
+        borderRadius: '50%',
+        boxShadow: 'rgb(44 44 23) 0px 0px 20px 8px',
+        position: 'relative',
+        width: '200px',
+        height: '200px'
+      }}
+      variants={coinAnimations}
+      animate={currentState}
+    >
+      <Image position='absolute' transform='translateZ(.1px)' alt='Coin Heads' src="/resources/casino/HEADS.png" />
+      <Image position='absolute' transform='rotateY(180deg)' alt='Coin Tails' src="/resources/casino/TAILS.png" />
+    </motion.div>
+  )
+}
+
+//
+export function CoinBetSelection (props: {
+    canBet: boolean,
+    bet: CoinBet,
+    setBet: (bet: CoinBet) => void
+}) {
+  //
+  return (
+    <BetBox subtitle='1.Pick your odds'>
+      <Flex w="full" justify='space-evenly'>
+        <BaseBetButton
+          correspondingBet={CoinBet.Heads}
+          betName="HEADS"
+          canBet={props.canBet}
+          bet={props.bet}
+          setBet={props.setBet}
+        />
+        <BaseBetButton
+          correspondingBet={CoinBet.Tails}
+          betName="TAILS"
+          canBet={props.canBet}
+          bet={props.bet}
+          setBet={props.setBet}
+        />
+      </Flex>
+    </BetBox>
+  )
+}

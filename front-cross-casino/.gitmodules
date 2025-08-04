@@ -1,0 +1,4 @@
+[submodule "smartend"]
+	path = smartend
+	url = https://github.com/Nightworkers-P2E/smartend
+  branch = cross

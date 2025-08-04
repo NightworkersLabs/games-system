@@ -1,0 +1,73 @@
+x-debug-env: &debug-env
+  - DATABASE_URL=postgresql://root@127.0.0.1:26257/nightworkers?schema=nw-chips-bank&sslmode=disable
+  - HTTPS_HOST=localhost
+  - CORS_ALLOWED_URL=http://localhost
+
+name: nightworkers-crosschain-service
+services:
+  database:
+    image: cockroachdb/cockroach:v22.2.19
+    command: start-single-node --insecure
+    ports:
+      - "26257:26257"
+      - "8080:8080"
+    volumes:
+      - nw-api-database:/cockroach/cockroach-data
+    restart: always
+    # healthcheck:
+    #   test: ["CMD", "cockroach", "node", "status", "--insecure", "--host=localhost:26257"]
+    #   interval: 60s
+    #   timeout: 2s
+    #   start_interval: 1s
+    #   start_period: 1s
+    #   retries: 3
+
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "9999:9999"
+      - "9229:9229"
+    command: [
+      # "--inspect-brk=0.0.0.0:9229", 
+      "server"
+    ]
+    # depends_on:
+    #   database:
+    #     condition: service_healthy
+    environment: *debug-env
+
+  scraper:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    # depends_on:
+    #   database:
+    #     condition: service_healthy
+    ports:
+      - "19229:9229"
+    command: [
+      # "--inspect-brk=0.0.0.0:9229", 
+      "scraper"
+    ]
+    environment: *debug-env
+
+  data-explorer:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "9998:9998"
+      - "29229:9229"
+    command: [
+      # "--inspect-brk=0.0.0.0:9229", 
+      "data-explorer"
+    ]
+    # depends_on:
+    #   database:
+    #     condition: service_healthy
+    environment: *debug-env
+
+volumes:
+  nw-api-database:

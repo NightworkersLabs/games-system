@@ -1,0 +1,29 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+    {
+      "label": "Check Typescript errors (all project)",
+      "type": "shell",
+      "command": "pnpm",
+      "args": ["exec", "tsc", "--noEmit", "--skipLibCheck", "--project", "./tsconfig.json"],
+      "problemMatcher": "$tsc"
+    },
+    {
+      "label": "Check circular dependencies",
+      "type": "shell",
+      "command": "pnpm",
+      "args": ["exec", "dpdm-fast", "--no-warning", "--no-tree", "dev.ts", "prod.ts", "verify.ts"],
+      "problemMatcher": "$tsc",
+      "options": {
+        "cwd": "./scripts/deploy"
+      }
+    },
+    {
+      "label": "Sort package.json",
+      "type": "shell",
+      "command": "pnpm",
+      "args": ["exec", "sort-package-json"],
+      "problemMatcher": "$tsc",
+    },
+  ]
+}

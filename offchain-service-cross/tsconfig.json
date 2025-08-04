@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    /* Base Options: */
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "target": "es2022",
+    "verbatimModuleSyntax": true,
+    "allowJs": true,
+    "resolveJsonModule": true,
+    "moduleDetection": "force",
+    /* Strictness */
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    /* If NOT transpiling with TypeScript: */
+    "moduleResolution": "Bundler",
+    "module": "ESNext",
+    "noEmit": true,
+    /* If your code doesn't run in the DOM: */
+    "lib": ["es2022"],
+    "paths": {
+      "#provably-fair/*": ["./src/lib/provably-fair/*"],
+      "#casino/*": ["./src/lib/casino/*"],
+      "#data-scraper/*": ["./src/lib/data-scraper/*"],
+      "#lib/*": ["./src/lib/*"],
+      "#env/*": ["./src/env/*"],
+      "#web-bindings/*": ["./src/web-bindings/*"],
+      "#abi/*": ["./abi/*"],
+      "#prisma/*": ["./src/prisma/*"]
+    }
+  }
+}

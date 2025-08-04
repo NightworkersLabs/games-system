@@ -1,0 +1,113 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "{Server} - Bundled",
+      "program": "${workspaceFolder}/dist/server",
+      "sourceMaps": true,
+      "outFiles": ["${workspaceFolder}/dist/server/**/*.js"],
+      "internalConsoleOptions": "neverOpen",
+      "console": "integratedTerminal",
+      "preLaunchTask": "Bundle w/ esbuild",
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "{Scraper} - Bundled",
+      "program": "${workspaceFolder}/dist/scraper",
+      "sourceMaps": true,
+      "outFiles": ["${workspaceFolder}/dist/scraper/**/*.js"],
+      "internalConsoleOptions": "neverOpen",
+      "console": "integratedTerminal",
+      "preLaunchTask": "Bundle w/ esbuild",
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "{Data Explorer} - Bundled",
+      "program": "${workspaceFolder}/dist/data-explorer",
+      "sourceMaps": true,
+      "outFiles": ["${workspaceFolder}/dist/data-explorer/**/*.js"],
+      "internalConsoleOptions": "neverOpen",
+      "console": "integratedTerminal",
+      "preLaunchTask": "Bundle w/ esbuild",
+    },
+    {
+      "type": "node-terminal",
+      "request": "launch",
+      "name": "{ALL} - Bundled w/in Stack",
+      "internalConsoleOptions": "neverOpen",
+      "preLaunchTask": "Run stack",
+      "postDebugTask": "Shutdown Compose stack",
+      "command": "docker compose logs -f",
+      "serverReadyAction":{
+        "action": "startDebugging",
+        "name": "{ALL} - Attach to Docker",
+        "pattern": ".*",
+        "killOnServerStop": false
+      },
+      "env": {
+        "COMPOSE_FILE": "docker-compose.debug.yml",
+      }
+    },
+    {
+      "type": "node",
+      "request": "attach",
+      "name": "{Server} - Attach to Docker",
+      "port": 9229,
+      "presentation": {
+        "hidden": true,
+        "order": 99
+      },
+      "continueOnAttach": true,
+      "sourceMaps": true,
+      "localRoot": "${workspaceFolder}/dist/server",
+      "remoteRoot": "/home/node/app/dist/server"
+    },
+    {
+      "type": "node",
+      "request": "attach",
+      "name": "{Scraper} - Attach to Docker",
+      "port": 19229,
+      "presentation": {
+        "hidden": true,
+        "order": 99
+      },
+      "continueOnAttach": true,
+      "sourceMaps": true,
+      "localRoot": "${workspaceFolder}/dist/scraper",
+      "remoteRoot": "/home/node/app/dist/scraper"
+    },
+    {
+      "type": "node",
+      "request": "attach",
+      "name": "{Data Explorer} - Attach to Docker",
+      "port": 29229,
+      "presentation": {
+        "hidden": true,
+        "order": 99
+      },
+      "continueOnAttach": true,
+      "sourceMaps": true,
+      "localRoot": "${workspaceFolder}/dist/data-explorer",
+      "remoteRoot": "/home/node/app/dist/data-explorer"
+    },
+  ],
+  "compounds": [
+    {
+      "name": "{ALL} - Attach to Docker",
+      "configurations": [
+        "{Data Explorer} - Attach to Docker",
+        "{Scraper} - Attach to Docker",
+        "{Server} - Attach to Docker"
+      ],
+      "presentation": {
+        "hidden": true,
+        "group": "",
+        "order": 99
+      }
+    }
+  ]
+}

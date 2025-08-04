@@ -1,0 +1,52 @@
+{
+  "name": "nightworkers-backend-lite",
+  "private": true,
+  "license": "UNLICENSED",
+  "type": "commonjs",
+  "version": "0.0.2",
+  "dependencies": {
+    "@openzeppelin/contracts": "^4.8.2",
+    "@nomiclabs/hardhat-ethers": "^2.2.3",
+    "@nomicfoundation/hardhat-verify": "^2.0.12",
+    "ethers": "^6.13.4",
+    "hardhat": "^2.13.0",
+    "hardhat-abi-exporter": "^2.10.1",
+    "log-update": "4.0.0",
+    "tsconfig-paths": "^4.2.0",
+    "@matterlabs/hardhat-zksync-deploy": "^1.6.0",
+    "@matterlabs/hardhat-zksync-solc": "^1.2.5",
+    "zksync-ethers": "^6.15.3",
+    "fs-extra": "^11.2.0"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^11.0.4",
+    "@types/node": "^22.10.2",
+    "@typescript-eslint/eslint-plugin": "^8.18.2",
+    "@typescript-eslint/parser": "^8.18.2",
+    "eslint": "^9.17.0",
+    "eslint-config-love": "^113.0.0",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-n": "^17.15.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^7.2.1",
+    "typescript": "^5.7.2",
+    "sort-package-json": "^2.12.0",
+    "dpdm-fast": "^1.0.7"
+  },
+  "scripts": {
+    "deployDev": "pnpm exec hardhat run scripts/deploy/dev.ts",
+    "deployProd": "pnpm exec hardhat run scripts/deploy/prod.ts",
+    "deployZk": "pnpm compile & pnpm exec hardhat deploy-zksync",
+    "verifyProd": "pnpm exec hardhat run scripts/deploy/verify.ts",
+    "precompile": "rimraf ./build/",
+    "compile": "pnpm exec hardhat compile",
+    "pretest": "pnpm compile",
+    "lint": "prettier ./test/**/*.ts --check",
+    "postinstall": "git submodule update --init --recursive && pnpm --dir ./offchain-service i",
+    "flatten": "pnpm exec hardhat flatten > _flatten.sol"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "packageManager": "pnpm@9.15.0"
+}

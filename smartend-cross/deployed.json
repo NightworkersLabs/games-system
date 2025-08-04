@@ -1,0 +1,62 @@
+{
+  "CasinoBank": {
+    "fuji": [
+      "0x2847555127E4301DB03D12A732Be8CDCa3Fc7988"
+    ],
+    "avalanche": [
+      "0x727571F63E760235397D3d4E76d2De3e3Cb7ac8A"
+    ],
+    "hardhat": [
+      "0x5FbDB2315678afecb367f032d93F642f64180aa3"
+    ],
+    "bitgertTestnet": [
+      "0x727571F63E760235397D3d4E76d2De3e3Cb7ac8A"
+    ],
+    "binanceTestnet": [
+      "0x727571F63E760235397D3d4E76d2De3e3Cb7ac8A"
+    ],
+    "polygonTestnet": [
+      "0x880189A3356A34f594D433D5F603cAc5cABC6684"
+    ],
+    "dogechainTestnet": [
+      "0x727571F63E760235397D3d4E76d2De3e3Cb7ac8A"
+    ],
+    "dogechain": [
+      "0x727571F63E760235397D3d4E76d2De3e3Cb7ac8A"
+    ],
+    "goerliTestnet": [
+      "0x880189A3356A34f594D433D5F603cAc5cABC6684",
+      "0x7412BB467A6A5716e5E5A55911737624967125ab"
+    ],
+    "ftmTestnet": [
+      "0x727571F63E760235397D3d4E76d2De3e3Cb7ac8A"
+    ],
+    "bsc": [
+      "0x727571F63E760235397D3d4E76d2De3e3Cb7ac8A"
+    ],
+    "mainnet": [
+      "0x727571F63E760235397D3d4E76d2De3e3Cb7ac8A"
+    ],
+    "optimisticGoerli": [
+      "0x727571F63E760235397D3d4E76d2De3e3Cb7ac8A"
+    ],
+    "opera": [
+      "0x727571F63E760235397D3d4E76d2De3e3Cb7ac8A"
+    ],
+    "zksyncGoerli": [
+      "0xcae8Af274c24A46dCFF3820105710D196Ce0451c"
+    ],
+    "polygon": [
+      "0x880189a3356a34f594d433d5f603cac5cabc6684"
+    ],
+    "qnetworkTestnet": [
+      "0x7412BB467A6A5716e5E5A55911737624967125ab"
+    ],
+    "arbitrumTestnet": [
+      "0x727571F63E760235397D3d4E76d2De3e3Cb7ac8A"
+    ],
+    "mantleTestnet": [
+      "0x727571F63E760235397D3d4E76d2De3e3Cb7ac8A"
+    ]
+  }
+}

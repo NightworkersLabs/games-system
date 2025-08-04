@@ -1,0 +1,190 @@
+body {
+    overflow: hidden !important;
+}
+
+html,
+body,
+#__next {
+	padding: 0;
+	margin: 0;
+	font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell,
+		Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+
+    /** makes sure body takes whole viewport space*/
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+    overflow: auto;
+    position: relative;
+}
+
+a {
+	color: inherit;
+	text-decoration: none;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+@keyframes indic-pop {
+	0% {
+		top: -.1rem
+	}
+    100% {
+        top: .1rem
+	}
+}
+
+.indic-pop {
+    position: relative;
+    animation: indic-pop .3s ease infinite both alternate;
+}
+
+@keyframes color-swap {
+	0% {
+		filter: hue-rotate(-10deg);
+        background-position-x: 0;
+	}
+    100% {
+        filter: hue-rotate(10deg);
+        background-position-x: 100%;
+	}
+}
+
+@keyframes pick {
+	0% {
+		transform: rotate(0);
+	}
+    100% {
+        transform: rotate(180deg);
+	}
+}
+
+button:hover .pickaxe { animation: pick .3s infinite both alternate steps(2, end);}
+
+@keyframes background-roller-x {
+	0% {
+        background-position-x: 0;
+	}
+    100% {
+        background-position-x: 100vw;
+	}
+}
+
+@keyframes rotateY {
+    0% {
+        transform: perspective(400px) rotateY(0deg);
+    }
+
+    100% {
+        transform: perspective(400px) rotateY(360deg);
+    }
+}
+
+.slow-rotate-y {
+    animation: rotateY 10s infinite linear;
+    transform-style: preserve-3d;
+}
+
+.threeD-preserved {
+    transform-style: preserve-3d;
+}
+
+.bodyBg {
+    background: repeat-x center/cover url("../public/resources/nw-bg.jpg");
+    image-rendering: pixelated;
+    animation: color-swap 20s ease-in-out infinite alternate, 
+               background-roller-x 30s ease-in-out infinite alternate;
+}
+
+.pixelFont {
+	font-family: "Press Start 2P", cursive;
+}
+
+.pinkBorder {
+	border: 4px solid #ed5af7 !important;
+}
+
+.casinoBg {
+    background-image: url("../public/resources/casino/casino-bg.png");
+    background-color: #340054f2;
+}
+
+.glowingBorder {
+	border: 4px solid #ed5af7 !important;
+	-webkit-box-shadow: 0px 0px 8px 4px #ed5af7;
+	-moz-box-shadow: 0px 0px 8px 4px #ed5af7;
+	box-shadow: 0px 0px 8px 4px #ed5af7;
+}
+
+.gauge {
+    transition: .3s width;
+}
+
+.gauge-remain {
+    box-shadow: 20px 0px 20px -9px #1000b196, 
+                inset -20px 0px 20px -4px #ff9999;
+}
+
+.lottery-gauge .passed {
+    color:#ffffff2e; 
+    font-weight: bold;
+}
+
+/*
+//
+*/
+
+@keyframes spin {
+    from {
+        transform:rotate(0deg);
+    }
+    to {
+        transform:rotate(360deg);
+    }
+}
+
+.rb {
+    transition: transform .2s;
+}
+
+.spinning {
+    animation: spin 1s linear infinite;
+}
+
+.test-container {
+    color: black;
+    background-image: url('../public/resources/test-wm.jpg');
+    box-shadow: inset 0 0 0 1000px rgb(185 174 45 / 20%);
+    background-size: 10rem;
+}
+
+.c-input {
+    background-color: #0000002b;
+    border-radius: 10px;
+}
+
+@keyframes tx-popup-blinking {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: .2;
+    }
+}
+
+.tx-popup-step-tracker .blinking {
+    animation: tx-popup-blinking .5s ease-in-out infinite alternate;
+}
+
+.stripped {
+    background: repeating-linear-gradient( 45deg, #e503b49c 0px, #b803e580 20px, #ffffff00 20px, #90caf900 40px );
+}
+
+.disabled {
+    opacity: 0.1;
+    pointer-events: none;
+    user-select: none;
+}

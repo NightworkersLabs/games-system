@@ -1,0 +1,91 @@
+{
+  "hardhat": {
+    "chainId": 31337,
+    "url": "http://127.0.0.1:8545",
+    "cheap": true
+  },
+  "fuji": {
+    "chainId": 43113,
+    "url": "https://api.avax-test.network/ext/bc/C/rpc",
+    "cheap": true
+  },
+  "avalanche": {
+    "chainId": 43114,
+    "url": "https://api.avax.network/ext/bc/C/rpc"
+  },
+  "bitgertTestnet": {
+    "chainId": 64668,
+    "url": "https://testnet-rpc.brisescan.com",
+    "cheap": true
+  },
+  "binanceTestnet": {
+    "chainId": 97,
+    "url": "https://data-seed-prebsc-1-s1.binance.org:8545",
+    "cheap": true
+  },
+  "polygonTestnet": {
+    "chainId": 80001,
+    "url": "https://matic-testnet-archive-rpc.bwarelabs.com",
+    "cheap": true
+  },
+  "dogechainTestnet": {
+    "chainId": 568,
+    "url": "https://rpc-testnet.dogechain.dog",
+    "cheap": true
+  },
+  "dogechain": {
+    "chainId": 2000,
+    "url": "https://rpc.dogechain.dog"
+  },
+  "goerliTestnet": {
+    "chainId": 5,
+    "url": "https://goerli.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161",
+    "cheap": true
+  },
+  "ftmTestnet": {
+    "chainId": 4002,
+    "url": "https://rpc.testnet.fantom.network",
+    "cheap": true
+  },
+  "zksyncGoerli": {
+    "chainId": 280,
+    "url": "https://zksync2-testnet.zksync.dev",
+    "cheap": true
+  },
+  "bsc": {
+    "chainId": 56,
+    "url": "https://bscrpc.com"
+  },
+  "mainnet": {
+    "chainId": 1,
+    "url": "https://rpc.ankr.com/eth"
+  },
+  "optimisticGoerli": {
+    "chainId": 420,
+    "url": "https://goerli.optimism.io",
+    "cheap": true
+  },
+  "opera": {
+    "chainId": 250,
+    "url": "https://rpc.fantom.network"
+  },
+  "polygon": {
+    "chainId": 137,
+    "url": "https://polygon-rpc.com"
+  },
+  "qnetworkTestnet": {
+    "chainId": 35443,
+    "url": "https://rpc.qtestnet.org",
+    "cheap": true
+  },
+  "arbitrumTestnet": {
+    "chainId": 421613,
+    "url": "https://goerli-rollup.arbitrum.io/rpc",
+    "cheap": true
+  },
+  "mantleTestnet": {
+    "chainId": 5001,
+    "url": "https://rpc.testnet.mantle.xyz",
+    "cheap": true
+  }
+}

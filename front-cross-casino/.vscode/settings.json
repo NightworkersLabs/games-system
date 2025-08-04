@@ -1,0 +1,8 @@
+{
+    "solidity.formatter": "prettier",
+    "editor.insertSpaces": true,
+    "editor.tabSize": 2,
+    "editor.detectIndentation": false,
+    "eslint.format.enable": true,
+	  "[javascript]": { "editor.defaultFormatter": "dbaeumer.vscode-eslint" }
+}

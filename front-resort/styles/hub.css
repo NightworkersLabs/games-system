@@ -1,0 +1,72 @@
+@keyframes glow {
+	0% {
+		text-shadow: 0 0 75px #EEE;
+	}
+    100% {
+        text-shadow: 0 0 100px #EEE;
+	}
+}
+
+@keyframes glow-purple {
+	0% {
+		text-shadow: 0 0 40px #b929d6, 0 0 10px #b929d6;
+        transform: scale(1.03);
+	}
+    100% {
+		text-shadow: 0 0 20px #b929d6;
+        transform: scale(1);
+	}
+}
+
+@keyframes heartbeat {
+	0% {
+        transform: scale(1) rotateZ(40deg);
+	}
+    100% {
+        transform: scale(1.1) rotateZ(40deg);
+	}
+}
+
+#title { transition: top .3s; }
+#title.preparing { top: 35%; }
+#title.ready { top: 0; }
+
+#app-state { overflow: hidden; transition: opacity .3s, max-height .3s; }
+#app-state.preparing { opacity: 1; max-height: 80px; }
+#app-state.ready { opacity: 0; max-height: 0px; }
+
+#game-zone { position: relative; transition: opacity 1s; }
+#game-zone.preparing { opacity: 0; height:0; overflow: hidden; }
+#game-zone.ready { opacity: 1; }
+
+#hud { transition: opacity 1s; }
+#hud.preparing { opacity: 0; }
+#hud.ready { opacity: 1; }
+
+.text-glow {animation: glow 1.5s ease-in-out infinite alternate;}
+.text-glow-purple {display: inline-block; animation: glow-purple 1.5s ease-in-out infinite alternate;}
+
+.roulette-pin {
+    animation: heartbeat .5s linear infinite alternate;
+    right: 4%;
+    top: 4%;
+    width: 20%;
+}
+
+.bc-logo {
+    box-shadow: 0px 0px 4px 1px red;
+    border-radius: 50%;
+}
+
+.hidden {
+    opacity: 0;
+}
+
+.norowgap {
+    row-gap: 0 !important;
+}
+
+.parteners-traded-good {
+    top: 1px;
+    position: relative;
+}

@@ -1,0 +1,22 @@
+name: nightworkers-oracle
+services:
+  service-gateway:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "9999:9999" # service port
+      - "9229:9229" # node debugger
+    command: [
+      "--inspect-brk=0.0.0.0:9229", 
+      "."
+    ]
+    environment:
+      NODE_ENV: development
+      #
+      # HTTPS_HOST: localhost
+      CORS_ALLOWED_URL: http://localhost
+      CHAIN_ID: 43113
+      RPC_URL: https://api.avax-test.network/ext/bc/C/rpc
+    volumes:
+      - ./.env.p2e.testnet:/home/node/app/dist/.env:ro
