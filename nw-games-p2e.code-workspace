@@ -1,0 +1,21 @@
+{
+	"folders": [
+		{
+			"path": "./",
+			"name": "[root]"
+		},
+		{
+			"path": "./front-resort",
+		},
+		{
+			"path": "./smartend-p2e",
+		},
+		{
+			"path": "./offchain-service-oracle",
+		},
+		{
+			"path": "./nft-assets",
+		},
+	],
+	"settings": {}
+}

@@ -1,0 +1,18 @@
+{
+	"folders": [
+		{
+			"path": "./",
+			"name": "[root]"
+		},
+		{
+			"path": "./front-cross-casino",
+		},
+		{
+			"path": "./smartend-cross",
+		},
+		{
+			"path": "./offchain-service-cross",
+		},
+	],
+	"settings": {}
+}
