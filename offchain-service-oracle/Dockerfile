@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-ARG APP_DIRECTORY=/home/node/app
+ARG APP_DIRECTORY=/app
 
 #
 # ---- Base Node ---- HEAVIER, with build dependencies (git, build-essentials, python3, git...)

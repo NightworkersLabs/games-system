@@ -33,7 +33,9 @@ ARG APP_DIRECTORY
 
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile --ignore-scripts
 COPY . .
-RUN pnpm postinstall
+
+# generate prisma models
+RUN pnpm postinstall 
 
 #
 ENV NODE_ENV=production

@@ -1,4 +1,4 @@
-# Night Workers © Web App
+# NightWorkersLabs | Resort (P2E+) App
 
 Using `Visual Studio Code` + `Google Chrome` as the default IDE + debug browser combo is highly recommended.
 

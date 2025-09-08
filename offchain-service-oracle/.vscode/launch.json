@@ -26,9 +26,7 @@
         "name": "Attach to Docker",
         "killOnServerStop": false
       },
-      "env": {
-        "COMPOSE_FILE": "docker-compose.debug.yml",
-      }
+      "cwd": "${workspaceFolder}/.dev"
     },
     {
       "type": "node",
@@ -41,7 +39,7 @@
       "continueOnAttach": true,
       "sourceMaps": true,
       "localRoot": "${workspaceFolder}/dist",
-      "remoteRoot": "/home/node/app/dist"
+      "remoteRoot": "/app/dist"
     }
   ]
 }

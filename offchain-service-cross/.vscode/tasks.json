@@ -18,9 +18,7 @@
       "args": ["compose", "up", "-d", "--wait", "--build"],
       "problemMatcher": [],
       "options": {
-        "env": {
-          "COMPOSE_FILE": "docker-compose.debug2.yml",
-        }
+        "cwd": "${workspaceFolder}/.dev",
       }
     },
     {
@@ -30,9 +28,7 @@
       "args": ["compose", "down", "-v"], // -v also removes volumes
       "problemMatcher": [],
       "options": {
-        "env": {
-          "COMPOSE_FILE": "docker-compose.debug.yml",
-        }
+        "cwd": "${workspaceFolder}/.dev",
       }
     },
     {

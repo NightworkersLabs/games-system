@@ -1,0 +1,92 @@
+##
+## Developper-only compose file, do not use in production setups
+##
+
+x-debug-env: &debug-env
+  - DATABASE_URL=postgresql://root@127.0.0.1:26257/nightworkers?schema=nw-chips-bank&sslmode=disable
+  - HTTPS_HOST=localhost
+  - CORS_ALLOWED_URL=http://localhost
+
+name: nwl-cross-backend
+services:
+  # stores off-chain persistent data (accounts tokens count...)
+  db:
+    image: cockroachdb/cockroach:v22.2.19
+    command: start-single-node --insecure
+    ports:
+      - "26257:26257" # DB port
+      - "8080:8080"   # Dashboard port
+    volumes:
+      - cockroach-data:/cockroach/cockroach-data
+    restart: always
+    healthcheck:
+      test: ["CMD", "cockroach", "sql", "--insecure", "--host=localhost:26257", "-e", "SELECT 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+
+  # games server
+  api:
+    build:
+      context: ..
+    ports:
+      - "9999:9999" # API port
+      - "9229:9229" # debugger port
+    command: [
+      # "--inspect-brk=0.0.0.0:9229", # enables wait-for-debugger
+      "server"
+    ]
+    depends_on:
+      db:
+        condition: service_healthy
+    environment: *debug-env
+    env_file:
+      - ./.env
+    volumes:
+      - ./deployed.json:/app/dist/deployed.json:ro
+      - ./networks.json:/app/dist/networks.json:ro
+
+  # blockchains data scrapper
+  scraper:
+    build:
+      context: ..
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "19229:9229"  # debugger port
+    command: [
+      # "--inspect-brk=0.0.0.0:9229", # enables wait-for-debugger
+      "scraper"
+    ]
+    environment: *debug-env
+    env_file:
+      - ./.env
+    volumes:
+      - ./deployed.json:/app/dist/deployed.json:ro
+      - ./networks.json:/app/dist/networks.json:ro
+
+  #
+  data-explorer:
+    build:
+      context: ..
+    ports:
+      - "9998:9998"  # HTTP endpoint port
+      - "29229:9229" # debugger port
+    command: [
+      # "--inspect-brk=0.0.0.0:9229", # enables wait-for-debugger
+      "data-explorer"
+    ]
+    depends_on:
+      db:
+        condition: service_healthy
+    environment: *debug-env
+    env_file:
+      - ./.env
+    volumes:
+      - ./deployed.json:/app/dist/deployed.json:ro
+      - ./networks.json:/app/dist/networks.json:ro
+
+volumes:
+  cockroach-data:
