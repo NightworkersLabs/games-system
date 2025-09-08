@@ -5,13 +5,13 @@
 			"name": "[root]"
 		},
 		{
-			"path": "./front-resort",
+			"path": "./app-resort",
 		},
 		{
-			"path": "./smartend-p2e",
+			"path": "./contracts-resort",
 		},
 		{
-			"path": "./offchain-service-oracle",
+			"path": "./offchain-resort",
 		},
 		{
 			"path": "./nft-assets",

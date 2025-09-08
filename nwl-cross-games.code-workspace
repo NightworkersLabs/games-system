@@ -5,13 +5,13 @@
 			"name": "[root]"
 		},
 		{
-			"path": "./front-cross-casino",
+			"path": "./app-cross-games",
 		},
 		{
-			"path": "./smartend-cross",
+			"path": "./contracts-cross-games",
 		},
 		{
-			"path": "./offchain-service-cross",
+			"path": "./offchain-cross-games",
 		},
 	],
 	"settings": {}
