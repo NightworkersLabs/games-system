@@ -7,8 +7,8 @@
   "scripts": {
     "precompile": "rimraf ./build/",
     "compile": "pnpm exec hardhat compile",
-    "deployDev": "pnpm exec hardhat run scripts/deploy/dev.ts",
-    "deployProd": "pnpm exec hardhat run scripts/deploy/prod.ts",
+    "deploy:dev": "pnpm exec hardhat run scripts/deploy/dev.ts",
+    "deploy:prod": "pnpm exec hardhat run scripts/deploy/prod.ts",
     "lint": "prettier ./test/**/*.ts --check",
     "mockPickRates": "pnpm exec hardhat run scripts/mocking/pickRates.ts",
     "mockTrustedValidator": "pnpm exec hardhat run scripts/mocking/trustedValidator.ts",

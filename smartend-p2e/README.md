@@ -16,8 +16,8 @@ Includes EVM contracts, tests, deployment scripts and off-chain service integrat
 - `./build/avalanchego --network-id=local --staking-enabled=false --snow-sample-size=1 --snow-quorum-size=1 --public-ip=127.0.0.1`
 
 If you want to deploy
-- `pnpm deployDev --network local`
-- If you do not want to generate a default whitelisted address list, call `deployWLess` instead of `deployDev`
+- `pnpm deploy:dev --network local`
+- If you do not want to generate a default whitelisted address list, call `deployWLess` instead of `deploy:dev`
 
 If you want to unit test against local node
 - `pnpm test -- network local` 
@@ -41,7 +41,7 @@ If you want to unit test against local node
 - Connect to Metamask
   - Make sure you have some AVAX on your EOA, since creation of a wallet have a cost
 - Create / Restore a multisig contract, with appropriate parameters
-- Copy this wallet address and feed it to the `pnpm deployProd --network local` script
+- Copy this wallet address and feed it to the `pnpm deploy:prod --network local` script
 - Run it
   - Once deployment successful, make sure to keep the logs, since it contains the addresses we need to feed the dApp for transactions delegation
 - Add theses addresses into dApp's `Address Book`
@@ -65,7 +65,7 @@ If you want to unit test against local node
 - Create Multi-sigs
   - Main Multisig : with 3 internal + 1 external members
   - Marketing Multisig
-- Deploy contracts on targeted network with `pnpm deployProd --network {target}` 
+- Deploy contracts on targeted network with `pnpm deploy:prod --network {target}` 
   - Make sure the correct parameters are filled in the `scripts/deploy/prod.ts` script
     - Main Multisig address
     - Marketing Multisig address

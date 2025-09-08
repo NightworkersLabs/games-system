@@ -54,11 +54,11 @@ How it should go, for each new Blockchain :
   - Update `smartend/hardhat.config.ts` file for Hardhat to acknoledge a new blockchain configuration. Pick any (id / name) you like, we'll reuse this later on, referred as `[blockhainNetworkName]`. If you also configure `smartend/hardhat.config.ts:config.etherscan.customChain`, make sure that naming is the same as `[blockhainNetworkName]`.
   - Open a terminal, now we'll attempt to deploy
     - `cd smartend`
-    - `pnpm deployProd --network [blockhainNetworkName]`
+    - `pnpm deploy:prod --network [blockhainNetworkName]`
     - Now wait and pray that it works. If not, ask Amphaal for help.
       - A lot of unexpected failures might lie in an inappropriate `RPC URL` used. If you can find another one, try again by changing it.
-      - If automatic verification of contract is missconfigured, `pnpm deployProd` might fail halfway, after sucessfully deploying. If deployment is sucessful, YOU DO NOT NEED TO use `pnpm deployProd` again ! Prefer tweeking `smartend/scripts/deploy/verify.ts` file, then running `pnpm verifyProd` instead.
-      - If deployment is sucessful, you'll find out in `pnpm deployProd` logs obviously, which will give you the newly deployed contract address. Check on block explorer that it exists. 
+      - If automatic verification of contract is missconfigured, `pnpm deploy:prod` might fail halfway, after sucessfully deploying. If deployment is sucessful, YOU DO NOT NEED TO use `pnpm deploy:prod` again ! Prefer tweeking `smartend/scripts/deploy/verify.ts` file, then running `pnpm verify:prod` instead.
+      - If deployment is sucessful, you'll find out in `pnpm deploy:prod` logs obviously, which will give you the newly deployed contract address. Check on block explorer that it exists. 
 
 2. You'll need to update the app front-end configuration :
   - After sucessfully deploying on a new blockchain, `deployed.json` & `networks.json` should have been automatically updated and must be pushed.

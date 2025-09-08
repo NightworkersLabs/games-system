@@ -31,14 +31,12 @@
     "dpdm-fast": "^1.0.7"
   },
   "scripts": {
-    "deployDev": "pnpm exec hardhat run scripts/deploy/dev.ts",
-    "deployProd": "pnpm exec hardhat run scripts/deploy/prod.ts",
-    "verifyProd": "pnpm exec hardhat run scripts/deploy/verify.ts",
+    "deploy:dev": "hardhat run scripts/deploy/dev.ts",
+    "deploy:prod": "hardhat run scripts/deploy/prod.ts",
+    "verify:prod": "hardhat run scripts/deploy/verify.ts",
     "precompile": "rimraf ./build/",
-    "compile": "pnpm exec hardhat compile",
-    "pretest": "pnpm compile",
-    "lint": "prettier ./test/**/*.ts --check",
-    "flatten": "pnpm exec hardhat flatten > _flatten.sol"
+    "compile": "hardhat compile",
+    "flatten": "hardhat flatten > _flatten.sol"
   },
   "engines": {
     "node": ">=22"
