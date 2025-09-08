@@ -9,7 +9,6 @@
     "compile": "pnpm exec hardhat compile",
     "deployDev": "pnpm exec hardhat run scripts/deploy/dev.ts",
     "deployProd": "pnpm exec hardhat run scripts/deploy/prod.ts",
-    "postinstall": "git submodule update --init --recursive && pnpm --dir ./offchain-service i",
     "lint": "prettier ./test/**/*.ts --check",
     "mockPickRates": "pnpm exec hardhat run scripts/mocking/pickRates.ts",
     "mockTrustedValidator": "pnpm exec hardhat run scripts/mocking/trustedValidator.ts",

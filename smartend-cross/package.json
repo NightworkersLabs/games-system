@@ -38,7 +38,6 @@
     "compile": "pnpm exec hardhat compile",
     "pretest": "pnpm compile",
     "lint": "prettier ./test/**/*.ts --check",
-    "postinstall": "git submodule update --init --recursive && pnpm --dir ./offchain-service i",
     "flatten": "pnpm exec hardhat flatten > _flatten.sol"
   },
   "engines": {

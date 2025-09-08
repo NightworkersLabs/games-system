@@ -15,21 +15,6 @@
       "args": ["exec", "sort-package-json"],
       "problemMatcher": "$tsc",
     },
-    {	
-			"label": ".) Fetch submodules recursively",
-			"type": "shell",
-			"command": "git submodule update --init --recursive",
-      "problemMatcher": "$tsc"
-		},
-    {
-      "label": "..) pnpm install (smartend & children)",
-      "type": "shell",
-      "command": "pnpm install",
-      "options": {
-        "cwd": "./smartend"
-      },
-      "problemMatcher": "$tsc"
-    },
     {
 			"label": "Configure : dApp",
 			"type": "shell",

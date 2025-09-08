@@ -5,8 +5,7 @@ Includes EVM contracts, tests, deployment scripts and off-chain service integrat
 > :information_source: As package maintainer, often run `pnpm upgrade --latest` 
 
 ## Compile contracts + unit tests
-- `git clone --recurse-submodules {this repo URL}` 
-  - If you cloned without `--recurse-submodules`, use `git submodule update --init` 
+- `git clone {this repo URL}` 
 - `npm install -g pnpm ethlint`
 - `pnpm`
 - `pnpm test`
