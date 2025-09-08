@@ -13,7 +13,8 @@
     "service:bts:dev": "pnpm build && cross-env DATABASE_URL=$npm_package_config_db_url node dist/bts/index.js",
     "service:data:dev": "pnpm build && cross-env DATABASE_URL=$npm_package_config_db_url node dist/data/index.js",
     "service:scraper:dev": "pnpm build && cross-env DATABASE_URL=$npm_package_config_db_url node dist/scraper/index.js",
-    "service:server:dev": "pnpm build && cross-env DATABASE_URL=$npm_package_config_db_url node dist/server/index.js"
+    "service:server:dev": "pnpm build && cross-env DATABASE_URL=$npm_package_config_db_url node dist/server/index.js",
+    "sort": "sort-package-json"
   },
   "config": {
     "db_url": "postgresql://root@127.0.0.1:26257/nightworkers?schema=nw-chips-bank&sslmode=disable"

@@ -8,19 +8,17 @@
     "predev": "ts-node -T env/networksCompiler.exec.ts",
     "dev": "next dev",
     "lint": "next lint",
+    "sort": "sort-package-json",
     "start": "next start"
-  },
-  "engines": {
-    "node": ">=22"
   },
   "dependencies": {
     "@babel/core": "^7.18.10",
-    "@chakra-ui/transition": "^2.1.0",
-    "@chakra-ui/icons": "^2.0.6",
     "@chakra-ui/icon": "^3.2.0",
+    "@chakra-ui/icons": "^2.0.6",
     "@chakra-ui/react": "^2.2.6",
     "@chakra-ui/styled-system": "^2.2.5",
     "@chakra-ui/system": "^2.2.4",
+    "@chakra-ui/transition": "^2.1.0",
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
     "@ethersproject/providers": "^5.6.8",
@@ -69,5 +67,8 @@
     "typescript": "^5.7.2",
     "wait-port": "^0.3.0"
   },
-  "packageManager": "pnpm@9.15.0"
+  "packageManager": "pnpm@9.15.0",
+  "engines": {
+    "node": ">=22"
+  }
 }

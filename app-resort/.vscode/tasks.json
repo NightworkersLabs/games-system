@@ -9,13 +9,6 @@
       "problemMatcher": "$tsc"
     },
     {
-      "label": "Sort package.json",
-      "type": "shell",
-      "command": "pnpm",
-      "args": ["exec", "sort-package-json"],
-      "problemMatcher": "$tsc",
-    },
-    {
 			"label": "Configure : dApp",
 			"type": "shell",
 			"command": "pnpm exec tsx env/smartendWatcher.ts",

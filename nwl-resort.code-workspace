@@ -17,5 +17,28 @@
 			"path": "./nft-assets",
 		},
 	],
+	"tasks": {
+		"version": "2.0.0",
+		"tasks": [
+			{
+				"label": "📦 Install package.json sorter",
+				"type": "shell",
+				"command": "pnpm add -g sort-package-json",
+				"hide": true
+			},
+			{
+				"label": "⇅ Sort package.json files",
+				"dependsOn": "📦 Install package.json sorter",
+				"command": "sort-package-json",
+				"type": "shell",
+				"args": [
+					"./nft-assets/package.json",
+					"./offchain-resort/package.json",
+					"./contracts-resort/package.json",
+					"./app-resort/package.json",
+				]
+			}
+		]
+	},
 	"settings": {}
 }

@@ -1,45 +1,46 @@
 {
   "name": "nwl-contracts-cross-games",
+  "version": "0.0.2",
   "private": true,
   "license": "UNLICENSED",
   "type": "commonjs",
-  "version": "0.0.2",
+  "scripts": {
+    "precompile": "rimraf ./build/",
+    "compile": "hardhat compile",
+    "deploy:dev": "hardhat run scripts/deploy/dev.ts",
+    "deploy:prod": "hardhat run scripts/deploy/prod.ts",
+    "flatten": "hardhat flatten > _flatten.sol",
+    "sort": "sort-package-json",
+    "verify:prod": "hardhat run scripts/deploy/verify.ts"
+  },
   "dependencies": {
-    "@openzeppelin/contracts": "^4.8.2",
-    "@nomiclabs/hardhat-ethers": "^2.2.3",
     "@nomicfoundation/hardhat-verify": "^2.0.12",
+    "@nomiclabs/hardhat-ethers": "^2.2.3",
+    "@openzeppelin/contracts": "^4.8.2",
     "ethers": "^6.13.4",
+    "fs-extra": "^11.2.0",
     "hardhat": "^2.13.0",
     "hardhat-abi-exporter": "^2.10.1",
     "log-update": "4.0.0",
-    "tsconfig-paths": "^4.2.0",
-    "fs-extra": "^11.2.0"
+    "tsconfig-paths": "^4.2.0"
   },
   "devDependencies": {
     "@types/fs-extra": "^11.0.4",
     "@types/node": "^22.10.2",
     "@typescript-eslint/eslint-plugin": "^8.18.2",
     "@typescript-eslint/parser": "^8.18.2",
+    "dpdm-fast": "^1.0.7",
     "eslint": "^9.17.0",
     "eslint-config-love": "^113.0.0",
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-n": "^17.15.1",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^7.2.1",
-    "typescript": "^5.7.2",
     "sort-package-json": "^2.12.0",
-    "dpdm-fast": "^1.0.7"
+    "typescript": "^5.7.2"
   },
-  "scripts": {
-    "deploy:dev": "hardhat run scripts/deploy/dev.ts",
-    "deploy:prod": "hardhat run scripts/deploy/prod.ts",
-    "verify:prod": "hardhat run scripts/deploy/verify.ts",
-    "precompile": "rimraf ./build/",
-    "compile": "hardhat compile",
-    "flatten": "hardhat flatten > _flatten.sol"
-  },
+  "packageManager": "pnpm@9.15.0",
   "engines": {
     "node": ">=22"
-  },
-  "packageManager": "pnpm@9.15.0"
+  }
 }

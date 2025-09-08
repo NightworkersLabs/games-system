@@ -9,13 +9,6 @@
       "problemMatcher": "$tsc"
     },
     {
-      "label": "Sort package.json",
-      "type": "shell",
-      "command": "npx",
-      "args": ["sort-package-json"],
-      "problemMatcher": "$tsc",
-    },
-    {
       "label": "Configure : dApp",
       "type": "shell",
       "command": "npx ts-node env/smartendWatcher.ts",

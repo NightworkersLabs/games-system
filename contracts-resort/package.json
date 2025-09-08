@@ -13,6 +13,7 @@
     "mockPickRates": "pnpm exec hardhat run scripts/mocking/pickRates.ts",
     "mockTrustedValidator": "pnpm exec hardhat run scripts/mocking/trustedValidator.ts",
     "prepublishOnly": "pnpm test",
+    "sort": "sort-package-json",
     "pretest": "pnpm compile",
     "test": "pnpm exec hardhat test"
   },

@@ -67,12 +67,5 @@
         "cwd": "${workspaceFolder}"
       }
     },
-    {
-      "label": "Sort package.json",
-      "type": "shell",
-      "command": "pnpm",
-      "args": ["exec", "sort-package-json"],
-      "problemMatcher": "$tsc",
-    },
   ]
 }

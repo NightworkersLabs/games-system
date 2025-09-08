@@ -6,7 +6,8 @@
     "type": "module",
     "scripts": {
         "build": "node src/build.mjs",
-        "dev": "pnpm build && node dist/server.js"
+        "dev": "pnpm build && node dist/server.js",
+        "sort": "sort-package-json"
     },
     "dependencies": {
         "@ethersproject/abstract-provider": "^5.7.0",
