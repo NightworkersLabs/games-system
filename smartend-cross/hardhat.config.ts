@@ -129,12 +129,6 @@ const config: HardhatUserConfig = {
       chainId: 4002,
       accounts: deployConfig
     },
-    /** reference-only blockchain, not suitable for deploying. Please use appropriate "hardhat.config.*.ts" file and deploy script */
-    zksyncGoerli: {
-      url: 'https://zksync2-testnet.zksync.dev',
-      chainId: 280,
-      accounts: deployConfig
-    },
     /** bitgert: {
       url: 'https://mainnet-rpc.brisescan.com',
       chainId: 32520,

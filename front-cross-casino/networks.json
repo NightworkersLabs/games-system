@@ -47,11 +47,6 @@
     "url": "https://rpc.testnet.fantom.network",
     "cheap": true
   },
-  "zksyncGoerli": {
-    "chainId": 280,
-    "url": "https://zksync2-testnet.zksync.dev",
-    "cheap": true
-  },
   "bsc": {
     "chainId": 56,
     "url": "https://bscrpc.com"

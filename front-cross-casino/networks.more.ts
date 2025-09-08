@@ -153,16 +153,6 @@ const moreNetworksInfos : HandledNetworksDefinition = {
       showBankBalanceAbove: '0.5'
     }
   },
-  zksyncGoerli: {
-    networkName: 'zkSync Goerli',
-    color: 'black',
-    subcolor: '#222',
-    explorer: 'https://explorer.zksync.io',
-    explorerArgs: [['network', 'goerli']],
-    faucet: 'https://portal.zksync.io/faucet',
-    currencyName: 'ETH',
-    logo: '/resources/icons/bc/zksync.jpg'
-  },
   qnetworkTestnet: {
     logo: '/resources/icons/bc/q-network.png',
     currencyName: 'QNT',
