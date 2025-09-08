@@ -2,7 +2,7 @@ import { Contract } from 'ethers'
 import { formatEther, parseEther } from 'ethers/lib/utils'
 import { ethers } from 'hardhat'
 import logUpdate = require('log-update')
-import { TraitsPack, readNFTAssetsRepositoryPacker } from 'nft-assets/read'
+import { TraitsPack, readNFTAssetsRepositoryPacker } from '@nightworkerslabs/nft-assets/utilities'
 import { IgniteParameters, NightworkersContractsFactory } from './NWContractsFactory'
 
 export class NightworkersContext extends NightworkersContractsFactory {

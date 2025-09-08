@@ -1,7 +1,7 @@
 import './_context'
 
 import { expect } from 'chai'
-import { TraitsPack } from 'nft-assets/read'
+import { TraitsPack } from '@nightworkerslabs/nft-assets/utilities'
 
 //
 // FRAMEWORK

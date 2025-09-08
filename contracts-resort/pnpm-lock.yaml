@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@nightworkerslabs/nft-assets':
+        specifier: ../nft-assets/
+        version: link:../nft-assets
       '@nomicfoundation/hardhat-verify':
         specifier: ^2.0.12
         version: 2.0.12(hardhat@2.22.17(bufferutil@4.0.8)(ts-node@10.9.2(@types/node@22.10.2)(typescript@5.7.2))(typescript@5.7.2)(utf-8-validate@5.0.10))
@@ -5170,6 +5173,7 @@ packages:
   yaeti@0.0.6:
     resolution: {integrity: sha512-MvQa//+KcZCUkBTIC9blM+CU9J2GzuTytsOUwf2lidtvkx/6gnEp1QvJv34t9vdjhFmha/mUiNDbN0D0mJWdug==}
     engines: {node: '>=0.10.32'}
+    deprecated: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
 
   yallist@3.1.1:
     resolution: {integrity: sha512-a4UGQaWPH59mOXUYnAG2ewncQS4i4F43Tv3JoAM+s2VDAmS9NsK8GpDMLrCHPksFT7h3K6TOoUNn2pb7RoXx4g==}

@@ -93,6 +93,9 @@ importers:
         specifier: ^4.0.0
         version: 4.5.5(@types/react@18.2.23)(immer@9.0.21)(react@18.2.0)
     devDependencies:
+      '@nightworkerslabs/nft-assets':
+        specifier: ../nft-assets/
+        version: link:../nft-assets
       '@types/fs-extra':
         specifier: ^11.0.4
         version: 11.0.4

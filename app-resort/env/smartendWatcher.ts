@@ -1,5 +1,5 @@
 import fse from 'fs-extra'
-import { produceNamesArrayFrom, readNFTAssetsRepositoryPacker } from '../smartend/nft-assets/read'
+import { produceNamesArrayFrom, readNFTAssetsRepositoryPacker } from '@nightworkerslabs/nft-assets/utilities'
 
 const dAppOutputEnvFileName = '.env.local'
 const dAppEnvSourceFolder = './smartend/artifacts/'

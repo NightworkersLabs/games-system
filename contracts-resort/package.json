@@ -17,6 +17,7 @@
     "test": "pnpm exec hardhat test"
   },
   "dependencies": {
+    "@nightworkerslabs/nft-assets": "../nft-assets/",
     "@nomicfoundation/hardhat-verify": "^2.0.12",
     "@nomiclabs/hardhat-ethers": "^2.0.6",
     "@nomiclabs/hardhat-waffle": "^2.0.3",

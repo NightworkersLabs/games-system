@@ -2,7 +2,7 @@ import { BigNumber, Contract, Wallet } from 'ethers'
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers'
 
 import { NightworkersContext } from 'scripts/deploy/framework/NWContext'
-import { TraitsPack } from 'nft-assets/read'
+import { TraitsPack } from '@nightworkerslabs/nft-assets/utilities'
 import { TrustedValidatorDaemon } from '@offchain-service/lib/tv-daemon'
 import { SecretsStorage } from '@offchain-service/lib/provably-fair/secrets-provider'
 import { MintOrderer } from './_helpers'
