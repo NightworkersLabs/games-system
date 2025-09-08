@@ -1,0 +1,12 @@
+{
+    "compilerOptions": {
+        "declaration": true,
+        "target": "ESNext",
+        "module": "nodenext",
+        "moduleResolution": "nodenext",
+        "lib": ["ESNext", "DOM"],
+        "types": ["node"],
+        "skipLibCheck": true
+    },
+    "include": ["utilities"]
+}
