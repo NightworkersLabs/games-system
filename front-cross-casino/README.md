@@ -1,22 +1,25 @@
-# Night Workers © Cross Casino
+# NightWorkersLabs | Cross-Chain Games App
+
+NextJS based-app for NightWorkers DAO Web3 Games. Needs 
+
+## Running the project locally
 Using `Visual Studio Code` + `Google Chrome` as the default IDE + debug browser combo is highly recommended.
 
-## Getting Started
-- `docker` MUST be installed locally (https://docs.docker.com/get-docker/) to allow local database deployment and auto-configuration.
-- `nodejs` MUST be installed locally (preferably v16+, https://nodejs.org/en/download/)
-- In a command prompt, Run `git clone {this repo URL}` (https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
-- In this prompt, go to the freshly cloned repository (w/ something like `cd cross-casino`)
-- Run `pnpm` or `pnpm install` in your command prompt (https://classic.pnpmpkg.com/lang/en/docs/install/#mac-stable)
-- Open the cloned repository folder w/ VSCode, and run the tasks below in succession through the Command Palette (https://www.alphr.com/open-command-vs-code/) > `Tasks: Run Task`
-    - `.) Fetch submodules recursively`
-    - `..) pnpm install (smartend & children)`
+### Prerequisites
+- Docker (or equivalent) MUST be installed and running (https://docs.docker.com/get-docker/)
+- NodeJS v22+ MUST be installed (https://nodejs.org/en/download/)
 
-## How to debug locally with Hardhat (in VSCode)
-- Make sure `docker` daemon is running on your local machine at the moment
+### Getting Started
+In a terminal:
+- `git clone {this repo URL}` (https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
+- `pnpm install` (https://classic.pnpmpkg.com/lang/en/docs/install/#mac-stable)
+
+### How to debug locally with Hardhat (in VSCode)
+Assuming you are using VSCode:
 - Go in the `Execute and Debug` side-panel
 - Select the `A) Full-stack` configuration from the dropdown widget
 - Press `F5` or click on `Start Debugging`
-- Wait a bit, multiple workers and debug terminals will spawn :
+- Wait a bit, multiple workers and debug terminals will spawn:
   - `1) Hardhat : Run EVM` : The temporary, debug blockchain on which the contracts will be installed
   - `1+) Nightworkers : Run Database` : The database holding balances data and stats
   - `1++) Nightworkers : Run Server` : The instance that provides the game API
@@ -26,9 +29,17 @@ Using `Visual Studio Code` + `Google Chrome` as the default IDE + debug browser 
   - `2+) Chrome : Attach to Next.js` : user session agnostic browser that launches the dApp
 - Once Chrome pops up, you are good to go (kinda).
 
-## How to deploy on a brand new EVM-compatible (stardard Layer 2) blockchain (testnet / mainnet)
+### Considerations
+- Careful when the Chrome window pops, the full dApp experience might not be fully warmed-up yet (database, events scraper, API endpoint...). have a look at `.vscode/launch.json` and check that every expected terminals and environments are spawned and fully functionnal.
+- On the first launch, a debug-specific profile will be created at repository root (`.chrome-vscode-debug-profile`). You will need to install and setup Metamask once ; this configuration will be used for every debug session after that point.
+- If you ever close the Chrome window that is currently debuging the dApp, you can respawn a new one by launching `2+) Chrome : Attach to Next.js` debug task. It will attach a new Chrome session to the current setup without needing to shutdown every workers and relaunch `A) Full-stack`.
+- On a brand new Metamask setup, you might want to use the debug-account that is automatically shipped with 20.000 ETH to test the dApp. To install it, watch out for `1) Hardhat : Run EVM` logs in the Terminals and get the Private Key associated with `Account #0`. (https://metamask.zendesk.com/hc/en-us/articles/360015489331-How-to-import-an-account). Its balance and history will be reset everytime `A) Full-stack` is freshly invoked.
+- When you use a brand new `A) Full-stack` after having successfully registered transactions on the previous EVM worker, Metamask will probably complain that your nonce are not synced. To fix that, you need to reset your account before submitting new transactions. (https://metamask.zendesk.com/hc/en-us/articles/360015488891-How-to-reset-your-account)
+- Be careful with using NodeJS version 17+, can cause ECONNREFUSED when using `localhost` manual binding (mainly because of this changed behavior : https://github.com/nodejs/node/issues/40702) Please prefer the usage of explicit `127.0.0.1` when possible
 
-### Outline
+## Extend the app
+
+### Deploying on a brand new EVM-compatible (stardard Layer 2) blockchain (testnet / mainnet)
 How it should go, for each new Blockchain :
 
 1. You'll need to deploy a single casino contract on this blockchain, (verified*, if possible) :
@@ -72,7 +83,7 @@ How it should go, for each new Blockchain :
   - `docker compose up -d`
   - Make sure on Portainer that everything got back up.
 
-## How to add a new partner into the referring system
+### Adding a new partner into the referring system
 
 - You will need to create a Pull Request for each new partner to add to the app.
   - Update `backlink_references.ts` with new partner information, following `BacklinkReferenceBase` interface.
@@ -80,11 +91,3 @@ How it should go, for each new Blockchain :
   - Make sure to pick a `trackerId` between 0 and 255 for new partner, prefer using one that is not already assigned. This ID will be the one that will be bound and visible on-chain for each user buy associated with this partner.
 - Commit your changes and wait for validation of your modifications of a repository admin.
 - Once your PR is approved, Github+Vercel continuous deployment will automatically push your modifications to testnet / mainnet app within 5-10 minutes.
-
-## Considerations
-- Careful when the Chrome window pops, the full dApp experience might not be fully warmed-up yet (database, events scraper, API endpoint...). have a look at `.vscode/launch.json` and check that every expected terminals and environments are spawned and fully functionnal.
-- On the first launch, a debug-specific profile will be created at repository root (`.chrome-vscode-debug-profile`). You will need to install and setup Metamask once ; this configuration will be used for every debug session after that point.
-- If you ever close the Chrome window that is currently debuging the dApp, you can respawn a new one by launching `2+) Chrome : Attach to Next.js` debug task. It will attach a new Chrome session to the current setup without needing to shutdown every workers and relaunch `A) Full-stack`.
-- On a brand new Metamask setup, you might want to use the debug-account that is automatically shipped with 20.000 ETH to test the dApp. To install it, watch out for `1) Hardhat : Run EVM` logs in the Terminals and get the Private Key associated with `Account #0`. (https://metamask.zendesk.com/hc/en-us/articles/360015489331-How-to-import-an-account). Its balance and history will be reset everytime `A) Full-stack` is freshly invoked.
-- When you use a brand new `A) Full-stack` after having successfully registered transactions on the previous EVM worker, Metamask will probably complain that your nonce are not synced. To fix that, you need to reset your account before submitting new transactions. (https://metamask.zendesk.com/hc/en-us/articles/360015488891-How-to-reset-your-account)
-- Be careful with using NodeJS version 17+, can cause ECONNREFUSED when using `localhost` manual binding (mainly because of this changed behavior : https://github.com/nodejs/node/issues/40702) Please prefer the usage of explicit `127.0.0.1` when possible
