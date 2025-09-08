@@ -3,9 +3,9 @@
   "version": "1.4.1",
   "private": true,
   "scripts": {
-    "prebuild": "ts-node -T env/networksCompiler.exec.ts",
+    "prebuild": "tsx -T env/networksCompiler.exec.ts",
     "build": "next build",
-    "predev": "ts-node -T env/networksCompiler.exec.ts",
+    "predev": "tsx -T env/networksCompiler.exec.ts",
     "dev": "next dev",
     "lint": "next lint",
     "sort": "sort-package-json",
@@ -63,7 +63,7 @@
     "eslint-plugin-react": "^7.37.3",
     "fs-extra": "^11.2.0",
     "sort-package-json": "^2.12.0",
-    "ts-node": "^10.9.2",
+    "tsx": "^4.20.5",
     "typescript": "^5.7.2",
     "wait-port": "^0.3.0"
   },
