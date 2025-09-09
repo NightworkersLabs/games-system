@@ -1,20 +1,21 @@
-import { EnvGenerator } from '#env/_base/generator'
-import 'dotenv/config'
-import env from 'env-var'
+import "dotenv/config";
 
-import { type IScraperEnvTemplate } from './template'
+import env from "env-var";
+
+import { type IScraperEnvTemplate } from "#/src/env/scraper/template";
+import { EnvGenerator } from "#env/_base/generator";
 
 //
 export class ScraperEnvGenerator extends EnvGenerator<IScraperEnvTemplate> {
   //
-  override build () : IScraperEnvTemplate {
+  override build(): IScraperEnvTemplate {
     //
-    const out : IScraperEnvTemplate = {
-      MNEMO_OR_PRIV_KEY: env.get('MNEMO_OR_PRIV_KEY').required().asString(),
-      DATABASE_URL: env.get('DATABASE_URL').required().asString()
-    }
+    const out: IScraperEnvTemplate = {
+      MNEMO_OR_PRIV_KEY: env.get("MNEMO_OR_PRIV_KEY").required().asString(),
+      DATABASE_URL: env.get("DATABASE_URL").required().asString(),
+    };
 
     //
-    return super.build(out)
+    return super.build(out);
   }
 }

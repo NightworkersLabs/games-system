@@ -11,70 +11,70 @@ export const ICheapeable = {
      * - 'true' means ONLY testnets
      * - 'false' means ONLY testnets + mainnets
      */
-    onlyCheap: { type: 'boolean' }
-  }
-} as const
+    onlyCheap: { type: "boolean" },
+  },
+} as const;
 
 //
 export const ITypedByGame = {
   properties: {
-    game: { type: 'string' }
-  }
-} as const
+    game: { type: "string" },
+  },
+} as const;
 
 /** @dev do not move this declaration from ICheapeable */
 export const typedByGame = {
-  type: 'object',
+  type: "object",
   additionalProperties: false,
   properties: {
     ...ITypedByGame.properties,
-    ...ICheapeable.properties
-  }
-} as const
+    ...ICheapeable.properties,
+  },
+} as const;
 
 //
 export const cheapable = {
-  type: 'object',
+  type: "object",
   additionalProperties: false,
-  ...ICheapeable
-} as const
+  ...ICheapeable,
+} as const;
 
 /** @dev do not move this declaration from ICheapeable */
 export const Imandatory = {
   properties: {
-    trackerId: { type: 'number' },
-    ...ICheapeable.properties
+    trackerId: { type: "number" },
+    ...ICheapeable.properties,
   },
-  required: ['trackerId']
-} as const
+  required: ["trackerId"],
+} as const;
 
 /** @dev do not move this declaration from Imandatory */
 export const mandatory = {
-  type: 'object',
+  type: "object",
   additionalProperties: false,
-  ...Imandatory
-} as const
+  ...Imandatory,
+} as const;
 
 //
 export const paged = {
-  type: 'object',
+  type: "object",
   allOf: [
     Imandatory,
     {
       properties: {
-        page: { type: 'number' },
-        length: { type: 'number' }
-      }
-    }
-  ]
-} as const
+        page: { type: "number" },
+        length: { type: "number" },
+      },
+    },
+  ],
+} as const;
 
 /** @dev do not move this declaration from ICheapeable */
 export const withId = {
-  type: 'object',
+  type: "object",
   additionalProperties: false,
   properties: {
-    historyId: { type: 'string' },
-    ...ITypedByGame.properties
-  }
-} as const
+    historyId: { type: "string" },
+    ...ITypedByGame.properties,
+  },
+} as const;

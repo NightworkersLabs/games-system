@@ -1,29 +1,39 @@
-import { type IBaseEnvTemplate, type IDatabaseEnvTemplate, type IWebServerEnvTemplate } from '#env/_base/template'
+import {
+  type IBaseEnvTemplate,
+  type IDatabaseEnvTemplate,
+  type IWebServerEnvTemplate,
+} from "#env/_base/template.types";
 
 //
-export interface IServerEnvTemplate extends IBaseEnvTemplate, IDatabaseEnvTemplate, IWebServerEnvTemplate {}
+export interface IServerEnvTemplate
+  extends IBaseEnvTemplate,
+    IDatabaseEnvTemplate,
+    IWebServerEnvTemplate {}
 
 //
-export const getAllowedDomains = (env: IWebServerEnvTemplate) : null | string[] => {
+export const getAllowedDomains = (
+  env: IWebServerEnvTemplate,
+): null | string[] => {
   //
-  if (env.CORS_ALLOWED_URL == null || env.CORS_ALLOWED_URL.length !== 0) return null
+  if (env.CORS_ALLOWED_URL == null || env.CORS_ALLOWED_URL.length !== 0)
+    return null;
 
   //
-  if (env.CORS_ALLOWED_URL.includes(',')) {
-    return env.CORS_ALLOWED_URL.split(',')
+  if (env.CORS_ALLOWED_URL.includes(",")) {
+    return env.CORS_ALLOWED_URL.split(",");
   }
 
   //
-  return [env.CORS_ALLOWED_URL]
-}
+  return [env.CORS_ALLOWED_URL];
+};
 
 //
 export const getCORSParams = (env: IWebServerEnvTemplate) => {
   //
-  const raw = getAllowedDomains(env)
+  const raw = getAllowedDomains(env);
 
   //
-  if (raw == null) return '*'
+  if (raw == null) return "*";
 
-  return raw
-}
+  return raw;
+};

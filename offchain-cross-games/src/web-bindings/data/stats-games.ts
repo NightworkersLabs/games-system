@@ -1,28 +1,30 @@
- 
-import type { FastifyInstance } from 'fastify'
+import type { FastifyInstance } from "fastify";
+import type { FromSchema } from "json-schema-to-ts";
 
-import type { FromSchema } from 'json-schema-to-ts'
-import { PrismaClient } from '#prisma/client/index.js'
-import { generateWhereChainFilter, HANDLED_GAMES_TABLES } from './_'
-import { cheapable } from './_schemas'
+import {
+  generateWhereChainFilter,
+  HANDLED_GAMES_TABLES,
+} from "#/src/web-bindings/data/_";
+import { cheapable } from "#/src/web-bindings/data/_schemas";
+import type { PrismaClient } from "#prisma/client/index.js";
 
 type GameEvol = {
-  then: number,
-  evol: [tsEpoch: number, count: number][]
-}
+  then: number;
+  evol: [tsEpoch: number, count: number][];
+};
 
 //
 type GamesEvol = {
-  [game: string] : GameEvol
-}
+  [game: string]: GameEvol;
+};
 
 //
 //
 //
 
 //
-const generateWhereDateFilter = (date: Date, arrow: 'until' | 'after') =>
-  `ts ${arrow === 'until' ? '<=' : '>'} TIMESTAMPTZ '${date.toISOString()}'`
+const generateWhereDateFilter = (date: Date, arrow: "until" | "after") =>
+  `ts ${arrow === "until" ? "<=" : ">"} TIMESTAMPTZ '${date.toISOString()}'`;
 
 //
 const getStatsQuery = (tableName: string, onlyCheap?: boolean) =>
@@ -39,92 +41,112 @@ const getStatsQuery = (tableName: string, onlyCheap?: boolean) =>
     AVG(won) "avgWins", 
     CAST(MAX(won) AS DECIMAL(10,0)) "maxWin" 
   FROM sub 
-  GROUP BY "bettedOn"`
+  GROUP BY "bettedOn"`;
 
 //
-const getGamePlayedByDayQuery = (tableName: string, date: Date, onlyCheap?: boolean) =>
+const getGamePlayedByDayQuery = (
+  tableName: string,
+  date: Date,
+  onlyCheap?: boolean,
+) =>
   `SELECT 
     DATE_TRUNC ('day', ts) AS ts, 
     CAST(COUNT(*) as DECIMAL(10, 0)) AS count 
    FROM "nw-chips-bank"."${tableName}"
    WHERE 
     ${generateWhereChainFilter(onlyCheap)} 
-    AND ${generateWhereDateFilter(date, 'after')}
+    AND ${generateWhereDateFilter(date, "after")}
    GROUP BY 
-    DATE_TRUNC('day', ts)`
+    DATE_TRUNC('day', ts)`;
 
 //
-const gamesPlayedBeforeDateQuery = (tableName: string, date: Date, onlyCheap?: boolean) =>
+const gamesPlayedBeforeDateQuery = (
+  tableName: string,
+  date: Date,
+  onlyCheap?: boolean,
+) =>
   `SELECT 
     CAST(COUNT(*) as DECIMAL(10, 0)) AS count 
   FROM "nw-chips-bank"."${tableName}"
   WHERE 
     ${generateWhereChainFilter(onlyCheap)} 
-    AND ${generateWhereDateFilter(date, 'until')}`
+    AND ${generateWhereDateFilter(date, "until")}`;
 
 //
 //
 //
 
 //
-export function bindGamesStatsToWebServer (webServer: FastifyInstance, client: PrismaClient) {
+export const bindGamesStatsToWebServer = (
+  webServer: FastifyInstance,
+  client: PrismaClient,
+) => {
   //
   //
   //
 
   //
-  const getStatsOnGame = (tableName: string, onlyCheap?: boolean) => client.$queryRawUnsafe(getStatsQuery(tableName, onlyCheap))
+  const getStatsOnGame = (tableName: string, onlyCheap?: boolean) =>
+    client.$queryRawUnsafe(getStatsQuery(tableName, onlyCheap));
 
   //
   const getStatsOnGames = async (onlyCheap?: boolean) => {
     //
-    const entriedPromises = Object.entries(HANDLED_GAMES_TABLES)
-      .map(async ([gameType, tableName]) => [
-        gameType,
-        await getStatsOnGame(tableName, onlyCheap)
-      ] as const)
+    const entriedPromises = Object.entries(HANDLED_GAMES_TABLES).map(
+      async ([gameType, tableName]) =>
+        [gameType, await getStatsOnGame(tableName, onlyCheap)] as const,
+    );
 
     //
-    return Object.fromEntries(
-      await Promise.all(entriedPromises)
-    )
-  }
+    return Object.fromEntries(await Promise.all(entriedPromises));
+  };
 
   //
-  const getGamesPlayedEvol = async (from: Date, onlyCheap?: boolean) : Promise<GamesEvol> => {
+  const getGamesPlayedEvol = async (
+    from: Date,
+    onlyCheap?: boolean,
+  ): Promise<GamesEvol> => {
     //
     const results = await Promise.all(
-      Object.entries(HANDLED_GAMES_TABLES)
-        .map(async ([gameType, tableName]) => {
-          //
+      Object.entries(HANDLED_GAMES_TABLES).map(
+        async ([gameType, tableName]) => {
           const queries = [
             gamesPlayedBeforeDateQuery(tableName, from, onlyCheap),
-            getGamePlayedByDayQuery(tableName, from, onlyCheap)
-          ].map(query => client.$queryRawUnsafe<Record<string, any>>(query))
+            getGamePlayedByDayQuery(tableName, from, onlyCheap),
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          ].map((query) => client.$queryRawUnsafe<Record<string, any>>(query));
 
           //
-          const [then, evol] = await Promise.all(queries)
+          const [then, evol] = await Promise.all(queries);
 
           //
-          const out: Record<string, GameEvol> = {}
+          const out: Record<string, GameEvol> = {};
 
-          //
           out[gameType] = {
             then: parseInt(then?.[0]?.count ?? 0),
-            evol: evol?.map((e: Record<string, any>) => [(e.ts as Date).getTime(), parseInt(e.count)]) ?? 0
-          }
+            evol:
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              evol?.map((e: Record<string, any>) => [
+                (e.ts as Date).getTime(),
+                parseInt(e.count),
+              ]) ?? 0,
+          };
 
           //
-          return out
-        })
-    )
+          return out;
+        },
+      ),
+    );
 
     //
-    return results.reduce((out, c) => ({
-      ...c,
-      ...out
-    }), {})
-  }
+    return results.reduce(
+      (out, c) => ({
+        ...c,
+        ...out,
+      }),
+      {},
+    );
+  };
 
   //
   //
@@ -132,82 +154,70 @@ export function bindGamesStatsToWebServer (webServer: FastifyInstance, client: P
 
   /** */
   webServer.get<{ Querystring: FromSchema<typeof cheapable> }>(
-    '/games-stats',
+    "/games-stats",
     {
       schema: {
-        querystring: cheapable
-      }
+        querystring: cheapable,
+      },
     },
-    ({ query }) => getStatsOnGames(
-      query.onlyCheap
-    )
-  )
+    ({ query }) => getStatsOnGames(query.onlyCheap),
+  );
 
   /** */
   webServer.get<{ Querystring: FromSchema<typeof cheapable> }>(
-    '/games-evol',
+    "/games-evol",
     {
       schema: {
-        querystring: cheapable
-      }
+        querystring: cheapable,
+      },
     },
     async ({ query }) => {
       //
       // get current date - 30 days
-      const now = new Date()
-      const thirtyDaysBack = new Date(now.getTime())
-      thirtyDaysBack.setDate(thirtyDaysBack.getDate() - 30)
+      const now = new Date();
+      const thirtyDaysBack = new Date(now.getTime());
+      thirtyDaysBack.setDate(thirtyDaysBack.getDate() - 30);
 
       //
-      const data = await getGamesPlayedEvol(
-        thirtyDaysBack,
-        query.onlyCheap
-      )
+      const data = await getGamesPlayedEvol(thirtyDaysBack, query.onlyCheap);
 
       //
       return Object.fromEntries(
-        Object.entries(data)
-          .map(([gameType, data]) => {
-            //
-            const array : [epoch: number, evol: number][] = []
+        Object.entries(data).map(([gameType, data]) => {
+          //
+          const array: [epoch: number, evol: number][] = [];
 
-            // insert initial state
-            let initialCount = data.then
-            array.push([thirtyDaysBack.getTime(), initialCount])
+          // insert initial state
+          let initialCount = data.then;
+          array.push([thirtyDaysBack.getTime(), initialCount]);
 
-            //
-            // sort by date asc
-            data.evol?.sort((a, b) => a[0] - b[0])
+          //
+          // sort by date asc
+          data.evol?.sort((a, b) => a[0] - b[0]);
 
-            // evolve balance during time
-            data.evol?.forEach(([date, mov]) => {
-              // alter balance
-              initialCount += mov
+          // evolve balance during time
+          data.evol?.forEach(([date, mov]) => {
+            // alter balance
+            initialCount += mov;
 
-              // push state
-              array.push([
-                date,
-                initialCount
-              ])
-            })
+            // push state
+            array.push([date, initialCount]);
+          });
 
-            const last = array[array.length - 1];
-            
-            //
-            if (last == null || last.length < 2) {
-              throw new Error('Invalid data')
-            }
+          const last = array[array.length - 1];
 
-            // latest value as actual value
-            array.push([
-              now.getTime(),
-              last[1]
-            ])
+          //
+          if (last == null || last.length < 2) {
+            throw new Error("Invalid data");
+          }
 
-            //
-            return [gameType, array] as const
-          })
-      )
-    }
-  )
-}
+          // latest value as actual value
+          array.push([now.getTime(), last[1]]);
+
+          //
+          return [gameType, array] as const;
+        }),
+      );
+    },
+  );
+};

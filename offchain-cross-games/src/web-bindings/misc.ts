@@ -1,44 +1,48 @@
-import { type FastifyInstance } from 'fastify'
+import type { BigNumber } from "ethers";
+import { type FastifyInstance } from "fastify";
+import { type FromSchema } from "json-schema-to-ts";
 
-import { SecretsStorage } from '#provably-fair/secrets-provider'
-import { BlockchainsRuntimes } from '#lib/multi-chain/configuration'
-import { type FromSchema } from 'json-schema-to-ts'
-import { BigNumber } from 'ethers'
+import type { BlockchainsRuntimes } from "#lib/multi-chain/configuration";
+import type { SecretsStorage } from "#provably-fair/secrets-provider";
 
 //
 const mandatoryChainId = {
-  type: 'object',
+  type: "object",
   additionalProperties: false,
   properties: {
-    chainId: { type: 'number' }
+    chainId: { type: "number" },
   },
-  required: ['chainId']
-} as const
+  required: ["chainId"],
+} as const;
 
 //
-export function bindMiscToWebServer (webServer: FastifyInstance, runtimes: BlockchainsRuntimes, secretsStorage: SecretsStorage) {
+export const bindMiscToWebServer = (
+  webServer: FastifyInstance,
+  runtimes: BlockchainsRuntimes,
+  secretsStorage: SecretsStorage,
+) => {
   //
-  webServer.get('/generate/secret', () =>
-    ({
-      secretHash: secretsStorage.requestSecretH(),
-      disposedAt: (new Date().getTime() / 1_000) + secretsStorage.secsBeforeAutoDispose // epoch seconds
-    })
-  )
+  webServer.get("/generate/secret", () => ({
+    secretHash: secretsStorage.requestSecretH(),
+    disposedAt:
+      new Date().getTime() / 1_000 + secretsStorage.secsBeforeAutoDispose, // epoch seconds
+  }));
 
   // check controller's account balance
   webServer.get<{ Querystring: FromSchema<typeof mandatoryChainId> }>(
-    '/controller/balance',
+    "/controller/balance",
     {
       schema: {
-        querystring: mandatoryChainId
-      }
+        querystring: mandatoryChainId,
+      },
     },
-    async request => {
+    async (request) => {
       //
-      const runtime = runtimes.safeGetRuntime(request.query.chainId)
+      const runtime = runtimes.safeGetRuntime(request.query.chainId);
 
       //
-      const e = await (runtime.controller.getBalance() as Promise<BigNumber>)
-      return e.toHexString()
-    })
-}
+      const e = await (runtime.controller.getBalance() as Promise<BigNumber>);
+      return e.toHexString();
+    },
+  );
+};

@@ -1,50 +1,59 @@
- 
-import { type FastifyInstance } from 'fastify'
+import { type FastifyInstance } from "fastify";
+import { type FromSchema } from "json-schema-to-ts";
 
-import { type FromSchema } from 'json-schema-to-ts'
-import { PrismaClient } from '#prisma/client/index.js'
-import { getPaginationConfiguration, getNetworkFilter } from './_'
-import { mandatory, paged } from './_schemas'
-
-//
-//
-//
+import {
+  getNetworkFilter,
+  getPaginationConfiguration,
+} from "#/src/web-bindings/data/_";
+import { mandatory, paged } from "#/src/web-bindings/data/_schemas";
+import type { PrismaClient } from "#prisma/client/index.js";
 
 //
-const getTrackerFilter = ({ trackerId } : FromSchema<typeof mandatory>) : { trackerId: number } | null => {
+//
+//
+
+//
+const getTrackerFilter = ({
+  trackerId,
+}: FromSchema<typeof mandatory>): { trackerId: number } | null => {
   return trackerId !== 0
     ? {
-      trackerId
-    }
-    : null
-}
+        trackerId,
+      }
+    : null;
+};
 
 //
-const getSponsorFilter = ({ trackerId } : FromSchema<typeof mandatory>) : { sponsorId: number } | null => {
+const getSponsorFilter = ({
+  trackerId,
+}: FromSchema<typeof mandatory>): { sponsorId: number } | null => {
   return trackerId !== 0
     ? {
-      sponsorId: trackerId
-    }
-    : null
-}
+        sponsorId: trackerId,
+      }
+    : null;
+};
 
 //
 //
 //
 
 //
-export function bindTrackersStatsToWebServer (webServer: FastifyInstance, client: PrismaClient) {
+export const bindTrackersStatsToWebServer = (
+  webServer: FastifyInstance,
+  client: PrismaClient,
+) => {
   //
   //
   //
 
   /** */
   webServer.get<{ Querystring: FromSchema<typeof paged> }>(
-    '/payments',
+    "/payments",
     {
       schema: {
-        querystring: paged
-      }
+        querystring: paged,
+      },
     },
     ({ query }) =>
       client.casinoBank_TaxRevenueTransfered.findMany({
@@ -53,42 +62,42 @@ export function bindTrackersStatsToWebServer (webServer: FastifyInstance, client
           amount: true,
           block: true,
           receiver: true,
-          bts: true
+          bts: true,
         },
         orderBy: {
-          bts: 'desc'
+          bts: "desc",
         },
         where: {
           ...getSponsorFilter(query),
-          ...getNetworkFilter(query)
+          ...getNetworkFilter(query),
         },
-        ...getPaginationConfiguration(query)
-      })
-  )
+        ...getPaginationConfiguration(query),
+      }),
+  );
 
   /** */
   webServer.get<{ Querystring: FromSchema<typeof mandatory> }>(
-    '/paymentsTotal',
+    "/paymentsTotal",
     {
       schema: {
-        querystring: mandatory
-      }
+        querystring: mandatory,
+      },
     },
     ({ query }) =>
       client.casinoBank_TaxRevenueTransfered.groupBy({
-        by: ['chainId'],
+        by: ["chainId"],
         _sum: {
-          amount: true
+          amount: true,
         },
         _count: {
-          _all: true
+          _all: true,
         },
         where: {
           ...getSponsorFilter(query),
-          ...getNetworkFilter(query)
-        }
-      })
-  )
+          ...getNetworkFilter(query),
+        },
+      }),
+  );
 
   //
   //
@@ -96,11 +105,11 @@ export function bindTrackersStatsToWebServer (webServer: FastifyInstance, client
 
   /** */
   webServer.get<{ Querystring: FromSchema<typeof paged> }>(
-    '/buys',
+    "/buys",
     {
       schema: {
-        querystring: paged
-      }
+        querystring: paged,
+      },
     },
     ({ query }) =>
       client.casinoBank_ChipsBought.findMany({
@@ -110,41 +119,41 @@ export function bindTrackersStatsToWebServer (webServer: FastifyInstance, client
           block: true,
           buyer: true,
           taxes: true,
-          bts: true
+          bts: true,
         },
         orderBy: {
-          bts: 'desc'
+          bts: "desc",
         },
         where: {
           ...getTrackerFilter(query),
-          ...getNetworkFilter(query)
+          ...getNetworkFilter(query),
         },
-        ...getPaginationConfiguration(query)
-      })
-  )
+        ...getPaginationConfiguration(query),
+      }),
+  );
 
   /** */
   webServer.get<{ Querystring: FromSchema<typeof mandatory> }>(
-    '/buysTotal',
+    "/buysTotal",
     {
       schema: {
-        querystring: mandatory
-      }
+        querystring: mandatory,
+      },
     },
     ({ query }) =>
       client.casinoBank_ChipsBought.groupBy({
-        by: ['chainId'],
+        by: ["chainId"],
         _sum: {
           amount: true,
-          taxes: true
+          taxes: true,
         },
         _count: {
-          _all: true
+          _all: true,
         },
         where: {
           ...getTrackerFilter(query),
-          ...getNetworkFilter(query)
-        }
-      })
-  )
-}
+          ...getNetworkFilter(query),
+        },
+      }),
+  );
+};
