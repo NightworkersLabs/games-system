@@ -24,7 +24,7 @@
       "#lib/*": ["./src/lib/*"],
       "#env/*": ["./src/env/*"],
       "#web-bindings/*": ["./src/web-bindings/*"],
-      "#abi/*": ["./abi/*"],
+      "#/abi/*": ["./abi/*"],
       "#prisma/*": ["./src/prisma/*"]
     }
   }

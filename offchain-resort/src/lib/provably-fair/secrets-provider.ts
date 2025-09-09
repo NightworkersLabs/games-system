@@ -1,68 +1,84 @@
-import { BigNumber } from 'ethers'
-import { keccak256 } from 'ethers/lib/utils.js'
-import { fromEvent as rxFromEvent, map, Observable, Subscription, mergeMap, timer, race, firstValueFrom, from } from 'rxjs'
-import { EventEmitter } from 'node:events'
-import { RandomGenerator } from './random-generator'
-import { TVLogger } from '#src/lib/params'
-import chalk from 'chalk'
+import chalk from "chalk";
+import { BigNumber } from "ethers";
+import { keccak256 } from "ethers/lib/utils.js";
+import { EventEmitter } from "node:events";
+import type { Observable, Subscription } from "rxjs";
+import {
+  firstValueFrom,
+  from,
+  fromEvent as rxFromEvent,
+  map,
+  mergeMap,
+  race,
+  timer,
+} from "rxjs";
+import type TypedEmitter from "typed-emitter/rxjs/index.js";
+import { type FromEvent } from "typed-emitter/rxjs/index.js";
 
-import type TypedEmitter from 'typed-emitter/rxjs/index.js'
-import { type FromEvent } from 'typed-emitter/rxjs/index.js'
+import { TVLogger } from "#/src/lib/params";
+import { RandomGenerator } from "#/src/lib/provably-fair/random-generator";
 
-
-const fromEvent = rxFromEvent as FromEvent
+const fromEvent = rxFromEvent as FromEvent;
 
 type SecretDisposerEvents = {
-  dispose: () => void
-}
+  dispose: () => void;
+};
 
 type SecretInstance = {
-  secret: string
-  disposer: TypedEmitter<SecretDisposerEvents>
-}
+  secret: string;
+  disposer: TypedEmitter<SecretDisposerEvents>;
+};
 
 type SecretHashWithDisposer = {
-  secretHash: string
-  disposer: TypedEmitter<SecretDisposerEvents>
-}
+  secretHash: string;
+  disposer: TypedEmitter<SecretDisposerEvents>;
+};
 
 type SecretDismissal = {
-  hasTimedOut: boolean
-  secretHash: string
-}
+  hasTimedOut: boolean;
+  secretHash: string;
+};
 
 type SecretsGenerationEvents = {
-  secretGenerated: (hash: SecretHashWithDisposer) => void
-}
+  secretGenerated: (hash: SecretHashWithDisposer) => void;
+};
 
 export class SecretsStorage {
   //
-  private _secretsStore = new Map<string, SecretInstance>()
+  private _secretsStore = new Map<string, SecretInstance>();
 
   //
-  private _secretsLifecycle = new EventEmitter() as TypedEmitter<SecretsGenerationEvents>
-  private _lifecycleObs: Observable<SecretDismissal>
-  private _lifecycleSub: Subscription
+  private _secretsLifecycle =
+    new EventEmitter() as TypedEmitter<SecretsGenerationEvents>;
+  private _lifecycleObs: Observable<SecretDismissal>;
+  private _lifecycleSub: Subscription;
 
-  public static DEFAULT_SECONDS_BEFORE_AUTODISPOSE = 3 * 60
-  public readonly secsBeforeAutoDispose: number
+  public static DEFAULT_SECONDS_BEFORE_AUTODISPOSE = 3 * 60;
+  public readonly secsBeforeAutoDispose: number;
 
   /**
    * @param secsBeforeAutoDispose how many seconds before a generated secret is automatically discarded
    */
-  constructor (secsBeforeAutoDispose: number = SecretsStorage.DEFAULT_SECONDS_BEFORE_AUTODISPOSE) {
+  constructor(
+    secsBeforeAutoDispose: number = SecretsStorage.DEFAULT_SECONDS_BEFORE_AUTODISPOSE,
+  ) {
     //
     if (secsBeforeAutoDispose < 5) {
-      throw new Error('auto-dispose of secrets should not be done under 5 seconds !')
+      throw new Error(
+        "auto-dispose of secrets should not be done under 5 seconds !",
+      );
     }
 
-    this.secsBeforeAutoDispose = secsBeforeAutoDispose
-    const msBAD = secsBeforeAutoDispose * 1_000
+    this.secsBeforeAutoDispose = secsBeforeAutoDispose;
+    const msBAD = secsBeforeAutoDispose * 1_000;
 
     //
-    this._lifecycleObs = fromEvent(this._secretsLifecycle, 'secretGenerated').pipe(
+    this._lifecycleObs = fromEvent(
+      this._secretsLifecycle,
+      "secretGenerated",
+    ).pipe(
       // for each secret generated...
-      mergeMap(instance => {
+      mergeMap((instance) => {
         //
         const hasTimedOutP = firstValueFrom(
           // race between...
@@ -70,79 +86,87 @@ export class SecretsStorage {
             // a time-out timer
             timer(msBAD).pipe(map(() => true)),
             // the dispose event triggered
-            fromEvent(instance.disposer, 'dispose').pipe(map(() => false))
-          )
-        )
+            fromEvent(instance.disposer, "dispose").pipe(map(() => false)),
+          ),
+        );
 
         //
         return from(hasTimedOutP).pipe(
-          map(timedOut => {
+          map((timedOut) => {
             // dismiss
-            this.dismissSecret(instance.secretHash)
+            this.dismissSecret(instance.secretHash);
 
             //
             return {
               hasTimedOut: timedOut,
-              secretHash: instance.secretHash
-            }
-          })
-        )
-      })
-    )
+              secretHash: instance.secretHash,
+            };
+          }),
+        );
+      }),
+    );
 
     //
-    this._lifecycleSub = this._lifecycleObs.subscribe(dismissal => {
+    this._lifecycleSub = this._lifecycleObs.subscribe((dismissal) => {
       // log secret discard
       if (dismissal.hasTimedOut && TVLogger.mustLog) {
-        console.log(chalk.grey(`[SecretsStorage] ${dismissal.secretHash} timed out, dismissed.`))
+        console.log(
+          chalk.grey(
+            `[SecretsStorage] ${dismissal.secretHash} timed out, dismissed.`,
+          ),
+        );
       }
-    })
+    });
 
     //
-    if (TVLogger.mustLog) { console.log('[SecretsStorage] Ready.') }
+    if (TVLogger.mustLog) {
+      console.log("[SecretsStorage] Ready.");
+    }
   }
 
   /**
    * find a non-stored secret to store in DB
    * @returns stored secret hash
    */
-  async _storeUnusedSecret (): Promise<string> {
+  async _storeUnusedSecret(): Promise<string> {
     while (true) {
       // get a fresh secret as hex string....
-      const secret = await RandomGenerator.asHexNumber()
+      const secret = await RandomGenerator.asHexNumber();
 
       // hash it...
-      const secretHash = keccak256(secret)
+      const secretHash = keccak256(secret);
 
       // check if no collision
       if (this._secretsStore.has(secretHash)) {
-        continue
+        continue;
       }
 
       // store the secret with his hash as his key
-      const disposer = new EventEmitter() as TypedEmitter<SecretDisposerEvents>
-      this._secretsStore.set(secretHash, { secret, disposer })
+      const disposer = new EventEmitter() as TypedEmitter<SecretDisposerEvents>;
+      this._secretsStore.set(secretHash, { secret, disposer });
 
       //
-      this._secretsLifecycle.emit('secretGenerated', {
+      this._secretsLifecycle.emit("secretGenerated", {
         disposer,
-        secretHash
-      })
+        secretHash,
+      });
 
       //
-      return secretHash
+      return secretHash;
     }
   }
 
   /**
    * stopping auto-dispose subscription makes the process stop waiting for timer() instances to complete
    */
-  shutdown () {
+  shutdown() {
     //
-    if (TVLogger.mustLog) { console.log('[SecretsStorage] shutting down...') }
+    if (TVLogger.mustLog) {
+      console.log("[SecretsStorage] shutting down...");
+    }
 
     //
-    this._lifecycleSub.unsubscribe()
+    this._lifecycleSub.unsubscribe();
   }
 
   //
@@ -153,56 +177,64 @@ export class SecretsStorage {
    * produce and secret and stores it on the server, waiting for it to be used later in an order
    * @returns the keccak256 hash of the secret generated, as an hex string representation
    */
-  async requestSecretH (): Promise<string> {
+  async requestSecretH(): Promise<string> {
     // hash it...
-    const secret = await this._storeUnusedSecret()
+    const secret = await this._storeUnusedSecret();
 
     //
-    if (TVLogger.mustLog) { console.log(`[SecretsStorage] secret requested (hash : ${secret})`) }
+    if (TVLogger.mustLog) {
+      console.log(`[SecretsStorage] secret requested (hash : ${secret})`);
+    }
 
     // cast hash to big number and return
-    return secret
+    return secret;
   }
 
   /**
    * @returns the keccak256 hash of the secret generated, as a BigNumber
    */
-  async requestSecret (): Promise<BigNumber> {
-    return BigNumber.from(await this.requestSecretH())
+  async requestSecret(): Promise<BigNumber> {
+    return BigNumber.from(await this.requestSecretH());
   }
 
   /**
    * try to reveal the secret associated with the requested hash, as hex string.
    * A positive reveal leads to a dismiss.
    */
-  tryExtractSecretFromHash (hashedSecret: BigNumber): string | undefined {
+  tryExtractSecretFromHash(hashedSecret: BigNumber): string | undefined {
     // if hashed secret is set to 0, just return
-    if (hashedSecret == null || hashedSecret.isZero()) { return undefined }
+    if (hashedSecret == null || hashedSecret.isZero()) {
+      return undefined;
+    }
 
     // cast to hex string representation
-    const hashedAsHexStr = hashedSecret.toHexString()
+    const hashedAsHexStr = hashedSecret.toHexString();
 
     // try to get the associated secret reprensented as hex string
-    const mbResult = this._secretsStore.get(hashedAsHexStr)
+    const mbResult = this._secretsStore.get(hashedAsHexStr);
 
     // dismiss from database if secret has been successfully fetched
-    if (typeof mbResult !== 'undefined') {
+    if (typeof mbResult !== "undefined") {
       // ask for dismiss
-      mbResult.disposer.emit('dispose')
+      mbResult.disposer.emit("dispose");
 
       // may log on success
-      if (TVLogger.mustLog) { console.log(`[SecretsStorage] secret extracted (hash : ${hashedAsHexStr})`) }
+      if (TVLogger.mustLog) {
+        console.log(
+          `[SecretsStorage] secret extracted (hash : ${hashedAsHexStr})`,
+        );
+      }
 
       // return the hex representation
-      return mbResult.secret
+      return mbResult.secret;
     }
 
     //
-    return undefined
+    return undefined;
   }
 
   //
-  dismissSecret (hexHashedSecretToDismiss: string): boolean {
-    return this._secretsStore.delete(hexHashedSecretToDismiss)
+  dismissSecret(hexHashedSecretToDismiss: string): boolean {
+    return this._secretsStore.delete(hexHashedSecretToDismiss);
   }
 }

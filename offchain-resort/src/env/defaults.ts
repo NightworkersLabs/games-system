@@ -1,1 +1,1 @@
-export const defaultTrustedValidatorPort = 9999
+export const defaultTrustedValidatorPort = 9999;

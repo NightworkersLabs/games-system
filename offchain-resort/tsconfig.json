@@ -18,8 +18,7 @@
     /* If your code doesn't run in the DOM: */
     "lib": ["es2022"],
     "paths": {
-      "#src/*": ["./src/*"], // https://dev.to/logto/migrate-a-60k-loc-typescript-nodejs-repo-to-esm-and-testing-become-4x-faster-12-5f82
-      "#abi/*": ["./abi/*"]
+      "#/*": ["./*"]
     }
   }
 }

@@ -1,6 +1,6 @@
 import { Contract, ethers, Wallet } from 'ethers'
 
-import CasinoBankABI from '#abi/CasinoBank.json'
+import CasinoBankABI from '#/abi/CasinoBank.json'
 import { getWallet } from '#env/_base/template'
 import { type IScraperEnvTemplate } from '#env/scraper/template'
 import chalk from 'chalk'

@@ -1,6 +1,7 @@
-import { BigNumber } from 'ethers'
-import { keccak256 } from 'ethers/lib/utils.js'
-import type TrustfulOrderPayloadWithNonce from '#src/lib/provably-fair/TrustfulOrderPayloadWithNonce'
+import { BigNumber } from "ethers";
+import { keccak256 } from "ethers/lib/utils.js";
+
+import type TrustfulOrderPayloadWithNonce from "#/src/lib/provably-fair/TrustfulOrderPayloadWithNonce";
 
 export class ProvablyFairResolver {
   /**
@@ -12,45 +13,54 @@ export class ProvablyFairResolver {
    * - secretAsHexString, self explainatory. Something like "0xa943..."
    * @returns the random number, rendered as its hex representation
    */
-  private static _asHexString (clientSeed: BigNumber, nonce: number, secretAsHexString: string): string {
+  private static _asHexString(
+    clientSeed: BigNumber,
+    nonce: number,
+    secretAsHexString: string,
+  ): string {
     // concat...
-    const concat = clientSeed.toHexString() + nonce.toString() + secretAsHexString
+    const concat =
+      clientSeed.toHexString() + nonce.toString() + secretAsHexString;
 
     // then, consider the concate string as ASCII, and turn it into SHA-3 hex representation
-    const random = keccak256(
-      Buffer.from(concat, 'ascii')
-    )
+    const random = keccak256(Buffer.from(concat, "ascii"));
 
     //
-    return random
+    return random;
   }
 
   //
-  static asBigNumber (clientSeed: BigNumber, nonce: number, secretAsHexString: string): BigNumber {
+  static asBigNumber(
+    clientSeed: BigNumber,
+    nonce: number,
+    secretAsHexString: string,
+  ): BigNumber {
     return BigNumber.from(
-      ProvablyFairResolver._asHexString(
-        clientSeed,
-        nonce,
-        secretAsHexString
-      )
-    )
+      ProvablyFairResolver._asHexString(clientSeed, nonce, secretAsHexString),
+    );
   }
 
   //
-  static fromPayloadAsHex (payload: TrustfulOrderPayloadWithNonce, secretAsHexString: string): string {
+  static fromPayloadAsHex(
+    payload: TrustfulOrderPayloadWithNonce,
+    secretAsHexString: string,
+  ): string {
     return ProvablyFairResolver._asHexString(
       payload.clientSeed,
       payload.nonce,
-      secretAsHexString
-    )
+      secretAsHexString,
+    );
   }
 
   //
-  static fromPayload (payload: TrustfulOrderPayloadWithNonce, secretAsHexString: string): BigNumber {
+  static fromPayload(
+    payload: TrustfulOrderPayloadWithNonce,
+    secretAsHexString: string,
+  ): BigNumber {
     return ProvablyFairResolver.asBigNumber(
       payload.clientSeed,
       payload.nonce,
-      secretAsHexString
-    )
+      secretAsHexString,
+    );
   }
 }

@@ -1,3 +1,3 @@
 export class TVLogger {
-  static mustLog = true
+  static mustLog = true;
 }
