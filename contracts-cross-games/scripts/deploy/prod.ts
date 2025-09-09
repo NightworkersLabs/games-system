@@ -3,10 +3,11 @@
 //
 // When running the script with `pnpm exec hardhat run <script>` you'll find the Hardhat
 // Runtime Environment's members available in the global scope.
-import { parseEther } from 'ethers'
-import { deployNWCasinoLite, tryVerifyContracts } from './_'
+import { parseEther } from "ethers";
 
-async function main () {
+import { deployNWCasinoLite, tryVerifyContracts } from "#/scripts/deploy/_";
+
+const main = async () => {
   // Hardhat always runs the compile task when running scripts with its command
   // line interface.
   //
@@ -19,23 +20,23 @@ async function main () {
 
   //
   const contracts = await deployNWCasinoLite({
-    singleChipPrice: parseEther('0.00001'), // TO FILL
+    singleChipPrice: parseEther("0.00001"), // TO FILL
     /* ADDRESSES */
-    trustedValidatorAddress: '0x544a3AC7FF74F1f7AD6e41FcAc4CF98d657675B2' // TO FILL
-  })
+    trustedValidatorAddress: "0x544a3AC7FF74F1f7AD6e41FcAc4CF98d657675B2", // TO FILL
+  });
 
   //
   // await contracts.transferOwnershipTo(mintMultisigAddress)
 
   //
-  await tryVerifyContracts(contracts.ALL_CONTEXTS)
-}
+  await tryVerifyContracts(contracts.ALL_CONTEXTS);
+};
 
 // We recommend this pattern to be able to use async/await everywhere
 // and properly handle errors.
 main()
   .then(() => process.exit(0))
   .catch((error) => {
-    console.error(error)
-    process.exit(1)
-  })
+    console.error(error);
+    process.exit(1);
+  });

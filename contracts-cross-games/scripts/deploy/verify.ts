@@ -3,10 +3,10 @@
 //
 // When running the script with `pnpm exec hardhat run <script>` you'll find the Hardhat
 // Runtime Environment's members available in the global scope.
-import { parseEther } from 'ethers'
-import { run } from 'hardhat'
+import { parseEther } from "ethers";
+import { run } from "hardhat";
 
-async function main () {
+const main = async () => {
   // Hardhat always runs the compile task when running scripts with its command
   // line interface.
   //
@@ -15,20 +15,20 @@ async function main () {
   // await hre.run('compile');
 
   /** DEV-ONLY, if previous failed */
-  await run('verify:verify', {
-    address: '0x727571F63E760235397D3d4E76d2De3e3Cb7ac8A', // TO FILL
+  await run("verify:verify", {
+    address: "0x727571F63E760235397D3d4E76d2De3e3Cb7ac8A", // TO FILL
     constructorArguments: [
-      '0x544a3AC7FF74F1f7AD6e41FcAc4CF98d657675B2', // trustedValidatorAddress, TO FILL,
-      parseEther('0.00001') // singleChipPrice, TO FILL
-    ]
-  })
-}
+      "0x544a3AC7FF74F1f7AD6e41FcAc4CF98d657675B2", // trustedValidatorAddress, TO FILL,
+      parseEther("0.00001"), // singleChipPrice, TO FILL
+    ],
+  });
+};
 
 // We recommend this pattern to be able to use async/await everywhere
 // and properly handle errors.
 main()
   .then(() => process.exit(0))
   .catch((error) => {
-    console.error(error)
-    process.exit(1)
-  })
+    console.error(error);
+    process.exit(1);
+  });

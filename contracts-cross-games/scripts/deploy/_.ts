@@ -1,68 +1,79 @@
-import { produceConsumerConfigurations } from './framework/env/EnvFilesGenerator'
-import { NightworkersContext } from './framework/NWContext'
-import { ContractContext, NightworkersContracts } from './framework/NWContracts'
-import { IgniteParameters } from './framework/NWContractsFactory'
+import { run } from "hardhat";
 
-import { run } from 'hardhat'
+import { produceConsumerConfigurations } from "#/scripts/deploy/framework/env/EnvFilesGenerator";
+import { NightworkersContext } from "#/scripts/deploy/framework/NWContext";
+import type {
+  ContractContext,
+  NightworkersContracts,
+} from "#/scripts/deploy/framework/NWContracts";
+import type { IgniteParameters } from "#/scripts/deploy/framework/NWContractsFactory";
 
-export async function deployNWCasinoLite (params: IgniteParameters) : Promise<NightworkersContracts> {
+export const deployNWCasinoLite = async (
+  params: IgniteParameters,
+): Promise<NightworkersContracts> => {
   //
-  console.log('== Begin deploying Nightworkers Casino Lite ! == ')
-  const context = new NightworkersContext('./deployed.json')
+  console.log("== Begin deploying Nightworkers Casino Lite ! == ");
+  const context = new NightworkersContext("./deployed.json");
 
   //
-  await context.deployAndIgnite(params)
+  await context.deployAndIgnite(params);
 
   // READY !
-  console.log('== Nightworkers Casino Lite ready ! == ')
-  console.log(` >> Contract ${await context.casinoBank.contract?.getAddress()} : Casino Bank`)
+  console.log("== Nightworkers Casino Lite ready ! == ");
+  console.log(
+    ` >> Contract ${await context.casinoBank.contract?.getAddress()} : Casino Bank`,
+  );
 
   //
-  produceConsumerConfigurations()
+  produceConsumerConfigurations();
 
   //
-  return context
-}
+  return context;
+};
 
 //
-export async function tryVerifyContracts (contractContexts: ContractContext[]) {
-  console.log('== Trying to verify contracts... == ')
+export const tryVerifyContracts = async (
+  contractContexts: ContractContext[],
+) => {
+  console.log("== Trying to verify contracts... == ");
 
   //
   for (const { contract, deployArgs, contractName } of contractContexts) {
     //
     if ((await contract?.getAddress()) == null || deployArgs == null) {
-      console.log(` >> [${contractName}] : invalid address or constructor args. Skipping.`)
-      continue
+      console.log(
+        ` >> [${contractName}] : invalid address or constructor args. Skipping.`,
+      );
+      continue;
     }
 
     //
     try {
       //
-      console.log(` >> [${contractName}] : Waiting confirmation blocks ...`)
+      console.log(` >> [${contractName}] : Waiting confirmation blocks ...`);
 
       //
-      await contract?.deploymentTransaction()?.wait(5)
+      await contract?.deploymentTransaction()?.wait(5);
 
       //
-      console.log(` >> [${contractName}] : Verifying ...`)
+      console.log(` >> [${contractName}] : Verifying ...`);
 
       //
-      await run('verify:verify', {
+      await run("verify:verify", {
         address: await contract?.getAddress(),
-        constructorArguments: deployArgs
-      })
+        constructorArguments: deployArgs,
+      });
 
       //
-      console.log(` >> [${contractName}] : Verification Completed !`)
+      console.log(` >> [${contractName}] : Verification Completed !`);
 
       //
     } catch (e) {
       //
-      console.log(` >> [${contractName}] : Failed... (${e})`)
+      console.log(` >> [${contractName}] : Failed... (${e})`);
     }
   }
 
   //
-  console.log('== Done ! == ')
-}
+  console.log("== Done ! == ");
+};

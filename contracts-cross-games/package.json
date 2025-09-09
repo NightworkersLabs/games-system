@@ -5,15 +5,20 @@
   "license": "UNLICENSED",
   "type": "commonjs",
   "scripts": {
+    "check:circdep": "dpdm --no-warning --no-tree scripts/deploy/dev.ts scripts/deploy/prod.ts scripts/deploy/verify.ts",
+    "check:ts": "tsc --noemit",
     "precompile": "rimraf ./build/",
     "compile": "hardhat compile",
     "deploy:dev": "hardhat run scripts/deploy/dev.ts",
     "deploy:prod": "hardhat run scripts/deploy/prod.ts",
+    "eslint": "eslint . --max-warnings 0",
     "flatten": "hardhat flatten > _flatten.sol",
+    "lint": "pnpm check:ts && pnpm check:circdep && pnpm eslint",
     "sort": "sort-package-json",
     "verify:prod": "hardhat run scripts/deploy/verify.ts"
   },
   "dependencies": {
+    "@nightworkerslabs/offchain-cross-games": "../offchain-cross-games",
     "@nomicfoundation/hardhat-verify": "^2.0.12",
     "@nomiclabs/hardhat-ethers": "^2.2.3",
     "@openzeppelin/contracts": "^4.8.2",
@@ -30,14 +35,15 @@
     "@typescript-eslint/eslint-plugin": "^8.18.2",
     "@typescript-eslint/parser": "^8.18.2",
     "dpdm-fast": "^1.0.7",
-    "eslint": "^9.17.0",
-    "eslint-config-love": "^113.0.0",
-    "eslint-plugin-import": "^2.31.0",
-    "eslint-plugin-n": "^17.15.1",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^7.2.1",
+    "eslint": "^9.35.0",
+    "@eslint/js": "^9.35.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-no-relative-import-paths": "^1.6.1",
+    "eslint-plugin-prettier": "^5.5.4",
+    "eslint-plugin-simple-import-sort": "^12.1.1",
     "sort-package-json": "^2.12.0",
-    "typescript": "^5.7.2"
+    "typescript": "^5.7.2",
+    "typescript-eslint": "^8.43.0"
   },
   "packageManager": "pnpm@9.15.0",
   "engines": {
