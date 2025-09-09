@@ -1,5 +1,4 @@
-import HHConfig from "hardhat.config";
-
+import HHConfig from "#/hardhat.config";
 import { HISTORIZED_NETWORKS_IGNORED } from "#/scripts/deploy/framework/NWContracts";
 
 //
