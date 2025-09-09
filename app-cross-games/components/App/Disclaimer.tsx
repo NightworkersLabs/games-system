@@ -1,8 +1,8 @@
-import { Flex, OrderedList, ListItem, Button, Text, Link } from '@chakra-ui/react'
+import { Button, Flex, Link,ListItem, OrderedList, Text } from '@chakra-ui/react'
 import { faDice, faWarning } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-export default function Disclaimer (props: { validate: () => void }) {
+const Disclaimer = (props: { validate: () => void }) => {
   return (
     <Flex
       direction='column' alignSelf='center' justifySelf='center' gap="2rem"
@@ -26,7 +26,7 @@ export default function Disclaimer (props: { validate: () => void }) {
 }
 
 //
-function DisclaimerHeader () {
+const DisclaimerHeader = () => {
   return (
     <Flex direction='column' mt='5' gap='3'>
       <FontAwesomeIcon size='5x' icon={faDice} />
@@ -41,7 +41,7 @@ function DisclaimerHeader () {
 }
 
 //
-function ConsentText () {
+const ConsentText = () => {
   return (
     <OrderedList spacing='3' textAlign='justify' fontFamily='monospace'>
       <ListItem>You confirm that you are allowed in your country of residence to partake in random-based, gamble-like systems that may involve monetary derivative gains or losses.</ListItem>
@@ -51,7 +51,7 @@ function ConsentText () {
 }
 
 //
-function ValidateConsentButton (props: { validate: () => void }) {
+const ValidateConsentButton = (props: { validate: () => void }) => {
   return (
     <Flex direction='column'>
       <Button
@@ -73,3 +73,5 @@ function ValidateConsentButton (props: { validate: () => void }) {
     </Flex>
   )
 }
+
+export default Disclaimer;

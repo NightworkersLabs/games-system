@@ -1,24 +1,25 @@
-import { Flex } from '@chakra-ui/react'
-import ContractTitle from 'components/_/ContractTitle'
 import { useMemo, useState } from 'react'
-import { useNWStore } from 'lib/store/main'
 import shallow from 'zustand/shallow'
 
-import { Coin, coinBetOutcomeDisplayer, CoinBetSelection } from 'components/Casino/_/Coinflip'
-import { GamePlateau } from 'components/Casino/_/base'
-import { CoinBet } from 'lib/store/slices/_/bet'
-import ChipsBetButton from '../_/ChipsBetButton'
-import { GameChipsAmountPicker } from '../_/ChipsAmountPicker'
-import { APIBetHistoryDisplayer } from '../_/ChipsBetHistoryDisplayer'
-import { CasinoAuthReminderPopup } from '../_/CasinoAuth'
-import { isAPICasinoBetRunning } from 'lib/store/slices/popup-tx/runners/api'
-import ChipsBalance from '../_/ChipsBalance'
-import NoChipsPopup from '../_/NoChipsPopup'
-import { GAMES_ICONS } from 'components/Casino'
-import GamesStatsTab from 'components/Casino/Stats'
+import { Flex } from '@chakra-ui/react'
+
+import ContractTitle from '#/components/_/ContractTitle'
+import { GAMES_ICONS } from '#/components/Casino'
+import { GamePlateau } from '#/components/Casino/_/base'
+import { Coin, coinBetOutcomeDisplayer, CoinBetSelection } from '#/components/Casino/_/Coinflip'
+import { CasinoAuthReminderPopup } from '#/components/Casino/Offchain/_/CasinoAuth'
+import { GameChipsAmountPicker } from '#/components/Casino/Offchain/_/ChipsAmountPicker'
+import ChipsBalance from '#/components/Casino/Offchain/_/ChipsBalance'
+import ChipsBetButton from '#/components/Casino/Offchain/_/ChipsBetButton'
+import { APIBetHistoryDisplayer } from '#/components/Casino/Offchain/_/ChipsBetHistoryDisplayer'
+import NoChipsPopup from '#/components/Casino/Offchain/_/NoChipsPopup'
+import GamesStatsTab from '#/components/Casino/Stats'
+import { useNWStore } from '#/lib/store/main'
+import type { CoinBet } from '#/lib/store/slices/_/bet'
+import { isAPICasinoBetRunning } from '#/lib/store/slices/popup-tx/runners/api'
 
 //
-export default function ChipsCoinFlip () {
+const ChipsCoinFlip = () => {
   //
   const {
     allChipsBalance,
@@ -104,3 +105,5 @@ export default function ChipsCoinFlip () {
     />
   )
 }
+
+export default ChipsCoinFlip;

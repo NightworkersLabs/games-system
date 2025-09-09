@@ -1,14 +1,14 @@
 //
 
-import { Contract, BigNumber, ethers } from 'ethers'
-import { deployed, handledNetworks } from 'lib/TypedNetworks'
-import CasinoBankABI from 'public/abi/CasinoBank.json'
-
+import { BigNumber, Contract, ethers } from 'ethers'
 import { formatEther } from 'ethers/lib/utils'
 
-import { Text, Flex } from '@chakra-ui/react'
-import { fetchData } from '../_'
-import { getDataServiceUrl, getNWExecutionContextFromEnv } from 'env/defaults'
+import { Flex,Text } from '@chakra-ui/react'
+
+import { fetchData } from '#/components/Data/_'
+import { getDataServiceUrl, getNWExecutionContextFromEnv } from '#/env/defaults'
+import { deployed, handledNetworks } from '#/lib/TypedNetworks'
+import CasinoBankABI from '#/public/abi/CasinoBank.json'
 
 //
 export type SingleChipsPrices = {
@@ -27,7 +27,7 @@ export type SingleChipsPrices = {
 const dataServiceUrl = getDataServiceUrl()
 
 //
-export const fetchStatsData = async <T = any> (path: string) : Promise<T> => {
+export const fetchStatsData = async <T,> (path: string) : Promise<T> => {
   //
   const url = new URL(path, dataServiceUrl)
   const cEnv = getNWExecutionContextFromEnv()
@@ -48,7 +48,7 @@ export const fetchStatsData = async <T = any> (path: string) : Promise<T> => {
 
 //
 export const chipsAmountRenderer = (
-  cell : { getValue: () => any | string, row: { original: { chainId: number } } },
+  cell : { getValue: () => string, row: { original: { chainId: number } } },
   singleChipValues: SingleChipsPrices,
   currencyMode: boolean,
   net: boolean = false
@@ -95,7 +95,7 @@ export const chipsAmountRenderer = (
 /**
  * @param chainsToFetch array of chain Ids that filters the available networks
  */
-export function getSingleChipValues (chainsToFetch: number[]) : Promise<SingleChipsPrices> {
+export const getSingleChipValues = (chainsToFetch: number[]) : Promise<SingleChipsPrices>  => {
   /** @dev why do i need this ? */
   const wtf = deployed
 

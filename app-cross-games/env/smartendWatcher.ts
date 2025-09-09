@@ -1,5 +1,4 @@
 import fse from 'fs-extra'
-
 import waitPort from 'wait-port'
 
 const dAppOutputEnvFileName = '.env.local'
@@ -15,7 +14,7 @@ const delay = (ms: number) => new Promise(resolve => setInterval(resolve, ms))
  * @dev copy resources necessary for the frontend to work, without smartend subdirectory to be pulled alongside
  * @dev supposed to be ran in parallel to the deployment script
  */
-async function watchAndConfigure () {
+const watchAndConfigure = async () => {
   // defaults to auto-replace file template
   const autoReplaceFullPath = dAppEnvSourceFolder + dAppEnvAutoReplaceFileName
   let dAppEnvSourceFilePath = autoReplaceFullPath
@@ -29,7 +28,7 @@ async function watchAndConfigure () {
     try {
       fse.rmSync(dAppEnvSourceFilePath)
       console.log(`Removed .env file ${dAppEnvSourceFilePath}`)
-    } catch (e) {}
+    } catch (_) {}
 
     // waits for the expected deployment script ran in parallel to produce said .env file...
     console.log(`Waiting for new .env file at ${dAppEnvSourceFilePath}...`)

@@ -1,10 +1,12 @@
-import { Flex, Text, Image, Button } from '@chakra-ui/react'
-import { CASINO_COIN_NAME } from 'env/defaults'
 import { useMemo } from 'react'
-import { useNWStore } from 'lib/store/main'
 import shallow from 'zustand/shallow'
 
-export default function NoChipsPopup () {
+import { Button,Flex, Image, Text } from '@chakra-ui/react'
+
+import { CASINO_COIN_NAME } from '#/env/defaults'
+import { useNWStore } from '#/lib/store/main'
+
+const NoChipsPopup = () => {
   //
   const {
     maxChipsBuyableAtOnce,
@@ -57,7 +59,7 @@ export default function NoChipsPopup () {
 }
 
 //
-function BuyChipsQuickButtons (props: { maxChipsBuyable: number }) {
+const BuyChipsQuickButtons = (props: { maxChipsBuyable: number }) => {
   //
   const buyChips = useNWStore(s => s.buyChips)
 
@@ -83,3 +85,5 @@ function BuyChipsQuickButtons (props: { maxChipsBuyable: number }) {
     </Flex>
   )
 }
+
+export default NoChipsPopup;

@@ -1,17 +1,20 @@
-import { Text, Flex, Input, InputGroup, InputLeftElement, InputRightElement } from '@chakra-ui/react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSeedling, faCheck, faWarning, faLock, faCircleExclamation, faAnglesDown } from '@fortawesome/free-solid-svg-icons'
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { NextStepLayout } from '.'
-import { useNWStore } from 'lib/store/main'
-import { AnySecurePopupTx } from 'lib/store/slices/popup-tx/handler'
 import shallow from 'zustand/shallow'
 
+import { Flex, Input, InputGroup, InputLeftElement, InputRightElement,Text } from '@chakra-ui/react'
+import { faAnglesDown,faCheck, faCircleExclamation, faLock, faSeedling, faWarning } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
+import { useNWStore } from '#/lib/store/main'
+import type { AnySecurePopupTx } from '#/lib/store/slices/popup-tx/handler'
+
+import { NextStepLayout } from '.'
+
 //
-export default function SeedPicker (props: {
+const SeedPicker = (props: {
     nextStep: () => void
     popupTx: AnySecurePopupTx
-}) {
+}) => {
   //
   const [passphrase, setPassphrase] = useState('')
 
@@ -36,7 +39,7 @@ export default function SeedPicker (props: {
 
   //
   const updateSeedFromEv = useCallback((ev) => {
-    const input = (ev.target.value as String).trim()
+    const input = (ev.target.value as string).trim()
     updateSeedFromPP(input)
 
     //
@@ -92,3 +95,5 @@ export default function SeedPicker (props: {
     </Flex>
   )
 }
+
+export default SeedPicker;

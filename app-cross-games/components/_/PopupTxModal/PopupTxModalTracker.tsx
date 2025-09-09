@@ -1,14 +1,17 @@
+import { useMemo } from 'react'
+import shallow from 'zustand/shallow'
+
 import { Flex, Spinner, Text, Tooltip } from '@chakra-ui/react'
 import { faCheck, faCircleExclamation, faReceipt, faTrashCan } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useMemo } from 'react'
-import { useNWStore } from 'lib/store/main'
-import { AnyPopupTx, getPopupTxCurrentStep, isProvable, isSecurePopupTx } from 'lib/store/slices/popup-tx/handler'
-import shallow from 'zustand/shallow'
 
-export default function PopupTxModalTracker (props: {
+import { useNWStore } from '#/lib/store/main'
+import type { AnyPopupTx} from '#/lib/store/slices/popup-tx/handler';
+import { getPopupTxCurrentStep, isProvable, isSecurePopupTx } from '#/lib/store/slices/popup-tx/handler'
+
+const PopupTxModalTracker = (props: {
     popupTx: AnyPopupTx
-}) {
+}) => {
   //
   const {
     showPopupTx,
@@ -104,13 +107,13 @@ export default function PopupTxModalTracker (props: {
   )
 }
 
-function PopupTxStepTracker (props: {
+const PopupTxStepTracker = (props: {
     currentStep: number,
     maxSteps: number,
     hasFailed: boolean,
     hasCompleted: boolean,
     hasSteppedIn: boolean
-}) {
+}) => {
   //
   return (
     <Flex
@@ -157,3 +160,5 @@ function PopupTxStepTracker (props: {
     </Flex>
   )
 }
+
+export default PopupTxModalTracker;

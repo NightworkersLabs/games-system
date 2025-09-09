@@ -1,9 +1,7 @@
-import _networks from 'networks.compiled.json'
-
-import _deployed from 'deployed.json'
-
-import { AvailableNetwork, CompiledNetwork } from 'env/networksCompiler'
-import { getNWExecutionContextFromEnv } from 'env/defaults'
+import _deployed from '#/deployed.json'
+import { getNWExecutionContextFromEnv } from '#/env/defaults'
+import type { AvailableNetwork, CompiledNetwork, NetworksDefinition } from '#/env/networksCompiler'
+import _networks from '#/networks.compiled.json'
 
 //
 // TYPED NETWORKS
@@ -19,7 +17,7 @@ export type ExtraNetworksDefinition = {
 
 /** @dev forced matching with ExtraNetworksDefinition */
 export const allNetworks = Object.fromEntries(
-  Object.entries(_networks)
+  Object.entries(_networks as NetworksDefinition)
     .map(([n, p]) => [n, { ...p, name: n }])
 ) as ExtraNetworksDefinition
 

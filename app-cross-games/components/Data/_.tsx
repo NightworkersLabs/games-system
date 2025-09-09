@@ -1,12 +1,15 @@
-import { getDataServiceUrl } from 'env/defaults'
-
-import { formatEther } from 'ethers/lib/utils'
 import { BigNumber } from 'ethers'
-import { networksByChainId } from 'lib/TypedNetworks'
-import { TableContainer, Table, Thead, Tr, Th, Tbody, Td, Flex, IconButton, Spinner, Text, Link, Tooltip } from '@chakra-ui/react'
-import { Table as TanstackTable, flexRender, Getter } from '@tanstack/react-table'
-import { faAngleDoubleLeft, faAngleLeft, faAngleRight, faAngleDoubleRight, faInfoCircle } from '@fortawesome/free-solid-svg-icons'
+import { formatEther } from 'ethers/lib/utils'
+import type { ReactElement } from 'react'
+
+import { Flex, IconButton, Link, Spinner, Table, TableContainer, Tbody, Td, Text, Th, Thead, Tooltip,Tr } from '@chakra-ui/react'
+import { faAngleDoubleLeft, faAngleDoubleRight, faAngleLeft, faAngleRight, faInfoCircle } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import type { Getter,Table as TanstackTable } from '@tanstack/react-table';
+import { flexRender } from '@tanstack/react-table'
+
+import { getDataServiceUrl } from '#/env/defaults'
+import { networksByChainId } from '#/lib/TypedNetworks'
 
 //
 const dataServiceUrl = getDataServiceUrl()
@@ -50,7 +53,7 @@ export const withAddressExplorer = <T, >(cell : { getValue: Getter<T>, row: { or
 }
 
 /** fetch with auto-bound bearer token */
-export const fetchData = async <T= any>(path: string | URL) : Promise<T> => {
+export const fetchData = async <T,>(path: string | URL) : Promise<T> => {
   //
   const url = typeof path === 'string' ? new URL(path, dataServiceUrl) : path
 
@@ -75,10 +78,10 @@ export const fetchData = async <T= any>(path: string | URL) : Promise<T> => {
 //
 
 //
-export function TooltipedHeader (props: {
+export const TooltipedHeader = (props: {
   title: string,
   label: string
-}) {
+}) => {
   return (
     <Tooltip hasArrow label={props.label}>
       <Flex gap='1' justifyContent='end' flexWrap='wrap'>
@@ -90,7 +93,7 @@ export function TooltipedHeader (props: {
 }
 
 //
-function NoData () {
+const NoData = () => {
   return (
     <Tr>
       <Td colSpan={99}>
@@ -104,11 +107,11 @@ function NoData () {
 }
 
 //
-export function BasicTable<T> (props: {
+export const BasicTable = <T,> (props: {
   table: TanstackTable<T>,
   withPager?: boolean,
-  title: any
-}) {
+  title: ReactElement
+}) => {
   //
   const rowModel = props.table.getRowModel()
 
@@ -164,9 +167,9 @@ export function BasicTable<T> (props: {
 }
 
 //
-function Pager<T> (props: {
+const Pager = <T,> (props: {
   table: TanstackTable<T>
-}) {
+}) => {
   return (
     <Flex flex='1' alignItems='center' justifyContent='space-between' pt='5' px='2'>
       <Flex gap='2'>

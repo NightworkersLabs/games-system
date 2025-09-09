@@ -1,8 +1,9 @@
 import { BigNumber } from 'ethers'
-import { getGameServiceUrl } from 'env/defaults'
 import { sha256 } from 'ethers/lib/utils'
-import { SEPRunState } from 'lib/SingleExecPromise'
-import { getMeaningfulMessageFromError } from 'lib/EthersErrorDigger'
+
+import { getGameServiceUrl } from '#/env/defaults'
+import { getMeaningfulMessageFromError } from '#/lib/EthersErrorDigger'
+import type { SEPRunState } from '#/lib/SingleExecPromise'
 
 /** Requested payload from the off-chain service */
 export class PerishableSecretHash {
@@ -53,7 +54,7 @@ export interface TrustfulPayloadContext {
 export type TPCUpdater = (c: TrustfulPayloadContext) => void
 
 //
-export function updateClientSeedFromPP (passPhrase: string, toUpdate: TrustfulPayloadContext, updater: TPCUpdater) {
+export const updateClientSeedFromPP = (passPhrase: string, toUpdate: TrustfulPayloadContext, updater: TPCUpdater) => {
   //
   if (toUpdate == null) return
   const isOK = passPhrase != null && passPhrase.length !== 0
@@ -71,7 +72,7 @@ export function updateClientSeedFromPP (passPhrase: string, toUpdate: TrustfulPa
   updater(toUpdate)
 }
 
-export async function requestServerSecret (toUpdate: TrustfulPayloadContext, updater: TPCUpdater) {
+export const requestServerSecret = async (toUpdate: TrustfulPayloadContext, updater: TPCUpdater) => {
   //
   if (toUpdate == null) return
   if (toUpdate.requestingSecret === true) return

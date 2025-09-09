@@ -1,4 +1,5 @@
-import Document, { Html, Main, Head, NextScript, DocumentContext, DocumentInitialProps } from 'next/document'
+import type { DocumentContext, DocumentInitialProps } from 'next/document';
+import Document, { Head, Html, Main, NextScript } from 'next/document'
 
 //
 const googleOwnDomainTag = 'LhBN99NI_16ahBQ5ywbOYfMnte3hiZD8UHhIv8xOzpo' /** liked to nightworkers.vercel.app */

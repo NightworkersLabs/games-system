@@ -1,6 +1,7 @@
-import { Flex, Tooltip } from '@chakra-ui/react'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime' // import plugin
+
+import { Flex, Tooltip } from '@chakra-ui/react'
 dayjs.extend(relativeTime) // use plugin
 
 //

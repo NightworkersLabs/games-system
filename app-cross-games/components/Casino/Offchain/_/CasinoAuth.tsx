@@ -1,12 +1,14 @@
-import { Button, Flex, Tooltip, Text } from '@chakra-ui/react'
-import { faPersonWalkingArrowRight, faPowerOff, faSpinner, faWarning } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useCallback, useEffect } from 'react'
-import { useNWStore } from 'lib/store/main'
 import shallow from 'zustand/shallow'
 
+import { Button, Flex, Text,Tooltip } from '@chakra-ui/react'
+import { faPersonWalkingArrowRight, faPowerOff, faSpinner, faWarning } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
+import { useNWStore } from '#/lib/store/main'
+
 //
-export default function CasinoAuth () {
+const CasinoAuth = () => {
   //
   const {
     currentEOAAddress,
@@ -48,7 +50,7 @@ export default function CasinoAuth () {
 }
 
 //
-function CasinoAuthButton (props: { clearAuth: () => void }) {
+const CasinoAuthButton = (props: { clearAuth: () => void }) => {
   //
   const {
     casinoAuthSignature,
@@ -107,7 +109,7 @@ function CasinoAuthButton (props: { clearAuth: () => void }) {
 }
 
 //
-export function CasinoAuthReminderPopup () {
+export const CasinoAuthReminderPopup = () => {
   return (
     <>
       <Text fontSize='.8rem' fontStyle='italic'>Please</Text>
@@ -116,3 +118,5 @@ export function CasinoAuthReminderPopup () {
     </>
   )
 }
+
+export default CasinoAuth;

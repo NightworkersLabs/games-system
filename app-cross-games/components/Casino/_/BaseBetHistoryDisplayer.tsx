@@ -1,19 +1,22 @@
-import { Flex, Grid, Link, Spinner, Text, useDisclosure } from '@chakra-ui/react'
-import { useMemo, useRef } from 'react'
-import { SEPRunState } from 'lib/SingleExecPromise'
 import { BigNumber } from 'ethers'
-import { AnyBet, AnyBettedCurrencyType, AnyStampType, BetEntry } from 'lib/store/slices/_/bet'
-import { BetTagDecorator, OutcomeDisplayerFunc } from 'components/Casino/_/base'
+import type { ReactElement} from 'react';
+import { useMemo, useRef } from 'react'
+
+import { Flex, Grid, Link, Spinner, Text, useDisclosure } from '@chakra-ui/react'
+
+import type { BetTagDecorator, OutcomeDisplayerFunc } from '#/components/Casino/_/base'
+import type { SEPRunState } from '#/lib/SingleExecPromise'
+import type { AnyBet, AnyBettedCurrencyType, AnyStampType, BetEntry } from '#/lib/store/slices/_/bet'
 
 //
-export function BaseBetHistoryDisplayer<T = AnyBet, C = AnyBettedCurrencyType, S = AnyStampType, EntryType = BetEntry<T, C, S>> (props: {
+export const BaseBetHistoryDisplayer = <T extends AnyBet, C = AnyBettedCurrencyType, S = AnyStampType, EntryType = BetEntry<T, C, S>> (props: {
   history: EntryType[]
   onLoading: SEPRunState
-  betEntryDisplayer: (entry: EntryType, index: number) => any
+  betEntryDisplayer: (entry: EntryType, index: number) => ReactElement
   outcomeDisplayer?: OutcomeDisplayerFunc<T>
   singleRowSizePx?: number
   maximumExpandedRows?: number
-}) {
+}) => {
   //
   const { isOpen, onToggle } = useDisclosure({
     onClose: () => {
@@ -66,7 +69,7 @@ export function BaseBetHistoryDisplayer<T = AnyBet, C = AnyBettedCurrencyType, S
   )
 }
 
-function NoBetsAwaiter () {
+const NoBetsAwaiter = () => {
   return (
     <Flex gap='3' alignItems='center' fontSize='.75rem'>
       <Spinner size='sm'/>
@@ -85,13 +88,13 @@ BaseBetHistoryDisplayer.defaultProps = {
 //
 //
 
-export function BaseBetDisplayer<T, C, S> (props: {
+export const BaseBetDisplayer = <T, C, S> (props: {
     bet: BetEntry<T, C, S>,
     currentStamp: S,
     outcomeDisplayer: OutcomeDisplayerFunc<T>
     amountDisplayer: (amount: C) => string
     elapsedStampDisplayer: (current: S, bet: S) => string | null
-}) {
+}) => {
   //
   const expected = useMemo(() => props.outcomeDisplayer(props.bet.expectedOutcome), [props])
 
@@ -143,9 +146,9 @@ export function BaseBetDisplayer<T, C, S> (props: {
 //
 
 //
-export function BetTag (props: {
+export const BetTag = (props: {
   decorator: BetTagDecorator
-}) {
+}) => {
   return (
     <Text
       px='1'

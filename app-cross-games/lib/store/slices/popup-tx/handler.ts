@@ -1,12 +1,13 @@
-import { StoreSlice } from 'lib/store/_'
-import { SEPRunState, SingleExecPromise } from 'lib/SingleExecPromise'
-import { Contract, ContractTransaction, EventFilter, Event, BigNumber } from 'ethers'
-import { IGameSlice } from '../game'
-import { _runBasicPopupTx } from './runners/basic'
-import { TrustfulBotResponse, TrustfulPayloadContext } from '../_/trustful'
-import { ChipsBalance } from '../casino-bank/user-context'
-import { ISecurePopupTxSlice } from './secure'
-import { HandledCasinoGame } from 'components/Casino'
+import type { BigNumber,Contract, ContractTransaction, Event, EventFilter } from 'ethers'
+
+import type { HandledCasinoGame } from '#/components/Casino'
+import type { SEPRunState, SingleExecPromise } from '#/lib/SingleExecPromise'
+import type { StoreSlice } from '#/lib/store/_'
+import type { TrustfulBotResponse, TrustfulPayloadContext } from '#/lib/store/slices/_/trustful'
+import type { ChipsBalance } from '#/lib/store/slices/casino-bank/user-context'
+import type { IGameSlice } from '#/lib/store/slices/game'
+import { _runBasicPopupTx } from '#/lib/store/slices/popup-tx/runners/basic'
+import type { ISecurePopupTxSlice } from '#/lib/store/slices/popup-tx/secure'
 
 //
 // BASE DEF
@@ -70,7 +71,9 @@ export interface ProvableSecurePopupTx {
 }
 
 export interface APISecurePopupTx extends
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     PopupTx<APISecurePopupTxWaitingStep, any>,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     BaseSecurePopupTx<any>,
     ProvableSecurePopupTx {
         /** @dev kinda needed to disambiguate API-secure from OnChain-secure */
@@ -152,31 +155,32 @@ export type AnyPopupTx = AnySecurePopupTx | AnyBasicPopupTx
 //
 
 //
-export function isSecurePopupTx (object: AnyPopupTx): object is AnySecurePopupTx {
+export const isSecurePopupTx = (object: AnyPopupTx): object is AnySecurePopupTx => {
   return 'submit' in object
 }
 
-export function isApiSecurePopupTx (object: AnySecurePopupTx): object is APISecurePopupTx {
+export const isApiSecurePopupTx = (object: AnySecurePopupTx): object is APISecurePopupTx => {
   return 'minimalMsThrottleRange' in object
 }
 
 /** checks whenever this onchain secure popup tx is End-to-End */
-export function isOCEtEPopupTx (object: AnySecurePopupTx): object is EndToEndOnChainSecurePopupTx {
+export const isOCEtEPopupTx = (object: AnySecurePopupTx): object is EndToEndOnChainSecurePopupTx => {
   return 'purposeId' in object
 }
 
 /** checks whenever this secure popup tx can produce an provability response */
-export function isProvable (object: any): object is ProvableSecurePopupTx {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const isProvable = (object: any): object is ProvableSecurePopupTx => {
   return isApiSecurePopupTx(object) || isOCEtEPopupTx(object)
 }
 
 //
-export function isBasicPopupTx (object: AnyPopupTx): object is AnyBasicPopupTx {
+export const isBasicPopupTx = (object: AnyPopupTx): object is AnyBasicPopupTx => {
   return 'txFunc' in object
 }
 
 //
-export function isTwoStepsPopupTx (object: AnyBasicPopupTx): object is TwoStepsPopupTx {
+export const isTwoStepsPopupTx = (object: AnyBasicPopupTx): object is TwoStepsPopupTx => {
   return 'increaseAllowanceFunc' in object
 }
 
@@ -228,7 +232,7 @@ interface IPrivateSlice {
 }
 
 /** returns the expected number of steps that a specific popup Tx has to go through */
-export function getPopupTxCurrentStep (popupTx: AnyPopupTx) : [number, number] {
+export const getPopupTxCurrentStep =  (popupTx: AnyPopupTx) : [number, number] => {
   if (popupTx == null) return [0, 0]
 
   //

@@ -1,12 +1,12 @@
-import { faGithub, faDiscord, faTwitter } from '@fortawesome/free-brands-svg-icons'
-
 import { Flex, Link, Tooltip } from '@chakra-ui/react'
+import type { IconProp } from '@fortawesome/fontawesome-svg-core'
+import { faDiscord, faGithub, faTwitter } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { IconProp } from '@fortawesome/fontawesome-svg-core'
-import NWDrawer from './Drawer'
+
+import NWDrawer from '#/components/App/Drawer'
 
 //
-function SocialButton (props: { url: string, icon: IconProp, tooltipText: string }) {
+const SocialButton = (props: { url: string, icon: IconProp, tooltipText: string }) => {
   return (
     <Tooltip label={props.tooltipText}>
       <Link color='white' isExternal href={props.url} bgColor='inherit' >
@@ -17,9 +17,9 @@ function SocialButton (props: { url: string, icon: IconProp, tooltipText: string
 }
 
 //
-export default function SocialBlade (props: {
+const SocialBlade = (props: {
     hideToolboxButton?: boolean
-}) {
+}) => {
   return (
     <Flex justifyContent='center' gap={5} mt='2' mb='2'>
       <SocialButton url='https://twitter.com/NightworkersLbs' icon={faTwitter} tooltipText='Twitter' />
@@ -29,3 +29,5 @@ export default function SocialBlade (props: {
     </Flex>
   )
 }
+
+export default SocialBlade;

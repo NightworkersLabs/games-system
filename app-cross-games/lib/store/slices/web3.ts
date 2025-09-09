@@ -1,21 +1,25 @@
-import { StoreSlice } from 'lib/store/_'
-import { getMeaningfulMessageFromError } from 'lib/EthersErrorDigger'
-import { SingleExecPromise } from 'lib/SingleExecPromise'
 import { Contract } from 'ethers'
-import { Web3Provider, JsonRpcSigner } from '@ethersproject/providers'
+import type EventEmitter from 'events'
+
+import type { JsonRpcSigner} from '@ethersproject/providers';
+import {Web3Provider } from '@ethersproject/providers'
 import MetaMaskOnboarding from '@metamask/onboarding'
 
-import { IInitialDataFetchingSlice } from './game'
-import { AvailableNetwork, toHex } from 'env/networksCompiler'
-import { handledNetworks, handledChainIds, deployed, getCompiledNetworkHex, ExtraCompiledNetwork, networksByChainId } from 'lib/TypedNetworks'
-
-import CasinoBankABI from 'public/abi/CasinoBank.json'
-import EventEmitter from 'events'
-import { BacklinkReference, BacklinkTracker } from 'lib/Backlinking'
+import type { AvailableNetwork} from '#/env/networksCompiler';
+import { toHex } from '#/env/networksCompiler'
+import type { BacklinkReference, BacklinkTracker } from '#/lib/Backlinking'
+import { getMeaningfulMessageFromError } from '#/lib/EthersErrorDigger'
+import { SingleExecPromise } from '#/lib/SingleExecPromise'
+import type { StoreSlice } from '#/lib/store/_'
+import type { IInitialDataFetchingSlice } from '#/lib/store/slices/game'
+import type { ExtraCompiledNetwork} from '#/lib/TypedNetworks';
+import { deployed, getCompiledNetworkHex, handledChainIds, handledNetworks, networksByChainId } from '#/lib/TypedNetworks'
+import CasinoBankABI from '#/public/abi/CasinoBank.json'
 
 //
 declare global {
     interface Window {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         ethereum?: any
     }
 }
@@ -108,11 +112,13 @@ interface IPrivateSlice {
 
     //
     _bindProviderEvents: (provider: Web3Provider) => (() => void)
-    _metamaskOnDisconnect: (error?: any) => void
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    _metamaskOnDisconnect: (_error?: any) => void
     _metamaskOnChainChanged: (chainId: string) => void
     _metamaskOnAccountsChanged: (accounts: Array<string>) => void
 
     //
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     _handleMMError: (err: any) => void
 }
 
@@ -555,7 +561,7 @@ interface AddEthereumChainParameter {
 }
 
 // https://docs.metamask.io/guide/rpc-api.html#wallet-addethereumchain
-function formatChain (chainName: AvailableNetwork) : AddEthereumChainParameter {
+const formatChain = (chainName: AvailableNetwork) : AddEthereumChainParameter => {
   //
   const network = handledNetworks[chainName]
 

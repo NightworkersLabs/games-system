@@ -1,4 +1,5 @@
-import { NextRequest, userAgent } from 'next/server'
+import type { NextRequest} from 'next/server';
+import { userAgent } from 'next/server'
 
 //
 const isIphone = (ua: string) => /(iPhone|iPod)/i.test(ua)
@@ -12,7 +13,7 @@ export interface MetaMaskMandatoryInfos {
 }
 
 //
-export function isStoreReliant (userAgent: string) : MetaMaskMandatoryInfos {
+export const isStoreReliant = (userAgent: string) : MetaMaskMandatoryInfos => {
   //
   const isIOS = isIphone(userAgent) || isIpad(userAgent)
 
@@ -23,7 +24,7 @@ export function isStoreReliant (userAgent: string) : MetaMaskMandatoryInfos {
   }
 }
 
-export function isStoreReliantFromRequest (req: NextRequest) : MetaMaskMandatoryInfos {
+export const isStoreReliantFromRequest = (req: NextRequest) : MetaMaskMandatoryInfos => {
   const ua = userAgent(req).ua
   return isStoreReliant(ua)
 }

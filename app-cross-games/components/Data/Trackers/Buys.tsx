@@ -1,22 +1,25 @@
-import { Flex } from '@chakra-ui/react'
-import { faGauge, faCashRegister } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { ColumnDef, getCoreRowModel, PaginationState, useReactTable } from '@tanstack/react-table'
-import { CASINO_COIN_NAME } from 'env/defaults'
-import { BacklinkReference } from 'lib/Backlinking'
 import { useMemo, useState } from 'react'
-import { networkFormatted, BasicTable, withBlockExplorerLink, withAddressExplorer, TooltipedHeader } from '../_'
-import { BuyData, BuyTotalData, fetchTrackersData } from './_'
-
 import useSWR from 'swr'
-import { MiniNetworkTag } from 'components/App/NetworkPicker'
-import { networksByChainId } from 'lib/TypedNetworks'
-import { TooltipdFromNow } from 'components/Casino/Stats/_'
+
+import { Flex } from '@chakra-ui/react'
+import { faCashRegister,faGauge } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import type { ColumnDef, PaginationState} from '@tanstack/react-table';
+import { getCoreRowModel, useReactTable } from '@tanstack/react-table'
+
+import { MiniNetworkTag } from '#/components/App/NetworkPicker'
+import { TooltipdFromNow } from '#/components/Casino/Stats/_'
+import { BasicTable, networkFormatted, TooltipedHeader,withAddressExplorer, withBlockExplorerLink } from '#/components/Data/_'
+import type { BuyData, BuyTotalData} from '#/components/Data/Trackers/_';
+import { fetchTrackersData } from '#/components/Data/Trackers/_'
+import { CASINO_COIN_NAME } from '#/env/defaults'
+import type { BacklinkReference } from '#/lib/Backlinking'
+import { networksByChainId } from '#/lib/TypedNetworks'
 
 /** props are cached data */
-export default function SalesAnalyticsBuys (props: {
+const SalesAnalyticsBuys = (props: {
   backlinkRef: BacklinkReference
-}) {
+}) => {
   //
   return (
     <Flex direction='column' gap='2'>
@@ -27,9 +30,9 @@ export default function SalesAnalyticsBuys (props: {
 }
 
 //
-function BuysTable (props: {
+const BuysTable = (props: {
   backlinkRef: BacklinkReference
-}) {
+}) => {
   //
   const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 0,
@@ -116,9 +119,9 @@ function BuysTable (props: {
 }
 
 //
-function BuysTotalTable (props: {
+const BuysTotalTable = (props: {
   backlinkRef: BacklinkReference
-}) {
+}) => {
   //
   const dataQuery = useSWR<BuyTotalData[]>(
     ['/buysTotal', props.backlinkRef.trackerId],
@@ -173,3 +176,5 @@ function BuysTotalTable (props: {
     />
   )
 }
+
+export default SalesAnalyticsBuys;

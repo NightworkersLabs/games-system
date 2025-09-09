@@ -1,8 +1,11 @@
-import { VStack, Text, Flex, Tooltip } from '@chakra-ui/react'
+import type { ReactElement, ReactNode} from 'react';
+import { useMemo, useState } from 'react'
+
+import { Flex, Text, Tooltip,VStack } from '@chakra-ui/react'
 import { faMagnifyingGlassChart, faReply, faScaleUnbalanced, faWarning } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useMemo, useState } from 'react'
-import { CoinBet, ColorBet } from 'lib/store/slices/_/bet'
+
+import type { CoinBet, ColorBet } from '#/lib/store/slices/_/bet'
 
 export interface BetTagDecorator {
     color: string,
@@ -10,7 +13,7 @@ export interface BetTagDecorator {
 }
 export type OutcomeDisplayerFunc<T> = (outcome: T) => BetTagDecorator
 
-export function BetBox (props: { children: any, subtitle: string }) {
+export const BetBox = (props: { children: ReactNode, subtitle: string }) => {
   return (
     <VStack
       flex='1'
@@ -31,13 +34,13 @@ export function BetBox (props: { children: any, subtitle: string }) {
   )
 }
 
-export function GamePlateau (props: {
-    top: any,
-    left: any,
-    right: any,
-    leftDisabled?: any,
-    stats?: any
-}) {
+export const GamePlateau = (props: {
+    top: ReactElement,
+    left: ReactElement,
+    right: ReactElement,
+    leftDisabled?: ReactElement,
+    stats?: ReactElement
+}) => {
   //
   const [statsMode, setStatsMode] = useState(false)
 
@@ -116,7 +119,7 @@ interface MultiplicatorBaseBetButton {
 }
 
 //
-export function BaseBetButton <T = CoinBet | ColorBet> (props: {
+export const BaseBetButton = <T extends CoinBet | ColorBet,> (props: {
     correspondingBet: T,
     betName: string,
     bet: T,
@@ -125,8 +128,8 @@ export function BaseBetButton <T = CoinBet | ColorBet> (props: {
     colorUnchecked?: string
     colorChecked?: string
     multiplicator? : MultiplicatorBaseBetButton
-    bg? : any
-}) {
+    bg? : string
+}) => {
   //
   const betThis = useMemo(() => props.bet === props.correspondingBet, [props.bet, props.correspondingBet])
 
@@ -185,11 +188,11 @@ export interface BetOdd {
 }
 
 //
-export function BetOdds (props: {
+export const BetOdds = (props: {
   colors: {[bettedOn: string]: string}
   data: BetOdd[]
   sorter: (a: BetOdd, b: BetOdd) => number
-}) {
+}) => {
   //
   const odds = useMemo(() =>
     props.data
@@ -249,14 +252,14 @@ export function BetOdds (props: {
 }
 
 //
-function BetOddComponent (props: {
+const BetOddComponent = (props: {
   bettedOn: string
   odds: number
   plays: string
   wons: string
   total: number
   bgColor?: string
-}) {
+}) => {
   //
   const prc = +(((props.odds / props.total) * 100).toFixed(2))
 

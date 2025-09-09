@@ -1,18 +1,20 @@
-import { Button, Flex, Image, Text } from '@chakra-ui/react'
-import { CASINO_COIN_NAME } from 'env/defaults'
 import { useMemo } from 'react'
-import { BetBox } from 'components/Casino/_/base'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowsSpin } from '@fortawesome/free-solid-svg-icons'
 
-export default function ChipsBetButton (props: {
+import { Button, Flex, Image, Text } from '@chakra-ui/react'
+import { faArrowsSpin } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
+import { BetBox } from '#/components/Casino/_/base'
+import { CASINO_COIN_NAME } from '#/env/defaults'
+
+const ChipsBetButton = (props: {
     bet: number,
     multiplicator: number,
     isDisabled: boolean,
     onClick: () => void,
     btnName: string,
     running: boolean
-}) {
+}) => {
   //
   const winnings = useMemo(() => {
     //
@@ -57,3 +59,5 @@ export default function ChipsBetButton (props: {
     </BetBox>
   )
 }
+
+export default ChipsBetButton;

@@ -1,10 +1,11 @@
-import { StoreSlice } from 'lib/store/_'
-import { SingleExecPromise } from 'lib/SingleExecPromise'
-import { IWeb3Slice } from './web3'
-import { BigNumber } from 'ethers'
+import type { BigNumber } from 'ethers'
 
-import { ICasinoBankRulesSlice } from './casino-bank/rules'
-import { IMonitoredPromise, mergeMapDoAll, delay } from 'lib/MonitoredPromise'
+import type {IMonitoredPromise} from '#/lib/MonitoredPromise';
+import { delay, mergeMapDoAll } from '#/lib/MonitoredPromise'
+import { SingleExecPromise } from '#/lib/SingleExecPromise'
+import type { StoreSlice } from '#/lib/store/_'
+import type { ICasinoBankRulesSlice } from '#/lib/store/slices/casino-bank/rules'
+import type { IWeb3Slice } from '#/lib/store/slices/web3'
 
 export interface IGameSlice {
   //

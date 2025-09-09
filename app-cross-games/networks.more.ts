@@ -1,4 +1,4 @@
-import { HandledNetworksDefinition } from 'env/networksCompiler'
+import type { HandledNetworksDefinition } from '#/env/networksCompiler'
 
 //
 // Here defined network MUST EXIST in networks.json

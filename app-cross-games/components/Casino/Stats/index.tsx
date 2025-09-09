@@ -1,25 +1,27 @@
-import { Tabs, TabList, Tab, TabPanels, TabPanel, Text } from '@chakra-ui/react'
+import { Tab, TabList, TabPanel, TabPanels, Tabs, Text } from '@chakra-ui/react'
 import { faChartArea, faTrophy } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { fetchData } from 'components/Data/_'
-import { getDataServiceUrl } from 'env/defaults'
-import { HandledCasinoGame } from '..'
-import BetsFeed from './BetsFeed'
-import Leaderboard from './Leaderboard'
+
+import BetsFeed from '#/components/Casino/Stats/BetsFeed'
+import Leaderboard from '#/components/Casino/Stats/Leaderboard'
+import { fetchData } from '#/components/Data/_'
+import { getDataServiceUrl } from '#/env/defaults'
+
+import type { HandledCasinoGame } from '..'
 
 const dataServiceUrl = getDataServiceUrl()
 
 //
-export const fetchForGameData = async (path: string, gameType: HandledCasinoGame) => {
+export const fetchForGameData = async <T,>(path: string, gameType: HandledCasinoGame): Promise<T> => {
   const url = new URL(path, dataServiceUrl)
   url.searchParams.set('game', gameType)
   return fetchData(url)
 }
 
 //
-export default function GamesStatsTab (props: {
+const GamesStatsTab = (props: {
   game : HandledCasinoGame
-}) {
+}) => {
   return (
     <Tabs isLazy isFitted colorScheme='pink' px='10' maxW='100%'>
       <TabList>
@@ -43,3 +45,5 @@ export default function GamesStatsTab (props: {
     </Tabs>
   )
 }
+
+export default GamesStatsTab;

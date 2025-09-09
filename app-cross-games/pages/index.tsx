@@ -1,10 +1,12 @@
-import NWEntryPoint, { NWEntryPointHeaders } from 'components'
-import RedirectAppStore from 'components/App/RedirectAppStore'
-import blStorage, { BacklinkReference } from 'lib/Backlinking'
-import { isStoreReliant, MetaMaskMandatoryInfos } from 'lib/DeviceDetector'
 import type { GetServerSideProps } from 'next'
-
 import { useEffect, useState } from 'react'
+
+import NWEntryPoint, { NWEntryPointHeaders } from '#/components'
+import RedirectAppStore from '#/components/App/RedirectAppStore'
+import type { BacklinkReference } from '#/lib/Backlinking';
+import blStorage from '#/lib/Backlinking'
+import type { MetaMaskMandatoryInfos } from '#/lib/DeviceDetector';
+import { isStoreReliant } from '#/lib/DeviceDetector'
 
 //
 export const getServerSideProps : GetServerSideProps = async (context) => {
@@ -18,10 +20,10 @@ export const getServerSideProps : GetServerSideProps = async (context) => {
 }
 
 //
-export default function MainPage (props: {
+const MainPage = (props: {
     mmInfos: MetaMaskMandatoryInfos,
     blRef?: BacklinkReference
-}) {
+}) => {
   //
   const [shouldRedirectToStore, setShouldRedirectToStore] = useState<boolean>(null)
 
@@ -56,3 +58,5 @@ export default function MainPage (props: {
 
   )
 }
+
+export default MainPage;

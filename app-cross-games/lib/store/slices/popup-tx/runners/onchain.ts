@@ -1,14 +1,15 @@
-import { getMeaningfulMessageFromError } from 'lib/EthersErrorDigger'
-import { SingleExecPromise } from 'lib/SingleExecPromise'
-import {
+import type { Event } from 'ethers'
+
+import { getMeaningfulMessageFromError } from '#/lib/EthersErrorDigger'
+import { SingleExecPromise } from '#/lib/SingleExecPromise'
+import type { TrustfulBotResponse } from '#/lib/store/slices/_/trustful'
+import type {
   AnyOnChainSecurePopupTx,
   EndToEndOnChainSecurePopupTx,
-  SecurePopupTxInvokeParams,
-  OnChainSecurePopupTxWaitingStep,
-  isOCEtEPopupTx
-} from '../handler'
-import { Event } from 'ethers'
-import { TrustfulBotResponse } from 'lib/store/slices/_/trustful'
+  SecurePopupTxInvokeParams} from '#/lib/store/slices/popup-tx/handler';
+import {
+  isOCEtEPopupTx,
+  OnChainSecurePopupTxWaitingStep} from '#/lib/store/slices/popup-tx/handler'
 
 //
 export const runOnChainSecurePopupTx = async ({
@@ -140,7 +141,7 @@ const _getBotProvableResponse = async (conf: EndToEndOnChainSecurePopupTx, nonce
 }
 
 /** wait for the context-related data of bot response to an order */
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+ 
 const _getBotOrderResponse = async (conf: EndToEndOnChainSecurePopupTx, nonce: number) => {
   const filter = conf.eventsFilter(conf.contractToListen, nonce)
   return new Promise<Event>(resolve => {

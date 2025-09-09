@@ -1,9 +1,10 @@
 import { Flex, Text } from '@chakra-ui/react'
 import { faWarning } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { NWNakedTitleContent } from 'components/App/NWTitle'
 
-export default function Error ({ statusCode }) {
+import { NWNakedTitleContent } from '#/components/App/NWTitle'
+
+const Error = ({ statusCode }) => {
   return (
     <Flex direction='column' gap='5rem' color="white" alignItems='center' justifyContent='center' flex='1'>
       <Flex fontSize='2rem' direction='column'>
@@ -29,3 +30,5 @@ Error.getInitialProps = ({ res, err }) => {
   const statusCode = res ? res.statusCode : err ? err.statusCode : 404
   return { statusCode }
 }
+
+export default Error;

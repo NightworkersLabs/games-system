@@ -1,29 +1,32 @@
-import { useReactTable, getCoreRowModel, ColumnDef } from '@tanstack/react-table'
-import { BasicTable, TooltipedHeader } from 'components/Data/_'
-import { Flex, Text } from '@chakra-ui/react'
-
 import { useMemo } from 'react'
 import useSWR from 'swr'
-import { fetchStatsData, GamesStats, PackedGamesStats } from './_'
+
+import { Flex, Text } from '@chakra-ui/react'
+import type { IconDefinition } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { CASINO_COIN_NAME } from 'env/defaults'
-import { IconDefinition } from '@fortawesome/free-brands-svg-icons'
-import { GAMES_ICONS } from 'components/Casino'
-import { BetTag } from 'components/Casino/_/BaseBetHistoryDisplayer'
-import { coinBetOutcomeDisplayer } from 'components/Casino/_/Coinflip'
-import { CoinBet, ColorBet } from 'lib/store/slices/_/bet'
-import { rouletteBetOutcomeDisplayer } from 'components/Casino/_/Roulette'
+import type { ColumnDef } from '@tanstack/react-table';
+import { getCoreRowModel,useReactTable } from '@tanstack/react-table'
+
+import { GAMES_ICONS } from '#/components/Casino'
+import { BetTag } from '#/components/Casino/_/BaseBetHistoryDisplayer'
+import { coinBetOutcomeDisplayer } from '#/components/Casino/_/Coinflip'
+import { rouletteBetOutcomeDisplayer } from '#/components/Casino/_/Roulette'
+import { BasicTable, TooltipedHeader } from '#/components/Data/_'
+import type { GamesStats, PackedGamesStats } from '#/components/Data/Stats/_';
+import { fetchStatsData } from '#/components/Data/Stats/_'
+import { CASINO_COIN_NAME } from '#/env/defaults'
+import { CoinBet, ColorBet } from '#/lib/store/slices/_/bet'
 
 //
 export const GameOutcomeDisplayer : {
-  [gameType: string] : (outcomeAsString: string) => any
+  [gameType: string] : (outcomeAsString: string) => React.ReactNode
 } = {
   coinflip: outcome => <BetTag decorator={coinBetOutcomeDisplayer(CoinBet[outcome as keyof typeof CoinBet])} />,
   roulette: outcome => <BetTag decorator={rouletteBetOutcomeDisplayer(ColorBet[outcome as keyof typeof ColorBet])} />
 }
 
 //
-export default function GamesStatsUI () {
+const GamesStatsUI = () => {
   //
   const dataQuery = useSWR<PackedGamesStats>(
     ['/games-stats'],
@@ -49,11 +52,11 @@ export default function GamesStatsUI () {
 }
 
 //
-function GamesTable (props: {
+const GamesTable = (props: {
   gameName: string
   data: GamesStats[],
   icon: IconDefinition
-}) {
+}) => {
   //
   const columns = useMemo<ColumnDef<GamesStats>[]>(
     () => [
@@ -160,3 +163,5 @@ function GamesTable (props: {
     </Flex>
   )
 }
+
+export default GamesStatsUI;

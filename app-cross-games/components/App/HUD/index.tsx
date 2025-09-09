@@ -1,17 +1,16 @@
-import { Flex, Button, Text, Divider } from '@chakra-ui/react'
-
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Button, Divider,Flex, Text } from '@chakra-ui/react'
+import type { IconProp } from '@fortawesome/fontawesome-svg-core'
 import { faCircleQuestion, faUserShield } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-import Wallet from 'components/App/HUD/Wallet'
-import AudioController from 'components/App/HUD/AudioController'
-import SecureBotHealth from './SecureBotHealth'
-import ProvablyFairChooser from './ProvablyFairChooser'
-import { useNWStore } from 'lib/store/main'
-import { IconProp } from '@fortawesome/fontawesome-svg-core'
+import AudioController from '#/components/App/HUD/AudioController'
+import ProvablyFairChooser from '#/components/App/HUD/ProvablyFairChooser'
+import SecureBotHealth from '#/components/App/HUD/SecureBotHealth'
+import Wallet from '#/components/App/HUD/Wallet'
+import { useNWStore } from '#/lib/store/main'
 
 //
-export default function HUD (props: { visibilityClass: string }) {
+const HUD = (props: { visibilityClass: string }) => {
   //
   const dAppState = useNWStore(s => s.dAppState)
 
@@ -46,7 +45,7 @@ export default function HUD (props: { visibilityClass: string }) {
 }
 
 //
-function SecureBotStatus () {
+const SecureBotStatus = () => {
   return (
     <Flex
       border='1px'
@@ -73,7 +72,7 @@ function SecureBotStatus () {
 }
 
 //
-export function HUDButton (props: { name: string, icon: IconProp, href: string }) {
+export const HUDButton = (props: { name: string, icon: IconProp, href: string }) => {
   return (
     <a href={props.href} target='_blank' rel="noreferrer">
       <Button
@@ -84,3 +83,5 @@ export function HUDButton (props: { name: string, icon: IconProp, href: string }
     </a>
   )
 }
+
+export default HUD;

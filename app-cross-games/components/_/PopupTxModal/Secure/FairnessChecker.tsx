@@ -1,27 +1,30 @@
-import {
-  Flex, Text, Link,
-  Accordion,
-  AccordionItem,
-  AccordionButton,
-  AccordionPanel,
-  AccordionIcon,
-  Input,
-  InputGroup,
-  Tooltip
-} from '@chakra-ui/react'
-import { faCheck, faCircleQuestion, faCubesStacked, faDice, faInfoCircle, faKey, faSeedling, faWarning } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { BigNumber } from 'ethers'
 import { keccak256 } from 'ethers/lib/utils'
 import { useMemo } from 'react'
-import { ProvableSecurePopupTx } from 'lib/store/slices/popup-tx/handler'
-import { TrustfulPayloadContext } from 'lib/store/slices/_/trustful'
-import { OUTCOME_RESOLVERS, RandomNumberResolver } from './OutcomeResolvers'
+
+import {
+  Accordion,
+  AccordionButton,
+  AccordionIcon,
+  AccordionItem,
+  AccordionPanel,
+  Flex,   Input,
+  InputGroup,
+Link,
+Text,   Tooltip
+} from '@chakra-ui/react'
+import { faCheck, faCircleQuestion, faCubesStacked, faDice, faInfoCircle, faKey, faSeedling, faWarning } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
+import type { RandomNumberResolver } from '#/components/_/PopupTxModal/Secure/OutcomeResolvers';
+import { OUTCOME_RESOLVERS } from '#/components/_/PopupTxModal/Secure/OutcomeResolvers'
+import type { TrustfulPayloadContext } from '#/lib/store/slices/_/trustful'
+import type { ProvableSecurePopupTx } from '#/lib/store/slices/popup-tx/handler'
 
 //
-export default function FairnessChecker (props: {
+const FairnessChecker = (props: {
     popupTx: TrustfulPayloadContext & ProvableSecurePopupTx
-}) {
+}) => {
   //
   const associatedResolver = useMemo(() =>
     OUTCOME_RESOLVERS[props.popupTx.resolveContext]
@@ -64,7 +67,7 @@ export default function FairnessChecker (props: {
 }
 
 //
-function NotProvableText (props: { wantsProvabilityForSecurePopupTx: boolean }) {
+const NotProvableText = (props: { wantsProvabilityForSecurePopupTx: boolean }) => {
   //
   return (
     <Text color='#ff7676' textAlign='center' mb='2'>
@@ -76,7 +79,7 @@ function NotProvableText (props: { wantsProvabilityForSecurePopupTx: boolean }) 
 }
 
 //
-function ProvableText () {
+const ProvableText = () => {
   return (
     <Text color='#54db54' textAlign='center' mb='2'>
             Everything worked as intended, let&apos;s check the values...
@@ -85,10 +88,10 @@ function ProvableText () {
 }
 
 //
-function HashSecretFairnessItem (props: {
+const HashSecretFairnessItem = (props: {
     usedServerSecretHash: BigNumber,
     usedSecret: BigNumber
-}) {
+}) => {
   //
   const rehashedSecret = useMemo(() =>
     keccak256(props.usedSecret.toHexString())
@@ -145,10 +148,10 @@ function HashSecretFairnessItem (props: {
 }
 
 //
-function OutcomeReplayerItem (props: {
+const OutcomeReplayerItem = (props: {
   randomNumber: BigNumber
   resolver: RandomNumberResolver
-}) {
+}) => {
 //
   return (
     <AccordionItem>
@@ -169,12 +172,12 @@ function OutcomeReplayerItem (props: {
 }
 
 //
-function RandomNumberFairnessItem (props: {
+const RandomNumberFairnessItem = (props: {
     clientSeed: BigNumber
     orderNonce: number
     randomNumber: BigNumber
     usedSecret: BigNumber
-}) {
+}) => {
   //
   const safeClientSeedHex = useMemo(() =>
     props.clientSeed?.toHexString() ?? '0x00'
@@ -260,11 +263,11 @@ function RandomNumberFairnessItem (props: {
   )
 }
 
-function FCAccordionTitle (props: {
+const FCAccordionTitle = (props: {
     title: string
     tooltip: string
     areEquals?: boolean
-}) {
+}) => {
   return (
     <Tooltip placement='top' hasArrow label={props.tooltip}>
       <Flex alignItems='center' flex='1' textAlign='left' gap='2'>
@@ -280,3 +283,5 @@ function FCAccordionTitle (props: {
     </Tooltip>
   )
 }
+
+export default FairnessChecker;

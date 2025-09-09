@@ -1,11 +1,12 @@
-import { useNWStore } from 'lib/store/main'
-import { isBasicPopupTx } from 'lib/store/slices/popup-tx/handler'
 import shallow from 'zustand/shallow'
-import BasicPopupTxModal from './Basic'
-import PopupTxModalTracker from './PopupTxModalTracker'
-import SecurePopupTxModal from './Secure'
 
-export default function PopupTxModal () {
+import BasicPopupTxModal from '#/components/_/PopupTxModal/Basic'
+import PopupTxModalTracker from '#/components/_/PopupTxModal/PopupTxModalTracker'
+import SecurePopupTxModal from '#/components/_/PopupTxModal/Secure'
+import { useNWStore } from '#/lib/store/main'
+import { isBasicPopupTx } from '#/lib/store/slices/popup-tx/handler'
+
+const PopupTxModal = () => {
   //
   const {
     isPopupTxVisible,
@@ -30,3 +31,5 @@ export default function PopupTxModal () {
       )
   )
 }
+
+export default PopupTxModal; 

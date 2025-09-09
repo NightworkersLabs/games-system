@@ -1,12 +1,12 @@
 import { writeJSONSync } from 'fs-extra'
-import { getCompiledNetworkInfos } from './networksCompiler'
-
 import { EOL } from 'os'
+
+import { getCompiledNetworkInfos } from '#/env/networksCompiler'
 
 const compiledFilePath = './networks.compiled.json'
 
 //
-function compileNetworks () {
+const compileNetworks = () => {
   // get compiled infos
   const compiled = getCompiledNetworkInfos()
 

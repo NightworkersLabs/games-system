@@ -1,18 +1,19 @@
-import { getMeaningfulMessageFromError } from 'lib/EthersErrorDigger'
-import { SingleExecPromise } from 'lib/SingleExecPromise'
-import {
-  SecurePopupTxInvokeParams,
-  APISecurePopupTx,
-  APISecurePopupTxWaitingStep,
-  isSecurePopupTx,
-  isApiSecurePopupTx,
-  AnyPopupTx
-} from '../handler'
 import { BigNumber } from 'ethers'
-import { ChipsBalance } from 'lib/store/slices/casino-bank/user-context'
+
+import { getMeaningfulMessageFromError } from '#/lib/EthersErrorDigger'
+import { SingleExecPromise } from '#/lib/SingleExecPromise'
+import type { ChipsBalance } from '#/lib/store/slices/casino-bank/user-context'
+import type {
+  AnyPopupTx,
+  APISecurePopupTx,
+  SecurePopupTxInvokeParams} from '#/lib/store/slices/popup-tx/handler';
+import {
+  APISecurePopupTxWaitingStep,
+  isApiSecurePopupTx,
+  isSecurePopupTx} from '#/lib/store/slices/popup-tx/handler'
 
 //
-export function isAPICasinoBetRunning (popupTx: AnyPopupTx) {
+export const isAPICasinoBetRunning = (popupTx: AnyPopupTx) => {
   return popupTx && isSecurePopupTx(popupTx) && isApiSecurePopupTx(popupTx) && popupTx.runState === true
 }
 
@@ -88,6 +89,6 @@ export const runAPISecurePopupTx = async ({
 
 //
 // Function to generate random number
-function randomWithinRange (min: number, max: number) {
+const randomWithinRange = (min: number, max: number) => {
   return Math.random() * (max - min) + min
 }

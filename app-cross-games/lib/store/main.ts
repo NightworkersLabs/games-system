@@ -1,15 +1,20 @@
-import create, { GetState, SetState } from 'zustand'
+import type { GetState, SetState } from 'zustand';
+import { create } from 'zustand'
 
-import web3Slice, { IWeb3Slice } from './slices/web3'
-import gameSlice, { IGameSlice } from './slices/game'
-
-import popupTxSlice, { IPopupTxSlice } from './slices/popup-tx/handler'
-import securePopupTxSlice, { ISecurePopupTxSlice } from './slices/popup-tx/secure'
-
-import casinoBankRulesSlice, { ICasinoBankRulesSlice } from './slices/casino-bank/rules'
-import casinoBankSlice, { ICasinoBankSlice } from './slices/casino-bank/user-context'
-
-import casinoAPISlice, { ICasinoAPISlice } from './slices/casino-api/user-context'
+import type { ICasinoAPISlice } from '#/lib/store/slices/casino-api/user-context';
+import casinoAPISlice from '#/lib/store/slices/casino-api/user-context'
+import type { ICasinoBankRulesSlice } from '#/lib/store/slices/casino-bank/rules';
+import casinoBankRulesSlice from '#/lib/store/slices/casino-bank/rules'
+import type { ICasinoBankSlice } from '#/lib/store/slices/casino-bank/user-context';
+import casinoBankSlice from '#/lib/store/slices/casino-bank/user-context'
+import type { IGameSlice } from '#/lib/store/slices/game';
+import gameSlice from '#/lib/store/slices/game'
+import type { IPopupTxSlice } from '#/lib/store/slices/popup-tx/handler';
+import popupTxSlice from '#/lib/store/slices/popup-tx/handler'
+import type { ISecurePopupTxSlice } from '#/lib/store/slices/popup-tx/secure';
+import securePopupTxSlice from '#/lib/store/slices/popup-tx/secure'
+import type { IWeb3Slice } from '#/lib/store/slices/web3';
+import web3Slice from '#/lib/store/slices/web3'
 
 type AllSlices =
     IWeb3Slice & IGameSlice
@@ -17,6 +22,7 @@ type AllSlices =
     & ICasinoBankRulesSlice & ICasinoBankSlice
     & ICasinoAPISlice
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const createRootSlice = (set: SetState<any>, get: GetState<any>) => ({
   ...web3Slice(set, get),
   ...gameSlice(set, get),

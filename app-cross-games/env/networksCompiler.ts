@@ -1,8 +1,8 @@
-import networks from '../networks.json'
-import more from '../networks.more'
+import networks from '#/networks.json'
+import more from '#/networks.more'
 
 //
-export function toHex (chainId: number): string {
+export const toHex = (chainId: number): string => {
   return '0x' + (chainId).toString(16)
 }
 
@@ -74,7 +74,7 @@ export type HandledNetworksDefinition = {
 }
 
 //
-export function isForkedNetwork (object: NetworkDefinition): object is ForkedNetwork {
+export const isForkedNetwork = (object: NetworkDefinition): object is ForkedNetwork => {
   return 'forkOf' in object
 }
 

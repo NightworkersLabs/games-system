@@ -1,4 +1,4 @@
-import { SingleExecPromise } from './SingleExecPromise'
+import { SingleExecPromise } from '#/lib/SingleExecPromise'
 
 //
 export const delay = (ms: number) => new Promise(resolve => setInterval(resolve, ms))

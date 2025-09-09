@@ -2,10 +2,12 @@ import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
 import { useMemo, useRef } from 'react'
 import useSWR from 'swr'
-import { fetchStatsData, GamesEvol } from './_'
+
+import type { GamesEvol } from '#/components/Data/Stats/_';
+import { fetchStatsData } from '#/components/Data/Stats/_'
 
 //
-export default function GamesEvolCharts () {
+const GamesEvolCharts = () => {
   //
   const chartComponentRef = useRef<HighchartsReact.RefObject>(null)
 
@@ -54,3 +56,5 @@ export default function GamesEvolCharts () {
     />
   )
 }
+
+export default GamesEvolCharts;

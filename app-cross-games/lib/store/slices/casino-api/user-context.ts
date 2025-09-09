@@ -1,7 +1,7 @@
-import { StoreSlice } from 'lib/store/_'
-import { ChipsBalance, IProtectedCasinoSlice } from '../casino-bank/user-context'
-import { IPopupTxSlice } from '../popup-tx/handler'
-import { AnyBet, BetEntry, CoinBet, ColorBet } from '../_/bet'
+import type { StoreSlice } from '#/lib/store/_'
+import type { AnyBet, BetEntry, CoinBet, ColorBet } from '#/lib/store/slices/_/bet'
+import type { ChipsBalance, IProtectedCasinoSlice } from '#/lib/store/slices/casino-bank/user-context'
+import type { IPopupTxSlice } from '#/lib/store/slices/popup-tx/handler'
 
 //
 export interface APIBetEntry<T = AnyBet> extends

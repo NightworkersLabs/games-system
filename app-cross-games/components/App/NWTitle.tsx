@@ -1,23 +1,24 @@
 import { useMemo } from 'react'
-import { Box, Flex, Text, Image, Link } from '@chakra-ui/react'
-import { useNWStore } from 'lib/store/main'
-import SocialBlade from './SocialBlade'
 
-import pkg from 'package.json'
-import { BacklinkReference } from 'lib/Backlinking'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Box, Flex, Image, Link,Text } from '@chakra-ui/react'
 import { faMultiply } from '@fortawesome/free-solid-svg-icons'
-import { getNWExecutionContextFromEnv } from 'env/defaults'
-import NetworkPicker from './NetworkPicker'
-import DAppStateTracker from './DAppStateTracker'
-import { domainUrl } from 'pages/_document'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
+import DAppStateTracker from '#/components/App/DAppStateTracker'
+import NetworkPicker from '#/components/App/NetworkPicker'
+import SocialBlade from '#/components/App/SocialBlade'
+import { getNWExecutionContextFromEnv } from '#/env/defaults'
+import type { BacklinkReference } from '#/lib/Backlinking'
+import { useNWStore } from '#/lib/store/main'
+import pkg from '#/package.json'
+import { domainUrl } from '#/pages/_document'
 
 //
-export default function NWTitle (props: {
+const NWTitle = (props: {
     visibilityClass?: string,
     isPlaceholder?: boolean,
     doNetworkSelection?: boolean
-}) {
+}) => {
   //
   const isProdEnv = useMemo(() => getNWExecutionContextFromEnv() === 'prod', [])
 
@@ -50,7 +51,7 @@ export default function NWTitle (props: {
   )
 }
 
-export function NWVersion () {
+export const NWVersion = () => {
   return (
     <Text
       fontSize={10}
@@ -60,7 +61,7 @@ export function NWVersion () {
   )
 }
 
-export function NWNakedTitle () {
+export const NWNakedTitle = () => {
   //
   const currentBacklink = useNWStore(s => s.currentBacklink)
 
@@ -82,7 +83,7 @@ export function NWNakedTitle () {
 }
 
 //
-function CollabTitle (props: { backlink: BacklinkReference }) {
+const CollabTitle = (props: { backlink: BacklinkReference }) => {
   return (
     <Flex alignItems='center' gap='4'>
       <BasicTitle isVertical={true} />
@@ -106,11 +107,11 @@ export const getSponsorImageUrl = (backlink: BacklinkReference | {
 }, fullUrl?: true) => `${fullUrl ? domainUrl : '/'}sponsors/${backlink.uniqueDashboardName}.${backlink.imgExt ?? 'png'}`
 
 //
-export function CollabImage (props: { backlink: BacklinkReference | {
+export const CollabImage = (props: { backlink: BacklinkReference | {
   dashboardDescription: string,
   uniqueDashboardName: string,
   imgExt?: string
-} }) {
+} }) => {
   return (
     <Image
       boxSize='64px'
@@ -125,9 +126,9 @@ export function CollabImage (props: { backlink: BacklinkReference | {
 }
 
 //
-function BasicTitle (props: {
+const BasicTitle = (props: {
     isVertical?: boolean
-}) {
+}) => {
   return (
     <Flex direction='column'>
       <NWVersion />
@@ -149,7 +150,7 @@ function BasicTitle (props: {
   )
 }
 
-export function NWNakedTitleContent () {
+export const NWNakedTitleContent = () => {
   //
   const isntProdEnv = useMemo(() => getNWExecutionContextFromEnv() !== 'prod', [])
 
@@ -174,3 +175,5 @@ export function NWNakedTitleContent () {
     </>
   )
 }
+
+export default NWTitle;

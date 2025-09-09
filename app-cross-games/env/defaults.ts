@@ -8,12 +8,12 @@ export const getNWExecutionContextFromEnv = () => {
 }
 
 /** @dev points to the server with all game API functions (provably-fair, coinflip, balance...) */
-export function getGameServiceUrl () : string {
+export const getGameServiceUrl = () : string => {
   return process.env.NEXT_PUBLIC_SECRET_PROVIDER_URL
 }
 
 /**  @dev points to the server with all data API functions (stats, dashboards...) */
-export function getDataServiceUrl () : string {
+export const getDataServiceUrl = () : string => {
   return process.env.NEXT_PUBLIC_DATA_PROVIDER_URL ?? getGameServiceUrl()
 }
 

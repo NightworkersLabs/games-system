@@ -1,6 +1,9 @@
-import { Box, Checkbox, Flex, Text } from '@chakra-ui/react'
-import { useNWStore } from 'lib/store/main'
 import { useCallback } from 'react'
+
+import { Box, Checkbox, Flex, Text } from '@chakra-ui/react'
+
+import { useNWStore } from '#/lib/store/main'
+
 import { NextStepButton } from '.'
 
 const ETETxText = 'To prevent manipulations and exploits from third-parties (hackers, us developpers...) of the outcome / rarity you will get,' +
@@ -13,12 +16,12 @@ const NonPFText = 'Since you explicitely OPTED-OUT of provability,' +
                   ' we will automate all the process for you, but you will NOT be able to confirm any fairness. If possible, always prefer using provability.'
 
 //
-export default function SecurePopupTxDescriptor (props: {
+const SecurePopupTxDescriptor = (props: {
     nextStep: () => void,
     usesProvablyFairness: boolean,
     willBeProvable: boolean,
     description: string
-}) {
+}) => {
   //
   const setSkipProvablyExplaination = useNWStore(s => s.setSkipProvablyExplaination)
 
@@ -54,3 +57,5 @@ export default function SecurePopupTxDescriptor (props: {
     </Flex>
   )
 }
+
+export default SecurePopupTxDescriptor;

@@ -1,13 +1,15 @@
-import { CASINO_COIN_NAME } from 'env/defaults'
 import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
-import { networksByChainId } from 'lib/TypedNetworks'
 import { useMemo, useRef } from 'react'
 import useSWR from 'swr'
-import { BalanceEvol, fetchStatsData } from './_'
+
+import type { BalanceEvol} from '#/components/Data/Stats/_';
+import { fetchStatsData } from '#/components/Data/Stats/_'
+import { CASINO_COIN_NAME } from '#/env/defaults'
+import { networksByChainId } from '#/lib/TypedNetworks'
 
 //
-export default function BalancesEvolChart () {
+const BalancesEvolChart = () => {
   //
   const chartComponentRef = useRef<HighchartsReact.RefObject>(null)
 
@@ -57,3 +59,5 @@ export default function BalancesEvolChart () {
     />
   )
 }
+
+export default BalancesEvolChart;

@@ -1,23 +1,23 @@
-import { ChakraProvider } from '@chakra-ui/react'
-import main from 'theme/main'
+import '#/styles/globals.css'
+import '#/styles/hub.css'
+import '#/styles/u-gauge.css'
+import '#/styles/bet-tracker.css'
+import '@fortawesome/fontawesome-svg-core/styles.css'
 
 import Head from 'next/head'
 
-import 'styles/globals.css'
-import 'styles/hub.css'
-import 'styles/u-gauge.css'
-import 'styles/bet-tracker.css'
-
+import { ChakraProvider } from '@chakra-ui/react'
 import { config } from '@fortawesome/fontawesome-svg-core'
-import '@fortawesome/fontawesome-svg-core/styles.css'
-import { appName, domainUrl } from './_document'
+
+import { appName, domainUrl } from '#/pages/_document'
+import main from '#/theme/main'
 config.autoAddCss = false
 
 //
 //
 //
 
-export default function NWApp ({ Component, pageProps }) {
+const NWApp = ({ Component, pageProps }) => {
   return (
     <ChakraProvider theme={main}>
       {/* <NWHead /> */}
@@ -39,11 +39,11 @@ export default function NWApp ({ Component, pageProps }) {
 // }
 
 //
-export function NWHead (props: {
+export const NWHead = (props: {
   title?: string,
   description?: string,
   imageUrl?: string
-}) {
+}) => {
   //
   return (
     <Head>
@@ -78,3 +78,5 @@ NWHead.defaultProps = {
   description: appName,
   imageUrl: `${domainUrl}favicons/apple-icon.png`
 }
+
+export default NWApp;

@@ -1,19 +1,21 @@
-import { Flex, Spinner } from '@chakra-ui/react'
-import { useCallback, useEffect, useState } from 'react'
-import { SingleExecPromise } from 'lib/SingleExecPromise'
-import { CircleIcon } from '../App/HUD/SecureBotHealth'
 import { motion, useAnimation } from 'framer-motion'
-import { delay } from 'lib/MonitoredPromise'
+import { useCallback, useEffect, useState } from 'react'
+
+import { Flex, Spinner } from '@chakra-ui/react'
+
+import { CircleIcon } from '#/components/App/HUD/SecureBotHealth'
+import { delay } from '#/lib/MonitoredPromise'
+import type { SingleExecPromise } from '#/lib/SingleExecPromise'
 
 /** */
-export default function AutoUpdateTracker (props: {
+const AutoUpdateTracker = (props: {
     /** callback wrapper which will be called on a precise timed schedule */
     toCallPeriodically: SingleExecPromise
     /** period in seconds before the SingleExecPromise will be called automatically */
     periodicityInSecs?: number
     /** if must call at mount 'toCallPeriodically' */
     immediateCall?: boolean
-}) {
+}) => {
   //
   const controls = useAnimation()
 
@@ -96,3 +98,5 @@ AutoUpdateTracker.defaultProps = {
   periodicityInSecs: 20,
   immediateCall: true
 }
+
+export default AutoUpdateTracker;

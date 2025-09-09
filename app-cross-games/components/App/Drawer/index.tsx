@@ -1,11 +1,12 @@
-import { Flex, Button, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerFooter, DrawerHeader, DrawerOverlay, Text, useDisclosure, Tooltip } from '@chakra-ui/react'
-import { faScrewdriverWrench, faToolbox } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useRef } from 'react'
 
-import TestingHelpers from './TestingHelpers'
+import { Button, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerFooter, DrawerHeader, DrawerOverlay, Flex, Text, Tooltip,useDisclosure } from '@chakra-ui/react'
+import { faScrewdriverWrench, faToolbox } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-export default function NWDrawer () {
+import TestingHelpers from '#/components/App/Drawer/TestingHelpers'
+
+const NWDrawer = () => {
   //
   const { isOpen, onOpen, onClose } = useDisclosure()
   const btnRef = useRef(null)
@@ -44,3 +45,5 @@ export default function NWDrawer () {
     </>
   )
 }
+
+export default NWDrawer;

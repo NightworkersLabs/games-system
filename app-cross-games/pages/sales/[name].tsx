@@ -1,15 +1,17 @@
-import { Text, Flex, Tab, TabList, TabPanel, TabPanels, Tabs, Link } from '@chakra-ui/react'
-import { GetServerSideProps } from 'next'
-import blStorage, { BacklinkReference, BacklinkTracker } from 'lib/Backlinking'
-import { fetchTrackersData } from 'components/Data/Trackers/_'
-import SalesAnalyticsBuys from 'components/Data/Trackers/Buys'
-import SalesAnalyticsPayments from 'components/Data/Trackers/Payments'
-import { NWHead } from 'pages/_app'
-import { CollabImage, getSponsorImageUrl, NWNakedTitleContent } from 'components/App/NWTitle'
-import { domainUrl, mainProduct } from 'pages/_document'
-// eslint-disable-next-line camelcase
-import { SWRConfig, unstable_serialize } from 'swr'
+import type { GetServerSideProps } from 'next'
 import { useMemo } from 'react'
+import { SWRConfig, unstable_serialize } from 'swr'
+
+import { Flex, Link,Tab, TabList, TabPanel, TabPanels, Tabs, Text } from '@chakra-ui/react'
+
+import { CollabImage, getSponsorImageUrl, NWNakedTitleContent } from '#/components/App/NWTitle'
+import { fetchTrackersData } from '#/components/Data/Trackers/_'
+import SalesAnalyticsBuys from '#/components/Data/Trackers/Buys'
+import SalesAnalyticsPayments from '#/components/Data/Trackers/Payments'
+import type { BacklinkReference, BacklinkTracker } from '#/lib/Backlinking';
+import blStorage from '#/lib/Backlinking'
+import { NWHead } from '#/pages/_app'
+import { domainUrl, mainProduct } from '#/pages/_document'
 
 //
 //
@@ -71,7 +73,7 @@ export const getStaticProps : GetServerSideProps = async (context) => {
 // This function gets called at build time on server-side.
 // It may be called again, on a serverless function, if
 // the path has not been generated.
-export async function getStaticPaths () {
+export const getStaticPaths = async () => {
   // We'll pre-render only these paths at build time.
   // { fallback: blocking } will server-render pages
   // on-demand if the path doesn't exist.
@@ -90,14 +92,14 @@ export async function getStaticPaths () {
 //
 
 //
-export default function SalesAnalyticsPage (props: {
-  fallback: any
+export const SalesAnalyticsPage = (props: {
+  fallback: object,
   backlinkRef: BacklinkReference
-}) {
+}) => {
   //
   const link = useMemo(() =>
     props.backlinkRef.sponsorIsComprehensive != null
-      ? `${domainUrl}presentedBy/${props.backlinkRef.uniqueDashboardName}`
+      ? `${domainUrl}presentedBy/${String(props.backlinkRef.uniqueDashboardName)}`
       : null
   , [props.backlinkRef.uniqueDashboardName, props.backlinkRef.sponsorIsComprehensive])
 
@@ -143,9 +145,9 @@ export default function SalesAnalyticsPage (props: {
 }
 
 //
-function Title (props: {
+const Title = (props: {
   backlinkRef: BacklinkReference
-}) {
+}) => {
   return (
     <Flex direction='column' alignItems='center' justifyContent='center' m='6' gap='1'>
       {props.backlinkRef.sponsorIsComprehensive && <CollabImage backlink={props.backlinkRef} />}
@@ -154,3 +156,5 @@ function Title (props: {
     </Flex>
   )
 }
+
+export default SalesAnalyticsPage;

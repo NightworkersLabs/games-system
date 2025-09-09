@@ -1,16 +1,17 @@
-import { Flex, Spinner, Text } from '@chakra-ui/react'
-import { APISecurePopupTxWaitingStep, BasicPopupTxWaitingStep, OnChainSecurePopupTxWaitingStep } from 'lib/store/slices/popup-tx/handler'
-
-import { WarningIcon, CheckIcon } from '@chakra-ui/icons'
-import { NextStepLayout } from './Secure'
 import { useCallback, useMemo } from 'react'
-import { SEPRunState } from 'lib/SingleExecPromise'
+
+import { CheckIcon,WarningIcon } from '@chakra-ui/icons'
+import { Flex, Spinner, Text } from '@chakra-ui/react'
+
+import { NextStepLayout } from '#/components/_/PopupTxModal/Secure'
+import type { SEPRunState } from '#/lib/SingleExecPromise'
+import type { APISecurePopupTxWaitingStep, BasicPopupTxWaitingStep, OnChainSecurePopupTxWaitingStep } from '#/lib/store/slices/popup-tx/handler'
 
 //
 export type StepState = 'Waiting' | 'Handling' | 'Handled' | 'Error'
 
 //
-function colorByStepState (state: StepState) : string {
+const colorByStepState = (state: StepState) : string => {
   switch (state) {
   case 'Error':
     return '#ff9292' // red
@@ -24,10 +25,10 @@ function colorByStepState (state: StepState) : string {
 }
 
 //
-function StepIcon (props: { state: StepState, color: string }) {
-  return (props.state === 'Handling' && <Spinner size='xs' mr='1' />) ||
-    (props.state === 'Error' && <WarningIcon mr='1' color={props.color} />) ||
-    (props.state === 'Handled' && <CheckIcon mr='1' color={props.color} />) ||
+const StepIcon = ({state, color} : { state: StepState, color: string }) => {
+  return (state === 'Handling' && <Spinner size='xs' mr='1' />) ||
+    (state === 'Error' && <WarningIcon mr='1' color={color} />) ||
+    (state === 'Handled' && <CheckIcon mr='1' color={color} />) ||
     <></>
 }
 
@@ -39,7 +40,7 @@ export interface PopupTxStep<T = AnyPopupTxStep> {
 }
 
 //
-export default function StepsLifecycleDisplayer <T = AnyPopupTxStep> (props: {
+const StepsLifecycleDisplayer = <T extends AnyPopupTxStep> (props: {
     /** callback to call when last step reached finished */
     nextStep: () => void,
     /** popup tx run state to monitor */
@@ -50,7 +51,7 @@ export default function StepsLifecycleDisplayer <T = AnyPopupTxStep> (props: {
     isProvableStepNext: boolean,
     /** steps configuration */
     steps: PopupTxStep<T>[]
-}) {
+}) => {
   const lastStep = useMemo(() => props.steps[props.steps.length - 1].step, [props.steps])
 
   //
@@ -95,3 +96,5 @@ export default function StepsLifecycleDisplayer <T = AnyPopupTxStep> (props: {
     </Flex>
   )
 }
+
+export default StepsLifecycleDisplayer;

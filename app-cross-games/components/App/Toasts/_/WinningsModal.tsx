@@ -1,12 +1,14 @@
-import { Image, Flex, Modal, ModalOverlay, ModalContent, ModalHeader, Text, ModalCloseButton, ModalBody, Box, Button } from '@chakra-ui/react'
+import { useMemo } from 'react'
+
+import { Box, Button,Flex, Image, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, Text } from '@chakra-ui/react'
 import { faTwitter } from '@fortawesome/free-brands-svg-icons'
 import { faCashRegister } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { formatEtherFixed } from 'lib/BigNumberFormatters'
-import { useNWStore } from 'lib/store/main'
-import { useMemo } from 'react'
 
-export default function WinningsModal () {
+import { formatEtherFixed } from '#/lib/BigNumberFormatters'
+import { useNWStore } from '#/lib/store/main'
+
+const WinningsModal = () => {
   //
   const {
     currencyName,
@@ -90,3 +92,5 @@ export default function WinningsModal () {
     </Modal>
   )
 }
+
+export default WinningsModal;

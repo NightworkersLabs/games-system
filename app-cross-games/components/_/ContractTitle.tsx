@@ -1,9 +1,10 @@
 import { Box, Flex, Text, Tooltip } from '@chakra-ui/react'
-import { faPause, faSquareCheck, IconDefinition } from '@fortawesome/free-solid-svg-icons'
+import type { IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import { faPause, faSquareCheck } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 //
-export default function ContractTitle (props: { title: string, isPaused?: boolean, icon?: IconDefinition }) {
+const ContractTitle = (props: { title: string, isPaused?: boolean, icon?: IconDefinition }) => {
   return (
     <Tooltip placement='right' hasArrow label={props.isPaused === true ? 'Not available right now :(' : (props.isPaused === false ? 'Active and available !' : '')}>
       <Flex direction='column' _hover={{ cursor: 'pointer' }}>
@@ -27,3 +28,5 @@ export default function ContractTitle (props: { title: string, isPaused?: boolea
     </Tooltip>
   )
 }
+
+export default ContractTitle;

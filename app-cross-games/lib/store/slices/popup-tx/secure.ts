@@ -1,15 +1,16 @@
-import { StoreSlice } from 'lib/store/_'
-import {
+import type { StoreSlice } from '#/lib/store/_'
+import { requestServerSecret, updateClientSeedFromPP } from '#/lib/store/slices/_/trustful'
+import type { ICasinoBankSlice } from '#/lib/store/slices/casino-bank/user-context'
+import type { IGameSlice } from '#/lib/store/slices/game'
+import type {
   AnySecurePopupTx,
   IPopupTxSlice,
-  IProtectedPopupTxSlice,
+  IProtectedPopupTxSlice} from '#/lib/store/slices/popup-tx/handler';
+import {
   isApiSecurePopupTx
-} from './handler'
-import { IGameSlice } from 'lib/store/slices/game'
-import { requestServerSecret, updateClientSeedFromPP } from 'lib/store/slices/_/trustful'
-import { ICasinoBankSlice } from 'lib/store/slices/casino-bank/user-context'
-import { runOnChainSecurePopupTx } from './runners/onchain'
-import { runAPISecurePopupTx } from './runners/api'
+} from '#/lib/store/slices/popup-tx/handler'
+import { runAPISecurePopupTx } from '#/lib/store/slices/popup-tx/runners/api'
+import { runOnChainSecurePopupTx } from '#/lib/store/slices/popup-tx/runners/onchain'
 
 //
 //

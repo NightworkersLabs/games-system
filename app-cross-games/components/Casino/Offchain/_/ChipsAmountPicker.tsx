@@ -1,12 +1,13 @@
-import BaseBetAmountPicker from 'components/Casino/_/BaseBetAmountPicker'
-import { CASINO_COIN_NAME } from 'env/defaults'
 import { useMemo } from 'react'
-import { useNWStore } from 'lib/store/main'
 
-export function GameChipsAmountPicker (props: {
+import BaseBetAmountPicker from '#/components/Casino/_/BaseBetAmountPicker'
+import { CASINO_COIN_NAME } from '#/env/defaults'
+import { useNWStore } from '#/lib/store/main'
+
+export const GameChipsAmountPicker = (props: {
     chipsSetter: (n: number) => void,
     value: number
-}) {
+}) => {
   //
   const {
     maxChipsPerBet,
@@ -26,13 +27,13 @@ export function GameChipsAmountPicker (props: {
 }
 
 //
-export function BaseChipsAmountPicker (props: {
+export const BaseChipsAmountPicker = (props: {
     chipsSetter: (n: number) => void,
     value: number,
     max: number,
     subtitle?: string
     isDisabled?: boolean
-}) {
+}) => {
   //
   return (
     <BaseBetAmountPicker

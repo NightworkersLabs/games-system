@@ -1,12 +1,15 @@
-import { Checkbox, Tooltip, Flex } from '@chakra-ui/react'
-import { faBalanceScale, faBalanceScaleLeft } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { ChangeEvent, useCallback, useEffect } from 'react'
-import { useNWStore } from 'lib/store/main'
+import type { ChangeEvent} from 'react';
+import { useCallback, useEffect } from 'react'
 import shallow from 'zustand/shallow'
 
+import { Checkbox, Flex,Tooltip } from '@chakra-ui/react'
+import { faBalanceScale, faBalanceScaleLeft } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
+import { useNWStore } from '#/lib/store/main'
+
 //
-export default function ProvablyFairChooser () {
+const ProvablyFairChooser = () => {
   const {
     useProvablyFairness,
     setProvablyFairnessUsage
@@ -40,3 +43,5 @@ export default function ProvablyFairChooser () {
     </Tooltip>
   )
 }
+
+export default ProvablyFairChooser;

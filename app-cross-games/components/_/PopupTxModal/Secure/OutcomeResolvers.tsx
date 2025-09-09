@@ -1,19 +1,22 @@
+import type { BigNumber } from 'ethers/lib/ethers'
+import type { ReactElement} from 'react';
+import { useMemo } from 'react'
+
 import { Flex, Text, Tooltip } from '@chakra-ui/react'
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { shorthandingBigNumber } from 'components/App/HUD/Wallet'
-import { HandledCasinoGame } from 'components/Casino'
-import { GameOutcomeDisplayer } from 'components/Data/Stats/Games'
-import { BigNumber } from 'ethers/lib/ethers'
-import { CoinBet, ColorBet } from 'lib/store/slices/_/bet'
-import { useMemo } from 'react'
+
+import { shorthandingBigNumber } from '#/components/App/HUD/Wallet'
+import type { HandledCasinoGame } from '#/components/Casino'
+import { GameOutcomeDisplayer } from '#/components/Data/Stats/Games'
+import { CoinBet, ColorBet } from '#/lib/store/slices/_/bet'
 
 //
 // FRAMEWORK
 //
 
 //
-export type RandomNumberResolver = (randomNumberToResolve: BigNumber) => any
+export type RandomNumberResolver = (randomNumberToResolve: BigNumber) => ReactElement
 
 //
 export const OUTCOME_RESOLVERS: { [c : HandledCasinoGame | string] : RandomNumberResolver } = {
@@ -32,10 +35,10 @@ const getCoinflipOutcome = (rawOutcome: number) : string =>
     : CoinBet[CoinBet.Tails]
 
 //
-function CoinflipResolver (props: {
+const CoinflipResolver = (props: {
   randomNumber: BigNumber
   gameType: HandledCasinoGame
-}) {
+}) => {
   //
   const rawOutcome = useMemo(() => props.randomNumber.mod(2).toNumber(), [props.randomNumber])
 
@@ -78,10 +81,10 @@ const getRouletteOutcome = (rawOutcome: number) : string =>
     )
 
 //
-function RouletteResolver (props: {
+const RouletteResolver = (props: {
   randomNumber: BigNumber
   gameType: HandledCasinoGame
-}) {
+}) => {
   //
   const rawOutcome = useMemo(() => props.randomNumber.mod(15).toNumber(), [props.randomNumber])
 
@@ -114,9 +117,9 @@ function RouletteResolver (props: {
 //
 
 //
-function RandomNumberOperator (props: {
+const RandomNumberOperator = (props: {
   randomNumber: BigNumber
-}) {
+}) => {
   return (
     <Tooltip hasArrow label='Random Number that you got as a response from the provably fair system'>
       <Flex fontSize='.5rem' flex='0' gap='2' lineHeight='1.2' alignItems='center' bgColor='gray' px='1' borderRadius='5px'>
@@ -129,7 +132,7 @@ function RandomNumberOperator (props: {
 }
 
 //
-function ModuloOperator () {
+const ModuloOperator = () => {
   return (
     <Tooltip hasArrow label='Applying a modulo ("%" in computer representation) on a randomly generated number is a common way to get an output from a certain amount of outcomes.'>
       <Flex fontSize='.7rem' gap='1' alignItems='center' bgColor='#c5ae34' px='1' borderRadius='5px'>
@@ -141,10 +144,10 @@ function ModuloOperator () {
 }
 
 //
-function PossibleOutcomes (props: {
+const PossibleOutcomes = (props: {
   possibles : number
   label: string
-}) {
+}) => {
   return (
     <Tooltip hasArrow label={props.label}>
       <Flex fontSize='.7rem' gap='1' alignItems='center' bgColor='#c43131' px='1' borderRadius='5px'>

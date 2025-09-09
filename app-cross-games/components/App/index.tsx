@@ -1,27 +1,25 @@
-import { Flex, Link, Text } from '@chakra-ui/react'
-
-import NWTitle from 'components/App/NWTitle'
-
-import { useNWStore } from 'lib/store/main'
-
+import { motion } from 'framer-motion'
+import type { ReactNode} from 'react';
 import { useCallback, useEffect, useState } from 'react'
 import shallow from 'zustand/shallow'
-import Casino from 'components/Casino'
-import HUD from 'components/App/HUD'
-import PopupTxModal from 'components/_/PopupTxModal'
 
-import NWToasts from './Toasts'
-import { DAppState } from 'lib/store/slices/web3'
-
-import { motion } from 'framer-motion'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Flex, Link, Text } from '@chakra-ui/react'
 import { faCircleArrowUp } from '@fortawesome/free-solid-svg-icons'
-import { BacklinkReference } from 'lib/Backlinking'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
+import PopupTxModal from '#/components/_/PopupTxModal'
+import HUD from '#/components/App/HUD'
+import NWTitle from '#/components/App/NWTitle'
+import NWToasts from '#/components/App/Toasts'
+import Casino from '#/components/Casino'
+import type { BacklinkReference } from '#/lib/Backlinking'
+import { useNWStore } from '#/lib/store/main'
+import type { DAppState } from '#/lib/store/slices/web3'
 
 //
-export default function App (props: {
+const App = (props: {
     isStoreCompatible: boolean
-}) {
+}) => {
   //
   const {
     dAppState,
@@ -112,10 +110,10 @@ export default function App (props: {
 }
 
 //
-function GameZone (props: {
+const GameZone = (props: {
   visibilityClass: string
-  children: any
-}) {
+  children: ReactNode
+}) => {
   //
   return (
     <Flex
@@ -146,9 +144,9 @@ function GameZone (props: {
 }
 
 //
-function EndorsementFooter (props: {
+const EndorsementFooter = (props: {
   backlink: BacklinkReference
-}) {
+}) => {
   return (
     <Flex alignItems='center' justifyContent='center' gap='1'>
       <Text>Endorsed by</Text>
@@ -161,7 +159,7 @@ function EndorsementFooter (props: {
 }
 
 //
-function ExtensionBarPointer () {
+const ExtensionBarPointer = () => {
   return (
     <Flex position='absolute' right='3.5cm' top='.2rem'>
       <motion.div
@@ -181,3 +179,5 @@ function ExtensionBarPointer () {
     </Flex>
   )
 }
+
+export default App;

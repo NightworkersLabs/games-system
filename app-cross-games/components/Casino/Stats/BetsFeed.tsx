@@ -1,12 +1,15 @@
-import { Image, Text, Flex, Spinner, Table, Tbody, Td, Th, Thead, Tr, Tooltip } from '@chakra-ui/react'
-import { shorthandingBigNumber } from 'components/App/HUD/Wallet'
-import { GameOutcomeDisplayer } from 'components/Data/Stats/Games'
-import { CASINO_COIN_NAME } from 'env/defaults'
-import { useNWStore } from 'lib/store/main'
 import useSWR from 'swr'
+
+import { Flex, Image, Spinner, Table, Tbody, Td, Text, Th, Thead, Tooltip,Tr } from '@chakra-ui/react'
+
+import { shorthandingBigNumber } from '#/components/App/HUD/Wallet'
+import { TooltipdFromNow } from '#/components/Casino/Stats/_'
+import { GameOutcomeDisplayer } from '#/components/Data/Stats/Games'
+import { CASINO_COIN_NAME } from '#/env/defaults'
+import { useNWStore } from '#/lib/store/main'
+
+import type { HandledCasinoGame } from '..'
 import { fetchForGameData } from '.'
-import { HandledCasinoGame } from '..'
-import { TooltipdFromNow } from './_'
 
 interface DbBetsData {
   address: string
@@ -28,9 +31,9 @@ export const contextualizedAddressDisplay = (currentEOA: string, address?: strin
   </Tooltip>
 
 //
-export default function BetsFeed (props: {
+const BetsFeed = (props: {
   game: HandledCasinoGame
-}) {
+}) => {
   //
   const currentEOAAddress = useNWStore(s => s.currentEOAAddress)
 
@@ -96,10 +99,10 @@ export default function BetsFeed (props: {
 }
 
 //
-function ChipsDisplay (props: {
+const ChipsDisplay = (props: {
   betted: number
   won?: number
-}) {
+}) => {
   return (
     <Flex alignItems='center' justifyContent='end' gap='2px' color={props.won ? '#76df76' : 'inherit'}>
       {
@@ -115,3 +118,5 @@ function ChipsDisplay (props: {
     </Flex>
   )
 }
+
+export default BetsFeed;

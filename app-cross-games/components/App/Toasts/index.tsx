@@ -1,9 +1,11 @@
-import CHIPSConversionToast from './_/CHIPSConversion'
+import CHIPSConversionToast from '#/components/App/Toasts/_/CHIPSConversion'
 
-export default function NWToasts () {
+const NWToasts = () => {
   return (
     <>
       <CHIPSConversionToast />
     </>
   )
 }
+
+export default NWToasts;

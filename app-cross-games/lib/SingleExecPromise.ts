@@ -1,5 +1,7 @@
-import { exhaustMap, catchError, Observable, share, Subject, throttleTime, of, tap, concatMap } from 'rxjs'
-import { getMeaningfulMessageFromError } from './EthersErrorDigger'
+import type { Observable} from 'rxjs';
+import { catchError, concatMap,exhaustMap, of, share, Subject, tap, throttleTime } from 'rxjs'
+
+import { getMeaningfulMessageFromError } from '#/lib/EthersErrorDigger'
 
 /**
 * @dev === null means never ran
@@ -14,6 +16,7 @@ type Raisable<A, R> = (cbArgs?: A) => Promise<R>
 /**
  * Wrapper around a Promise to prevent multiple parallel firings
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export class SingleExecPromise<A = any, R = void> {
   //
   private _subject = new Subject<A>()
@@ -27,7 +30,7 @@ export class SingleExecPromise<A = any, R = void> {
 
   /** shorthand for synchronous raisable, wrapped */
   static of<A, R> (raisable: ((args: A) => R), runStateUpdater?: SEPRunStateUpdate) {
-    return new SingleExecPromise(args => new Promise<R>(resolve => resolve(raisable(args))), runStateUpdater)
+    return new SingleExecPromise((args: A) => new Promise<R>(resolve => resolve(raisable(args))), runStateUpdater)
   }
 
   /** shorthand for async raisable */
@@ -91,6 +94,7 @@ export class SingleExecPromise<A = any, R = void> {
   }
 
   //
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private static _failedRaisableErrMsg (msg: string, cb: any) {
     return cb.toString()
       .replaceAll('\n', '')

@@ -1,23 +1,27 @@
-import { Button, Flex, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay } from '@chakra-ui/react'
 import { Step, Steps, useSteps } from 'chakra-ui-steps'
 import { useEffect, useMemo } from 'react'
-import { useNWStore } from 'lib/store/main'
-import {
+import shallow from 'zustand/shallow'
+
+import { Button, Flex, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay } from '@chakra-ui/react'
+
+import FairnessChecker from '#/components/_/PopupTxModal/Secure/FairnessChecker'
+import SecurePopupTxDescriptor from '#/components/_/PopupTxModal/Secure/SecureTxDescriptor'
+import SeedPicker from '#/components/_/PopupTxModal/Secure/SeedPicker'
+import ServerHashFetcher from '#/components/_/PopupTxModal/Secure/ServerHashFetcher'
+import type { PopupTxStep } from '#/components/_/PopupTxModal/StepsLifecycleDisplayer';
+import StepsLifecycleDisplayer from '#/components/_/PopupTxModal/StepsLifecycleDisplayer'
+import { useNWStore } from '#/lib/store/main'
+import { PerishableSecretHash } from '#/lib/store/slices/_/trustful'
+import type {
   AnyOnChainSecurePopupTx,
-  AnySecurePopupTx,
+  AnySecurePopupTx} from '#/lib/store/slices/popup-tx/handler';
+import {
   APISecurePopupTxWaitingStep,
   isApiSecurePopupTx,
   isOCEtEPopupTx,
   isProvable,
   OnChainSecurePopupTxWaitingStep
-} from 'lib/store/slices/popup-tx/handler'
-import { PerishableSecretHash } from 'lib/store/slices/_/trustful'
-import FairnessChecker from './FairnessChecker'
-import SecurePopupTxDescriptor from './SecureTxDescriptor'
-import SeedPicker from './SeedPicker'
-import ServerHashFetcher from './ServerHashFetcher'
-import StepsLifecycleDisplayer, { PopupTxStep } from '../StepsLifecycleDisplayer'
-import shallow from 'zustand/shallow'
+} from '#/lib/store/slices/popup-tx/handler'
 
 //
 const getOnChainSubSteps = (popupTx: AnyOnChainSecurePopupTx) : PopupTxStep<OnChainSecurePopupTxWaitingStep>[] => [
@@ -34,9 +38,9 @@ const getAPISubSteps = () : PopupTxStep<APISecurePopupTxWaitingStep>[] => [
 ]
 
 //
-export default function SecurePopupTxModal (props: {
+const SecurePopupTxModal = (props: {
     popupTx: AnySecurePopupTx
-}) {
+}) => {
   //
   const minimizePopupTx = useNWStore(s => s.minimizePopupTx)
 
@@ -62,10 +66,10 @@ export default function SecurePopupTxModal (props: {
 }
 
 //
-function SecurePopupTxSteps (props : {
+const SecurePopupTxSteps = (props : {
     popupTx: AnySecurePopupTx,
     modalDiscarder: () => void
-}) {
+}) => {
   //
   const {
     currentPopupTxID,
@@ -154,7 +158,7 @@ function SecurePopupTxSteps (props : {
   const mightExecuteTx = useMemo(() =>
     (props.popupTx.wantedAsProvable === true && activeStep === 3) ||
     (props.popupTx.wantedAsProvable === false && activeStep === 1)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+   
   , [activeStep, props.popupTx.wantedAsProvable])
 
   //
@@ -210,7 +214,7 @@ function SecurePopupTxSteps (props : {
 }
 
 //
-export function NextStepLayout (props: { nextStep: () => void, nextDescr: string }) {
+export const NextStepLayout = (props: { nextStep: () => void, nextDescr: string }) => {
   return (
     <Flex mt='5' width="100%" justify="flex-end">
       <NextStepButton nextStep={props.nextStep} nextDescr={props.nextDescr} />
@@ -219,10 +223,12 @@ export function NextStepLayout (props: { nextStep: () => void, nextDescr: string
 }
 
 //
-export function NextStepButton (props: { nextStep: () => void, nextDescr: string }) {
+export const NextStepButton = (props: { nextStep: () => void, nextDescr: string }) => {
   return (
     <Button size="sm" onClick={props.nextStep}>
       {props.nextDescr}
     </Button>
   )
 }
+
+export default SecurePopupTxModal;

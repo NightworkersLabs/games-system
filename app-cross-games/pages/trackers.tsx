@@ -1,22 +1,24 @@
 // This function gets called at build time on server-side.
 // It may be called again, on a serverless function, if
 
-import { GetServerSideProps } from 'next'
-
-import blStorage, { BacklinkReference } from 'lib/Backlinking'
-import { ColumnDef, useReactTable, getCoreRowModel, getPaginationRowModel } from '@tanstack/react-table'
+import type { GetServerSideProps } from 'next'
 import { useMemo } from 'react'
-import { Text, Link, Flex } from '@chakra-ui/react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faLink, faPersonArrowDownToLine } from '@fortawesome/free-solid-svg-icons'
 
-import { allNetworks } from 'lib/TypedNetworks'
-import { AvailableNetwork } from 'env/networksCompiler'
-import { NetworkTag } from 'components/App/NetworkPicker'
-import { NWHead } from './_app'
-import { CollabImage, NWNakedTitleContent } from 'components/App/NWTitle'
-import { mainProduct } from './_document'
-import { BasicTable } from 'components/Data/_'
+import { Flex,Link, Text } from '@chakra-ui/react'
+import { faLink, faPersonArrowDownToLine } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import type { ColumnDef} from '@tanstack/react-table';
+import { getCoreRowModel, getPaginationRowModel,useReactTable } from '@tanstack/react-table'
+
+import { NetworkTag } from '#/components/App/NetworkPicker'
+import { CollabImage, NWNakedTitleContent } from '#/components/App/NWTitle'
+import { BasicTable } from '#/components/Data/_'
+import type { AvailableNetwork } from '#/env/networksCompiler'
+import type { BacklinkReference } from '#/lib/Backlinking';
+import blStorage from '#/lib/Backlinking'
+import { allNetworks } from '#/lib/TypedNetworks'
+import { NWHead } from '#/pages/_app'
+import { mainProduct } from '#/pages/_document'
 
 //
 const TITLE_TEXT = 'Trackers & Partners'
@@ -32,9 +34,9 @@ export const getStaticProps : GetServerSideProps = async () => {
 }
 
 //
-export default function PartersPage (props: {
+const PartersPage = (props: {
   backlinks: BacklinkReference[]
-}) {
+}) => {
   return (
     <Flex direction='column' flex='1' alignItems='center' justifyContent='center'>
       <NWHead
@@ -45,16 +47,16 @@ export default function PartersPage (props: {
       <Flex direction='column' p='5'>
         <NWNakedTitleContent />
       </Flex>
-      <PartnersPage backlinks={props.backlinks} />
+      <PartnersTable backlinks={props.backlinks} />
       <Flex flex='1' />
     </Flex>
   )
 }
 
 //
-function PartnersPage (props: {
+const PartnersTable = (props: {
   backlinks: BacklinkReference[]
-}) {
+}) => {
   //
   const columns = useMemo<ColumnDef<BacklinkReference>[]>(
     () => [
@@ -175,3 +177,5 @@ function PartnersPage (props: {
     />
   )
 }
+
+export default PartersPage;

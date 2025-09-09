@@ -1,4 +1,4 @@
-import { BigNumber } from 'ethers'
+import type { BigNumber } from 'ethers'
 
 /**
  * all the meaningful outcomes of a coin flip

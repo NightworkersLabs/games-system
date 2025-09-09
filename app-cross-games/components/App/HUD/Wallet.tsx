@@ -1,15 +1,17 @@
-import { Text, Button, Flex, Tooltip, Image } from '@chakra-ui/react'
 import { useMemo } from 'react'
-import { useNWStore } from 'lib/store/main'
 import shallow from 'zustand/shallow'
-import AutoUpdateTracker from 'components/_/AutoUpdateTracker'
-import { formatEtherFixed } from 'lib/BigNumberFormatters'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
+import { Button, Flex, Image,Text, Tooltip } from '@chakra-ui/react'
 import { faCaretDown, faPlusCircle, faServer, faWallet } from '@fortawesome/free-solid-svg-icons'
-import { handledChainIds } from 'lib/TypedNetworks'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
+import AutoUpdateTracker from '#/components/_/AutoUpdateTracker'
+import { formatEtherFixed } from '#/lib/BigNumberFormatters'
+import { useNWStore } from '#/lib/store/main'
+import { handledChainIds } from '#/lib/TypedNetworks'
 
 //
-export default function Wallet (props : { isVisible: boolean }) {
+const Wallet = (props : { isVisible: boolean }) => {
   //
   const {
     signer,
@@ -45,7 +47,7 @@ export default function Wallet (props : { isVisible: boolean }) {
 }
 
 //
-function NetworkSwitcher () {
+const NetworkSwitcher = () => {
   //
   const selectingNetwork = useNWStore(s => s.selectingNetwork)
 
@@ -68,7 +70,7 @@ function NetworkSwitcher () {
 }
 
 //
-function ConnectButton () {
+const ConnectButton = () => {
   //
   const connectWallet = useNWStore(s => s.connectWallet)
 
@@ -86,7 +88,7 @@ function ConnectButton () {
 }
 
 //
-function GetFromFaucetButton () {
+const GetFromFaucetButton = () => {
   //
   const currentNetwork = useNWStore(s => s.currentNetwork)
 
@@ -112,7 +114,7 @@ function GetFromFaucetButton () {
 }
 
 //
-function CurrentChainDisplay () {
+const CurrentChainDisplay = () => {
   //
   const networkName = useNWStore(s => s.currentNetwork?.networkName)
 
@@ -128,12 +130,12 @@ function CurrentChainDisplay () {
 }
 
 //
-export function shorthandingBigNumber (addr: string) {
+export const shorthandingBigNumber = (addr: string) => {
   return `${addr.slice(0, 7)}...${addr.slice(-5, addr.length)}`
 }
 
 //
-function ConnectedAccount () {
+const ConnectedAccount = () => {
   //
   const currentEOAAddress = useNWStore(s => s.currentEOAAddress)
 
@@ -146,7 +148,7 @@ function ConnectedAccount () {
 }
 
 //
-export function BlockchainCurrencyIcon () {
+export const BlockchainCurrencyIcon = () => {
   //
   const currentNetwork = useNWStore(s => s.currentNetwork)
 
@@ -167,7 +169,7 @@ export function BlockchainCurrencyIcon () {
 }
 
 //
-function AccountBalance (props : { isVisible: boolean }) {
+const AccountBalance = (props : { isVisible: boolean }) => {
   //
   const {
     userBalance,
@@ -198,3 +200,5 @@ function AccountBalance (props : { isVisible: boolean }) {
     </Flex>
   )
 }
+
+export default Wallet;

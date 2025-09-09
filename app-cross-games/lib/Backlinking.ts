@@ -1,5 +1,5 @@
-import _backlinks from 'backlink_references'
-import { AvailableNetwork } from 'env/networksCompiler'
+import _backlinks from '#/backlink_references'
+import type { AvailableNetwork } from '#/env/networksCompiler'
 
 //
 export type BacklinkTracker = keyof typeof _backlinks

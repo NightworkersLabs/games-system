@@ -1,13 +1,16 @@
-import { Flex, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay } from '@chakra-ui/react'
-import { useNWStore } from 'lib/store/main'
-import { AnyBasicPopupTx, BasicPopupTxWaitingStep, isTwoStepsPopupTx } from 'lib/store/slices/popup-tx/handler'
 import { useMemo } from 'react'
-import StepsLifecycleDisplayer from '../StepsLifecycleDisplayer'
+
+import { Flex, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay } from '@chakra-ui/react'
+
+import StepsLifecycleDisplayer from '#/components/_/PopupTxModal/StepsLifecycleDisplayer'
+import { useNWStore } from '#/lib/store/main'
+import type { AnyBasicPopupTx} from '#/lib/store/slices/popup-tx/handler';
+import { BasicPopupTxWaitingStep, isTwoStepsPopupTx } from '#/lib/store/slices/popup-tx/handler'
 
 //
-export default function BasicPopupTxModal (props: {
+const BasicPopupTxModal = (props: {
     popupTx: AnyBasicPopupTx
-}) {
+}) => {
   //
   const minimizePopupTx = useNWStore(s => s.minimizePopupTx)
 
@@ -54,3 +57,5 @@ export default function BasicPopupTxModal (props: {
     </Modal>
   )
 }
+
+export default BasicPopupTxModal;

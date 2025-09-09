@@ -1,12 +1,14 @@
 
-import { Flex, Icon, Spinner, Text, Tooltip } from '@chakra-ui/react'
-import { getGameServiceUrl } from 'env/defaults'
 import { BigNumber } from 'ethers'
 import { parseEther } from 'ethers/lib/utils'
-import { formatEtherFixed } from 'lib/BigNumberFormatters'
 import { useMemo } from 'react'
-import { useNWStore } from 'lib/store/main'
 import useSWR from 'swr'
+
+import { Flex, Icon, Spinner, Text, Tooltip } from '@chakra-ui/react'
+
+import { getGameServiceUrl } from '#/env/defaults'
+import { formatEtherFixed } from '#/lib/BigNumberFormatters'
+import { useNWStore } from '#/lib/store/main'
 
 //
 export const CircleIcon = (props) => (
@@ -52,7 +54,7 @@ enum HealthStatus {
 }
 
 //
-function healthToColor (status: HealthStatus) {
+const healthToColor = (status: HealthStatus) => {
   switch (status) {
   case HealthStatus.NotAvailable:
   case HealthStatus.DangerouslyBroke:
@@ -65,7 +67,7 @@ function healthToColor (status: HealthStatus) {
 }
 
 //
-function healthToCompleteDescr (status: HealthStatus) {
+const healthToCompleteDescr = (status: HealthStatus) => {
   switch (status) {
   case HealthStatus.KindaBroke:
     return 'Bot account is emptying. You might consider poking the dev to ask a refill soon.'
@@ -79,7 +81,7 @@ function healthToCompleteDescr (status: HealthStatus) {
 }
 
 //
-function healthToSimpleDescr (status: HealthStatus) {
+const healthToSimpleDescr = (status: HealthStatus) => {
   switch (status) {
   case HealthStatus.DangerouslyBroke:
     return 'Broke!'
@@ -93,7 +95,7 @@ function healthToSimpleDescr (status: HealthStatus) {
 }
 
 //
-export default function SecureBotHealth () {
+const SecureBotHealth = () => {
   //
   const currentNetwork = useNWStore(s => s.currentNetwork)
 
@@ -138,3 +140,5 @@ export default function SecureBotHealth () {
     </Tooltip>
   )
 }
+
+export default SecureBotHealth;

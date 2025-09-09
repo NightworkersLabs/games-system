@@ -1,7 +1,9 @@
-import { getMeaningfulMessageFromError } from 'lib/EthersErrorDigger'
-import { SingleExecPromise } from 'lib/SingleExecPromise'
-import { isTwoStepsPopupTx, BasicPopupTxWaitingStep, PopupTxInvokeParams, AnyBasicPopupTx } from '../handler'
-import { Event } from 'ethers'
+import type { Event } from 'ethers'
+
+import { getMeaningfulMessageFromError } from '#/lib/EthersErrorDigger'
+import { SingleExecPromise } from '#/lib/SingleExecPromise'
+import type { AnyBasicPopupTx, PopupTxInvokeParams } from '#/lib/store/slices/popup-tx/handler';
+import {BasicPopupTxWaitingStep, isTwoStepsPopupTx } from '#/lib/store/slices/popup-tx/handler'
 
 export const _runBasicPopupTx = async ({
   popupTxId,

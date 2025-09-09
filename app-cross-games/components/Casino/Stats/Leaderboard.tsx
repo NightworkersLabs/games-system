@@ -1,13 +1,15 @@
-import { Flex, Image, Spinner, Table, Text, Tr, Td, Thead, Th, Tbody, Tooltip } from '@chakra-ui/react'
+import useSWR from 'swr'
+
+import { Flex, Image, Spinner, Table, Tbody, Td, Text, Th, Thead, Tooltip,Tr } from '@chakra-ui/react'
 import { faAddressCard, faCircleQuestion, faRankingStar, faStopwatch } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { CASINO_COIN_NAME } from 'env/defaults'
-import { useNWStore } from 'lib/store/main'
 
-import useSWR from 'swr'
+import { contextualizedAddressDisplay } from '#/components/Casino/Stats/BetsFeed'
+import { CASINO_COIN_NAME } from '#/env/defaults'
+import { useNWStore } from '#/lib/store/main'
+
+import type { HandledCasinoGame } from '..'
 import { fetchForGameData } from '.'
-import { HandledCasinoGame } from '..'
-import { contextualizedAddressDisplay } from './BetsFeed'
 
 //
 interface LeaderboardData {
@@ -18,9 +20,9 @@ interface LeaderboardData {
 }
 
 //
-export default function Leaderboard (props: {
+const Leaderboard = (props: {
   game: HandledCasinoGame
-}) {
+}) => {
   //
   const currentEOAAddress = useNWStore(s => s.currentEOAAddress)
 
@@ -86,9 +88,9 @@ export default function Leaderboard (props: {
 }
 
 //
-function EmptyDataHandler (props: {
+const EmptyDataHandler = (props: {
   state: 'loading' | 'noData'
-}) {
+}) => {
   return props.state === 'noData'
     ? <>
       <Text fontSize='.65rem' bgColor='#0005' px='10' py='1' borderRadius='3px'>(Nobody yet !)</Text>
@@ -100,13 +102,13 @@ function EmptyDataHandler (props: {
 }
 
 //
-function CuppedBadge (props: {
+const CuppedBadge = (props: {
   cupType: 'gold' | 'silver' | 'bronze'
   loading: boolean
   size?: 'big' | 'normal'
   zIndex?: number
   data?: LeaderboardData
-}) {
+}) => {
   return (
     <Flex direction='row' flexWrap='wrap' bgColor='#0008' borderRadius='10px' alignItems='center' justifyContent='center' gap='5'>
       <Cupped size={props.size} cupType={props.cupType} zIndex={props.zIndex} data={props.data} />
@@ -172,12 +174,12 @@ CuppedBadge.defaultProps = {
 }
 
 //
-function Cupped (props: {
+const Cupped = (props: {
   cupType: 'gold' | 'silver' | 'bronze'
   size?: 'big' | 'normal'
   zIndex?: number
   data?: LeaderboardData
-}) {
+}) => {
   return (
     <Flex zIndex={props.zIndex} position='relative'>
       <Image
@@ -201,3 +203,5 @@ function Cupped (props: {
     </Flex>
   )
 }
+
+export default Leaderboard;

@@ -1,6 +1,6 @@
-import { CASINO_COIN_NAME } from 'env/defaults'
+import { Flex, Link,Text } from '@chakra-ui/react'
 
-import { Flex, Text, Link } from '@chakra-ui/react'
+import { CASINO_COIN_NAME } from '#/env/defaults'
 
 //
 const getDocLink = (contractName: string) => `https://github.com/Nightworkers-P2E/owner-guide/blob/main/${contractName}.md`
@@ -9,7 +9,7 @@ const getDocLink = (contractName: string) => `https://github.com/Nightworkers-P2
 const getAbiLink = (contractName: string) => `/abi/${contractName}.json`
 
 //
-export default function TestingHelpers () {
+const TestingHelpers = () => {
   //
   return (
     <Flex direction='column' alignItems='center' mb='5' p='2' gap='3' className='test-container'>
@@ -24,11 +24,11 @@ export default function TestingHelpers () {
   )
 }
 
-function ContractRow (props: {
+const ContractRow = (props: {
     contractName: string,
     customDescr?: string,
     noDoc?: boolean
-}) {
+}) => {
   return (
     <Flex gap='2'>
       <Link flex='1' href={getAbiLink(props.contractName)} isExternal>{ props.customDescr ?? props.contractName }</Link>
@@ -36,3 +36,5 @@ function ContractRow (props: {
     </Flex>
   )
 }
+
+export default TestingHelpers;

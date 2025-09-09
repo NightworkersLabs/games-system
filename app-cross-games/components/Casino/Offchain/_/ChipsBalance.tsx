@@ -1,13 +1,15 @@
-import { Flex, Tooltip, Text, Image } from '@chakra-ui/react'
+import { motion, useAnimation } from 'framer-motion'
+import { useEffect, useRef, useState } from 'react'
+import shallow from 'zustand/shallow'
+
+import { Flex, Image,Text, Tooltip } from '@chakra-ui/react'
 import { faRotate, faWarning } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { CASINO_COIN_NAME } from 'env/defaults'
-import { useEffect, useRef, useState } from 'react'
-import { useNWStore } from 'lib/store/main'
-import shallow from 'zustand/shallow'
-import { motion, useAnimation } from 'framer-motion'
 
-const usePrevious = <T extends unknown>(value: T): T | undefined => {
+import { CASINO_COIN_NAME } from '#/env/defaults'
+import { useNWStore } from '#/lib/store/main'
+
+const usePrevious = <T,>(value: T): T | undefined => {
   const ref = useRef<T>(null)
   useEffect(() => {
     ref.current = value
@@ -15,9 +17,9 @@ const usePrevious = <T extends unknown>(value: T): T | undefined => {
   return ref.current
 }
 
-export default function ChipsBalance (props: {
+const ChipsBalance = (props: {
     isFullMode?: boolean
-}) {
+}) => {
   //
   const allChipsBalance = useNWStore(s => s.allChipsBalance)
 
@@ -63,9 +65,9 @@ export default function ChipsBalance (props: {
 }
 
 //
-function BalanceDisplay (props: {
+const BalanceDisplay = (props: {
     explicitMode: boolean
-}) {
+}) => {
   //
   const {
     chipsBalance,
@@ -94,11 +96,11 @@ function BalanceDisplay (props: {
 }
 
 //
-function MiniBalanceDisplay (props: {
+const MiniBalanceDisplay = (props: {
     balanceValue: number,
     descr?: string,
     hueRotateDeg?: number
-}) {
+}) => {
   //
   const running = useNWStore(s => s.syncChipsBalanceRS)
 
@@ -173,7 +175,7 @@ function MiniBalanceDisplay (props: {
 }
 
 //
-function RefreshBalanceButton () {
+const RefreshBalanceButton = () => {
   //
   const {
     running,
@@ -212,3 +214,5 @@ function RefreshBalanceButton () {
     </Tooltip>
   )
 }
+
+export default ChipsBalance;

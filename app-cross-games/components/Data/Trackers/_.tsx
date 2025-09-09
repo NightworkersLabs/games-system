@@ -1,12 +1,11 @@
-import { getDataServiceUrl } from 'env/defaults'
-
-import { fetchData } from '../_'
+import { fetchData } from '#/components/Data/_'
+import { getDataServiceUrl } from '#/env/defaults'
 
 //
 const dataServiceUrl = getDataServiceUrl()
 
 //
-export const fetchTrackersData = async (path: string, trackerId: number) => {
+export const fetchTrackersData = async <T,>(path: string, trackerId: number) : Promise<T> => {
   const url = new URL(path, dataServiceUrl)
   url.searchParams.set('trackerId', trackerId.toString())
   return fetchData(url)

@@ -1,24 +1,22 @@
-import { useNWStore } from 'lib/store/main'
-
-import App from 'components/App'
-
+import { AnimatePresence,motion } from 'framer-motion'
+import Head from 'next/head'
 import { useCallback, useEffect } from 'react'
 
-import { motion, AnimatePresence } from 'framer-motion'
-import Disclaimer from './App/Disclaimer'
-import { BacklinkReference } from 'lib/Backlinking'
-import useSessionStorage from 'lib/useSessionStorage'
-import { PreferredNetworkSession } from 'lib/store/slices/web3'
-import Head from 'next/head'
-import { NWHead } from 'pages/_app'
-import { domainUrl } from 'pages/_document'
-import { greenMultiplicator } from './Casino/_/Roulette'
+import App from '#/components/App'
+import Disclaimer from '#/components/App/Disclaimer'
+import { greenMultiplicator } from '#/components/Casino/_/Roulette'
+import type { BacklinkReference } from '#/lib/Backlinking'
+import { useNWStore } from '#/lib/store/main'
+import type { PreferredNetworkSession } from '#/lib/store/slices/web3'
+import useSessionStorage from '#/lib/useSessionStorage'
+import { NWHead } from '#/pages/_app'
+import { domainUrl } from '#/pages/_document'
 
 //
-export default function NWEntryPoint (props: {
+const NWEntryPoint = (props: {
     isStoreCompatible: boolean,
     blRef: BacklinkReference
-}) {
+}) => {
   //
   const {
     provider,
@@ -99,7 +97,7 @@ export default function NWEntryPoint (props: {
 
   //
   return (
-    <AnimatePresence  mode='wait'>
+    <AnimatePresence exitBeforeEnter>
       <motion.div
         style={!validatedDisclaimer ? { display: 'flex', flex: 1, justifyContent: 'center' } : { flex: 1 }}
         key={validatedDisclaimer ? 'app' : 'disclaimer'}
@@ -127,7 +125,7 @@ const description = `Provably fair, degen-ready, multi-chain Casino ! Flip coin 
 const image = `${domainUrl}banner.jpg`
 
 /** preloads casino components */
-export function NWEntryPointHeaders () {
+export const NWEntryPointHeaders = () => {
   return (
     <>
       <NWHead
@@ -145,3 +143,5 @@ export function NWEntryPointHeaders () {
     </>
   )
 }
+
+export default NWEntryPoint;

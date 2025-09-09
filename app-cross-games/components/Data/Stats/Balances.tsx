@@ -1,22 +1,25 @@
-import { ColumnDef, useReactTable, getCoreRowModel } from '@tanstack/react-table'
-import { MiniNetworkTag } from 'components/App/NetworkPicker'
-import { BasicTable, networkFormatted, TooltipedHeader } from 'components/Data/_'
-import { deployed, networksByChainId } from 'lib/TypedNetworks'
-import { Switch, Text, Flex } from '@chakra-ui/react'
-
+import { BigNumber } from 'ethers'
 import { useMemo, useState } from 'react'
 import useSWR from 'swr'
-import { BalanceData, chipsAmountRenderer, fetchStatsData, SingleChipsPrices } from './_'
-import { BigNumber } from 'ethers'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
+import { Flex,Switch, Text } from '@chakra-ui/react'
 import { faBalanceScale, faFileContract } from '@fortawesome/free-solid-svg-icons'
-import { CASINO_COIN_NAME } from 'env/defaults'
-import { HUDButton } from 'components/App/HUD'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import type { ColumnDef} from '@tanstack/react-table';
+import { getCoreRowModel,useReactTable } from '@tanstack/react-table'
+
+import { HUDButton } from '#/components/App/HUD'
+import { MiniNetworkTag } from '#/components/App/NetworkPicker'
+import { BasicTable, networkFormatted, TooltipedHeader } from '#/components/Data/_'
+import type { BalanceData, SingleChipsPrices } from '#/components/Data/Stats/_';
+import { chipsAmountRenderer, fetchStatsData } from '#/components/Data/Stats/_'
+import { CASINO_COIN_NAME } from '#/env/defaults'
+import { deployed, networksByChainId } from '#/lib/TypedNetworks'
 
 //
-export default function BalancesTable (props: {
+const BalancesTable = (props: {
   singleChipValues: SingleChipsPrices
-}) {
+}) => {
   //
   const dataQuery = useSWR<BalanceData[]>(
     ['/balances-total'],
@@ -196,3 +199,5 @@ export default function BalancesTable (props: {
     </Flex>
   )
 }
+
+export default BalancesTable;

@@ -1,10 +1,12 @@
-import { Flex, Spinner, Button, Text, Image, Box } from '@chakra-ui/react'
-import { useState, useMemo, useCallback, useRef, useEffect } from 'react'
-import { useNWStore } from 'lib/store/main'
+import { useCallback, useEffect,useMemo, useRef, useState } from 'react'
+
+import { Box,Button, Flex, Image, Spinner, Text } from '@chakra-ui/react'
 import MetaMaskOnboarding from '@metamask/onboarding'
 
+import { useNWStore } from '#/lib/store/main'
+
 //
-export default function DAppStateTracker (props: { visibilityClass: string }) {
+const DAppStateTracker = (props: { visibilityClass: string }) => {
   //
   const {
     dAppState,
@@ -52,7 +54,7 @@ export default function DAppStateTracker (props: { visibilityClass: string }) {
   )
 }
 
-function OnboardingButton () {
+const OnboardingButton = () => {
   //
   const dAppState = useNWStore(s => s.dAppState)
 
@@ -99,3 +101,5 @@ function OnboardingButton () {
     </>
   )
 }
+
+export default DAppStateTracker;

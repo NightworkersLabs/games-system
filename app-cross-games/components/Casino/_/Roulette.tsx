@@ -1,11 +1,16 @@
-import { Flex, Image } from '@chakra-ui/react'
+import type { Variants } from 'framer-motion';
+import { motion } from 'framer-motion'
 import { useMemo } from 'react'
-import { BetBox, BaseBetButton, OutcomeDisplayerFunc, BetOdds, BetOdd } from './base'
-import { ColorBet } from 'lib/store/slices/_/bet'
-import { motion, Variants } from 'framer-motion'
-import { fetchForGameData } from '../Stats'
 import useSWR from 'swr'
-import { HandledCasinoGame } from '..'
+
+import { Flex, Image } from '@chakra-ui/react'
+
+import type { BetOdd, OutcomeDisplayerFunc } from '#/components/Casino/_/base';
+import { BaseBetButton, BetBox,BetOdds } from '#/components/Casino/_/base'
+import { fetchForGameData } from '#/components/Casino/Stats'
+import { ColorBet } from '#/lib/store/slices/_/bet'
+
+import type { HandledCasinoGame } from '..'
 
 //
 //
@@ -64,7 +69,7 @@ const rouletteAnimationsBase: Variants = {
   }
 }
 
-function generateVariants (base: Variants, ranges: RouletteDegreesRange) : Variants {
+const generateVariants = (base: Variants, ranges: RouletteDegreesRange) : Variants => {
   const exp = Object.keys(ranges).reduce((prev, curr) => {
     //
     prev[curr] = {
@@ -105,9 +110,9 @@ export const rouletteBetOutcomeDisplayer : OutcomeDisplayerFunc<ColorBet> = outc
 })
 
 //
-export function RouletteWheel (props: {
+export const RouletteWheel = (props: {
     history: {outcome?: ColorBet, outcomeDetailed?: number, hasFailed?: boolean }[]
-}) {
+}) => {
   //
   const currentState = useMemo(() => {
     //
@@ -160,11 +165,11 @@ export function RouletteWheel (props: {
 export const greenMultiplicator = 10
 
 //
-export function RouletteColorPicker (props: {
+export const RouletteColorPicker = (props: {
     canBet: boolean,
     bet: ColorBet,
     setBet: (bet: ColorBet) => void
-}) {
+}) => {
   //
   const { data } = useSWR<BetOdd[]>(
     ['/winrates', 'roulette' as HandledCasinoGame],

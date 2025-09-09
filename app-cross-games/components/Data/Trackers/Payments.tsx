@@ -1,21 +1,24 @@
+import { useMemo, useState } from 'react'
+import useSWR from 'swr'
+
 import { Flex } from '@chakra-ui/react'
 import { faFileInvoiceDollar, faGauge } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import useSWR from 'swr'
-import { ColumnDef, getCoreRowModel, PaginationState, useReactTable } from '@tanstack/react-table'
-import { BacklinkReference } from 'lib/Backlinking'
-import { useMemo, useState } from 'react'
-import { PaymentData, PaymentTotalData, fetchTrackersData } from './_'
-import { networkFormatted, BasicTable, withBlockExplorerLink, withAddressExplorer } from '../_'
+import type { ColumnDef, PaginationState} from '@tanstack/react-table';
+import { getCoreRowModel, useReactTable } from '@tanstack/react-table'
 
-import { MiniNetworkTag } from 'components/App/NetworkPicker'
-import { networksByChainId } from 'lib/TypedNetworks'
-import { TooltipdFromNow } from 'components/Casino/Stats/_'
+import { MiniNetworkTag } from '#/components/App/NetworkPicker'
+import { TooltipdFromNow } from '#/components/Casino/Stats/_'
+import { BasicTable, networkFormatted, withAddressExplorer,withBlockExplorerLink } from '#/components/Data/_'
+import type {PaymentData, PaymentTotalData } from '#/components/Data/Trackers/_';
+import { fetchTrackersData } from '#/components/Data/Trackers/_'
+import type { BacklinkReference } from '#/lib/Backlinking'
+import { networksByChainId } from '#/lib/TypedNetworks'
 
 /** props are cached data */
-export default function SalesAnalyticsPayments (props: {
+const SalesAnalyticsPayments = (props: {
   backlinkRef: BacklinkReference
-}) {
+}) => {
   return (
     <Flex direction='column' gap='2'>
       <PaymentsTotalTable backlinkRef={props.backlinkRef} />
@@ -25,9 +28,9 @@ export default function SalesAnalyticsPayments (props: {
 }
 
 //
-function PaymentsTable (props: {
+const PaymentsTable = (props: {
   backlinkRef: BacklinkReference
-}) {
+}) => {
   //
   const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 0,
@@ -105,9 +108,9 @@ function PaymentsTable (props: {
 }
 
 //
-function PaymentsTotalTable (props: {
+const PaymentsTotalTable = (props: {
   backlinkRef: BacklinkReference
-}) {
+}) => {
   //
   const dataQuery = useSWR<PaymentTotalData[]>(
     ['/paymentsTotal', props.backlinkRef.trackerId],
@@ -153,3 +156,5 @@ function PaymentsTotalTable (props: {
     />
   )
 }
+
+export default SalesAnalyticsPayments;

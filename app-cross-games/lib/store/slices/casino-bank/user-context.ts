@@ -1,12 +1,14 @@
-import { CASINO_COIN_NAME, getGameServiceUrl } from 'env/defaults'
-import { StoreSlice } from 'lib/store/_'
-import { SEPRunState, SingleExecPromise } from 'lib/SingleExecPromise'
-import { IWeb3Slice } from '../web3'
-import { ICasinoBankRulesSlice } from './rules'
-import { BigNumber } from 'ethers'
-import { IPopupTxSlice } from '../popup-tx/handler'
-import { IGameSlice } from '../game'
-import { delay } from 'lib/MonitoredPromise'
+import type { BigNumber } from 'ethers'
+
+import { CASINO_COIN_NAME, getGameServiceUrl } from '#/env/defaults'
+import { delay } from '#/lib/MonitoredPromise'
+import type { SEPRunState} from '#/lib/SingleExecPromise';
+import { SingleExecPromise } from '#/lib/SingleExecPromise'
+import type { StoreSlice } from '#/lib/store/_'
+import type { ICasinoBankRulesSlice } from '#/lib/store/slices/casino-bank/rules'
+import type { IGameSlice } from '#/lib/store/slices/game'
+import type { IPopupTxSlice } from '#/lib/store/slices/popup-tx/handler'
+import type { IWeb3Slice } from '#/lib/store/slices/web3'
 
 //
 export interface ChipConversionResult {
@@ -69,7 +71,7 @@ export interface ICasinoBankSlice {
 }
 
 export interface IProtectedCasinoSlice {
-    _casinoPOST: <T = any>(pathSuffix: string, payload?: any) => Promise<T>
+    _casinoPOST: <T>(pathSuffix: string, payload?: object) => Promise<T>
 }
 
 interface IPrivateSlice {

@@ -1,11 +1,12 @@
-import { Flex, Checkbox, Button, Tooltip, Box, SliderFilledTrack, Slider, SliderThumb, SliderTrack } from '@chakra-ui/react'
+import type { ChangeEvent, MouseEventHandler, ReactEventHandler} from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
+import { Box, Button, Checkbox, Flex, Slider, SliderFilledTrack, SliderThumb, SliderTrack,Tooltip } from '@chakra-ui/react'
+import { faArrowsRotate, faMusic, faVolumeHigh,faVolumeLow, faVolumeMute, faVolumeOff } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faMusic, faVolumeMute, faArrowsRotate, faVolumeLow, faVolumeOff, faVolumeHigh } from '@fortawesome/free-solid-svg-icons'
-import { ChangeEvent, MouseEventHandler, ReactEventHandler, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 //
-export default function AudioController () {
+const AudioController = () => {
   const audioRef = useRef(null)
   const [isPaused, setIsPaused] = useState(true)
   const [autoplay, setAutoplay] = useState(false)
@@ -131,3 +132,5 @@ export default function AudioController () {
     </Flex>
   )
 }
+
+export default AudioController;

@@ -1,13 +1,13 @@
-import { Button, Flex, Image, Text, Link, Box } from '@chakra-ui/react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faDownload, faMobileScreenButton, faTabletScreenButton } from '@fortawesome/free-solid-svg-icons'
-
 import { motion } from 'framer-motion'
 import { useMemo } from 'react'
 
-export default function RedirectAppStore (props: {
+import { Box,Button, Flex, Image, Link, Text } from '@chakra-ui/react'
+import { faDownload, faMobileScreenButton, faTabletScreenButton } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
+const RedirectAppStore = (props: {
     store: 'google-play' | 'app-store'
-}) {
+}) => {
   //
   return (
     <motion.div
@@ -34,9 +34,9 @@ export default function RedirectAppStore (props: {
 }
 
 //
-function RedirectToStoreActions (props: {
+const RedirectToStoreActions = (props: {
     store: 'google-play' | 'app-store'
-}) {
+}) => {
   //
   const storeUrl = useMemo(() =>
     props.store === 'app-store'
@@ -65,7 +65,7 @@ function RedirectToStoreActions (props: {
 }
 
 //
-function RedirectToStoreDescription () {
+const RedirectToStoreDescription = () => {
   return (
     <Flex fontSize='.7rem' direction='column' alignItems='center' justifyContent='center' gap='5'>
       <Text>If you want to be able to use all Web3 features we provide,</Text>
@@ -79,7 +79,7 @@ function RedirectToStoreDescription () {
 }
 
 //
-function RedirectToStoreHeader () {
+const RedirectToStoreHeader = () => {
   return (
     <Flex gap='5' alignItems='center' justifyContent='center'>
       <FontAwesomeIcon icon={faMobileScreenButton} size='2x'/>
@@ -88,3 +88,5 @@ function RedirectToStoreHeader () {
     </Flex>
   )
 }
+
+export default RedirectAppStore;

@@ -1,15 +1,18 @@
-import { Text, Flex, Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react'
-import { NWNakedTitleContent } from 'components/App/NWTitle'
-import BalancesTable from 'components/Data/Stats/Balances'
-import BalancesEvolChart from 'components/Data/Stats/BalancesEvol'
-import GamesStatsUI from 'components/Data/Stats/Games'
-import GamesEvolCharts from 'components/Data/Stats/GamesEvol'
-import { BalanceData, BalanceEvol, fetchStatsData, GamesEvol, getSingleChipValues, PackedGamesStats, SingleChipsPrices } from 'components/Data/Stats/_'
-import { GetServerSideProps } from 'next'
-
+import type { GetServerSideProps } from 'next'
+import type { ReactElement } from 'react';
 import { SWRConfig } from 'swr'
-import { NWHead } from './_app'
-import { mainProduct } from './_document'
+
+import { Flex, Tab, TabList, TabPanel, TabPanels, Tabs,Text } from '@chakra-ui/react'
+
+import { NWNakedTitleContent } from '#/components/App/NWTitle'
+import type { BalanceData, BalanceEvol, GamesEvol, PackedGamesStats, SingleChipsPrices } from '#/components/Data/Stats/_';
+import { fetchStatsData, getSingleChipValues } from '#/components/Data/Stats/_'
+import BalancesTable from '#/components/Data/Stats/Balances'
+import BalancesEvolChart from '#/components/Data/Stats/BalancesEvol'
+import GamesStatsUI from '#/components/Data/Stats/Games'
+import GamesEvolCharts from '#/components/Data/Stats/GamesEvol'
+import { NWHead } from '#/pages/_app'
+import { mainProduct } from '#/pages/_document'
 
 //
 const refreshedEveryMin = 5
@@ -55,10 +58,10 @@ export const getStaticProps : GetServerSideProps = async () => {
 }
 
 //
-export default function StatsPage (props: {
+const StatsPage = (props: {
   singleChipValues: SingleChipsPrices,
-  fallback: any
-}) {
+  fallback: ReactElement
+}) => {
   //
   return (
     //
@@ -96,3 +99,5 @@ export default function StatsPage (props: {
     </SWRConfig>
   )
 }
+
+export default StatsPage;

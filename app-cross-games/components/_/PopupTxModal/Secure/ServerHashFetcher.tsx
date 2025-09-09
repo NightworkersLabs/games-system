@@ -1,17 +1,20 @@
-import { RepeatIcon, TimeIcon, CheckIcon, WarningIcon } from '@chakra-ui/icons'
-import { Flex, IconButton, Input, InputGroup, InputLeftElement, InputRightElement, Spinner, Text, Tooltip } from '@chakra-ui/react'
 import { useEffect, useMemo, useState } from 'react'
 import { useTimer } from 'react-timer-hook'
-import { useNWStore } from 'lib/store/main'
-import { AnySecurePopupTx } from 'lib/store/slices/popup-tx/handler'
 import shallow from 'zustand/shallow'
+
+import { CheckIcon, RepeatIcon, TimeIcon, WarningIcon } from '@chakra-ui/icons'
+import { Flex, IconButton, Input, InputGroup, InputLeftElement, InputRightElement, Spinner, Text, Tooltip } from '@chakra-ui/react'
+
+import { useNWStore } from '#/lib/store/main'
+import type { AnySecurePopupTx } from '#/lib/store/slices/popup-tx/handler'
+
 import { NextStepLayout } from '.'
 
 //
-export default function ServerHashFetcher (props: {
+const ServerHashFetcher = (props: {
     nextStep: () => void,
     popupTx: AnySecurePopupTx
-}) {
+}) => {
   //
   const {
     currentPopupTxID,
@@ -117,7 +120,7 @@ export default function ServerHashFetcher (props: {
   )
 }
 
-function PerishableSecretTimer ({ minutes, seconds, secretExpired }) {
+const PerishableSecretTimer = ({ minutes, seconds, secretExpired }) => {
   //
   return (
     <Flex p='2'>
@@ -134,7 +137,7 @@ function PerishableSecretTimer ({ minutes, seconds, secretExpired }) {
   )
 }
 
-function SecretFetchingFailed (props : { errMsg: string }) {
+const SecretFetchingFailed = (props : { errMsg: string }) => {
   return (
     <Flex direction='column' align='center' mt='2'>
       <Text color='#ff7676'>Issue while fetching secret:</Text>
@@ -143,3 +146,5 @@ function SecretFetchingFailed (props : { errMsg: string }) {
     </Flex>
   )
 }
+
+export default ServerHashFetcher; 

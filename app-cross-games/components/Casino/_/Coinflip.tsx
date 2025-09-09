@@ -1,12 +1,16 @@
-import { Flex, Image } from '@chakra-ui/react'
+import type { Variants } from 'framer-motion';
+import { motion } from 'framer-motion'
 import { useMemo } from 'react'
-import { BetBox, BaseBetButton, OutcomeDisplayerFunc, BetOdd, BetOdds } from './base'
-
-import { motion, Variants } from 'framer-motion'
-import { CoinBet } from 'lib/store/slices/_/bet'
 import useSWR from 'swr'
-import { HandledCasinoGame } from '..'
-import { fetchForGameData } from '../Stats'
+
+import { Flex, Image } from '@chakra-ui/react'
+
+import type { BetOdd,OutcomeDisplayerFunc } from '#/components/Casino/_/base';
+import { BaseBetButton, BetBox, BetOdds } from '#/components/Casino/_/base'
+import { fetchForGameData } from '#/components/Casino/Stats'
+import { CoinBet } from '#/lib/store/slices/_/bet'
+
+import type { HandledCasinoGame } from '..'
 
 export const coinBetOutcomeDisplayer : OutcomeDisplayerFunc<CoinBet> = outcome => ({
   descr: CoinBet[outcome],
@@ -62,9 +66,9 @@ const coinAnimations : Variants = {
 }
 
 //
-export function Coin (props: {
+export const Coin = (props: {
     history: { outcome?: CoinBet, hasFailed?: boolean }[]
-}) {
+}) => {
   //
   const currentState = useMemo(() => {
     //
@@ -108,11 +112,11 @@ export function Coin (props: {
 }
 
 //
-export function CoinBetSelection (props: {
+export const CoinBetSelection = (props: {
     canBet: boolean,
     bet: CoinBet,
     setBet: (bet: CoinBet) => void
-}) {
+}) => {
   //
   const { data } = useSWR<BetOdd[]>(
     ['/winrates', 'coinflip' as HandledCasinoGame],

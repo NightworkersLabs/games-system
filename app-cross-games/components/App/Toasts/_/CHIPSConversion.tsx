@@ -1,15 +1,16 @@
-import { useToast } from '@chakra-ui/react'
-import { CASINO_COIN_NAME } from 'env/defaults'
 import { useCallback, useEffect } from 'react'
-import { useNWStore } from 'lib/store/main'
-
 import shallow from 'zustand/shallow'
-import WinningsModal from './WinningsModal'
-import { formatEtherFixed } from 'lib/BigNumberFormatters'
-import { ChipConversionResult } from 'lib/store/slices/casino-bank/user-context'
+
+import { useToast } from '@chakra-ui/react'
+
+import WinningsModal from '#/components/App/Toasts/_/WinningsModal'
+import { CASINO_COIN_NAME } from '#/env/defaults'
+import { formatEtherFixed } from '#/lib/BigNumberFormatters'
+import { useNWStore } from '#/lib/store/main'
+import type { ChipConversionResult } from '#/lib/store/slices/casino-bank/user-context'
 
 //
-export default function CHIPSConversionToast () {
+const CHIPSConversionToast = () => {
   //
   const {
     running,
@@ -90,3 +91,5 @@ export default function CHIPSConversionToast () {
     singleChipPrice && latestChipsConversion?.netEvol > 0 && <WinningsModal />
   )
 }
+
+export default CHIPSConversionToast;

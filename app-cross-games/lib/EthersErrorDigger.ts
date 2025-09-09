@@ -1,7 +1,8 @@
 /**
  * try to extract a meaningful message from a ethers request error
  */
-export function getMeaningfulMessageFromError (e: any) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const getMeaningfulMessageFromError = (e: any) => {
   if (e?.error?.data?.message) {
     return e.error.data.message
   } else if (e?.data?.message) {

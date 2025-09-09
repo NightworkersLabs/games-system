@@ -1,11 +1,14 @@
-import { Button, Flex, HStack, Image, Text } from '@chakra-ui/react'
-import { BetBox } from 'components/Casino/_/base'
-import { CASINO_COIN_NAME } from 'env/defaults'
+import type { ReactElement} from 'react';
 import { useMemo } from 'react'
-import { AnyBettedCurrencyType } from 'lib/store/slices/_/bet'
+
+import { Button, Flex, HStack, Image, Text } from '@chakra-ui/react'
+
+import { BetBox } from '#/components/Casino/_/base'
+import { CASINO_COIN_NAME } from '#/env/defaults'
+import type { AnyBettedCurrencyType } from '#/lib/store/slices/_/bet'
 
 //
-export default function BaseBetAmountPicker <T = AnyBettedCurrencyType> (props: {
+const BaseBetAmountPicker = <T extends AnyBettedCurrencyType> (props: {
     betUpdater: (updatedBetAmount: T) => void,
     betIncreaser: (tick: T, upperLimit: T) => void,
     betDecreaser: (tick: T, lowerLimit: T) => void,
@@ -17,8 +20,8 @@ export default function BaseBetAmountPicker <T = AnyBettedCurrencyType> (props: 
     betTick: T,
     isDisabled?: boolean,
     subtitle?: string,
-    image?: any
-}) {
+    image?: ReactElement
+}) => {
   //
   const safeMaxBet = useMemo(() =>
     props.safeMaxResolver(props.minBet, props.maxBet)
@@ -73,12 +76,12 @@ export default function BaseBetAmountPicker <T = AnyBettedCurrencyType> (props: 
 }
 
 //
-function BaseBetButton (props: {
+const BaseBetButton = (props: {
     isDisabled: boolean,
     onClick: () => void,
     text: string
     size: 'md' | 'sm'
-}) {
+}) => {
   return (
     <Button
       variant="outline"
@@ -99,3 +102,5 @@ BaseBetAmountPicker.defaultProps = {
   subtitle: '2. Pick your bet',
   image: <Image boxSize='28px' src='/resources/casino/CHIP_14.png' alt={CASINO_COIN_NAME} />
 }
+
+export default BaseBetAmountPicker;

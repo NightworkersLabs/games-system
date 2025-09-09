@@ -1,9 +1,11 @@
-import { Flex, Textarea, VStack, Text, Button, useToast } from '@chakra-ui/react'
 import { useCallback, useState } from 'react'
-import { NWHead } from './_app'
-import { mainProduct } from './_document'
 
-export default function MultiSignatureAddressesFormatter () {
+import { Button, Flex, Text, Textarea, useToast,VStack } from '@chakra-ui/react'
+
+import { NWHead } from '#/pages/_app'
+import { mainProduct } from '#/pages/_document'
+
+const MultiSignatureAddressesFormatter = () => {
   //
   const [wlList, updateWLList] = useState('')
   const [addrCount, setAddrCount] = useState(0)
@@ -60,3 +62,5 @@ export default function MultiSignatureAddressesFormatter () {
     </Flex>
   )
 }
+
+export default MultiSignatureAddressesFormatter;

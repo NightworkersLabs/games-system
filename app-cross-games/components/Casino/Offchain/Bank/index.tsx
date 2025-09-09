@@ -1,21 +1,22 @@
+import { BigNumber } from 'ethers'
+import { parseEther } from 'ethers/lib/utils'
+import { useEffect, useMemo, useState } from 'react'
+import shallow from 'zustand/shallow'
+
 import { Button, Flex, Text, Tooltip } from '@chakra-ui/react'
 import { faBank, faCircleQuestion, faFileContract, faRotate, faWallet } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import ContractTitle from 'components/_/ContractTitle'
-import AutoUpdateTracker from 'components/_/AutoUpdateTracker'
-import { formatEtherFixed } from 'lib/BigNumberFormatters'
-import { useEffect, useMemo, useState } from 'react'
-import { useNWStore } from 'lib/store/main'
-import { BigNumber } from 'ethers'
 
-import { BaseChipsAmountPicker } from '../_/ChipsAmountPicker'
-import shallow from 'zustand/shallow'
-import { HUDButton } from 'components/App/HUD'
-import { CasinoAuthReminderPopup } from '../_/CasinoAuth'
-import { BlockchainCurrencyIcon } from 'components/App/HUD/Wallet'
-import { parseEther } from 'ethers/lib/utils'
+import AutoUpdateTracker from '#/components/_/AutoUpdateTracker'
+import ContractTitle from '#/components/_/ContractTitle'
+import { HUDButton } from '#/components/App/HUD'
+import { BlockchainCurrencyIcon } from '#/components/App/HUD/Wallet'
+import { CasinoAuthReminderPopup } from '#/components/Casino/Offchain/_/CasinoAuth'
+import { BaseChipsAmountPicker } from '#/components/Casino/Offchain/_/ChipsAmountPicker'
+import { formatEtherFixed } from '#/lib/BigNumberFormatters'
+import { useNWStore } from '#/lib/store/main'
 
-export default function CasinoBank () {
+const CasinoBank = () => {
   //
   const {
     updateCasinoBankContext$,
@@ -72,7 +73,7 @@ export default function CasinoBank () {
 }
 
 //
-function BankBalance () {
+const BankBalance = () => {
   //
   const {
     casinoBankBalance,
@@ -106,7 +107,7 @@ function BankBalance () {
 }
 
 //
-function ChipsTrader () {
+const ChipsTrader = () => {
   //
   const casinoAuthSignature = useNWStore(s => s.casinoAuthSignature)
 
@@ -135,7 +136,7 @@ function ChipsTrader () {
 }
 
 //
-function ChipsBuyer () {
+const ChipsBuyer = () => {
   //
   const {
     maxChipsBuyableAtOnce,
@@ -213,7 +214,7 @@ function ChipsBuyer () {
 }
 
 //
-function ChipsWithdrawer () {
+const ChipsWithdrawer = () => {
   //
   const {
     chipsBalance,
@@ -292,7 +293,7 @@ function ChipsWithdrawer () {
 }
 
 //
-function TaxWidgetIndicator () {
+const TaxWidgetIndicator = () => {
   //
   const chipsBuyBasePointsTax = useNWStore(s => s.chipsBuyBasePointsTax)
 
@@ -309,3 +310,5 @@ function TaxWidgetIndicator () {
     </Tooltip>
   )
 }
+
+export default CasinoBank;

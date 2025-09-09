@@ -1,16 +1,15 @@
 import { useRouter } from 'next/router'
 
-import blStorage from 'lib/Backlinking'
-
-import MainPage, { getServerSideProps as gSSP } from '../index'
-import { MetaMaskMandatoryInfos } from 'lib/DeviceDetector'
+import blStorage from '#/lib/Backlinking'
+import type { MetaMaskMandatoryInfos } from '#/lib/DeviceDetector'
+import MainPage, { getServerSideProps as gSSP } from '#/pages/index'
 
 export const getServerSideProps = gSSP
 
 //
-export default function BacklinkRoutingWrapper (props: {
+const BacklinkRoutingWrapper = (props: {
     mmInfos: MetaMaskMandatoryInfos
-}) {
+}) => {
   const router = useRouter()
   const blName = router.query.name as string
   const blInfos = blStorage[blName]
@@ -20,3 +19,5 @@ export default function BacklinkRoutingWrapper (props: {
     blRef={blInfos}
   />
 }
+
+export default BacklinkRoutingWrapper;

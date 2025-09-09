@@ -1,11 +1,13 @@
-import { Flex, Image, Link, Text } from '@chakra-ui/react'
-import { AvailableNetwork } from 'env/networksCompiler'
-import { useNWStore } from 'lib/store/main'
-
-import { ExtraCompiledNetwork, handledNetworks } from 'lib/TypedNetworks'
 import { useEffect, useMemo, useRef } from 'react'
 
-export default function NetworkPicker () {
+import { Flex, Image, Link, Text } from '@chakra-ui/react'
+
+import type { AvailableNetwork } from '#/env/networksCompiler'
+import { useNWStore } from '#/lib/store/main'
+import type { ExtraCompiledNetwork} from '#/lib/TypedNetworks';
+import { handledNetworks } from '#/lib/TypedNetworks'
+
+const NetworkPicker = () => {
   //
   const myRef = useRef<HTMLDivElement>(null)
 
@@ -45,9 +47,9 @@ export default function NetworkPicker () {
 }
 
 //
-function NetworkButton (props: {
+const NetworkButton = (props: {
   network: ExtraCompiledNetwork
-}) {
+}) => {
   //
   const connectToPreferredNetwork = useNWStore(s => s.connectToPreferredNetwork)
 
@@ -63,9 +65,9 @@ function NetworkButton (props: {
 }
 
 //
-export function NetworkTag (props: {
+export const NetworkTag = (props: {
   network: ExtraCompiledNetwork
-}) {
+}) => {
   //
   const subtext = useMemo(() => {
     if ('faucet' in props.network) {
@@ -109,9 +111,9 @@ export function NetworkTag (props: {
   )
 }
 
-export function MiniNetworkTag (props: {
+export const MiniNetworkTag = (props: {
   network: ExtraCompiledNetwork
-}) {
+}) => {
   //
   return (
     <Flex
@@ -135,3 +137,5 @@ export function MiniNetworkTag (props: {
     </Flex>
   )
 }
+
+export default NetworkPicker;

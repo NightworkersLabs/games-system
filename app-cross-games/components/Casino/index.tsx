@@ -1,15 +1,16 @@
-import { Flex, Tooltip } from '@chakra-ui/react'
-import CasinoBank from './Offchain/Bank'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBank, faCoins, faDharmachakra, faDice } from '@fortawesome/free-solid-svg-icons'
 import { useMemo } from 'react'
-import { IconProp } from '@fortawesome/fontawesome-svg-core'
 
-import CasinoAuth from './Offchain/_/CasinoAuth'
-import ChipsBalance from './Offchain/_/ChipsBalance'
-import ChipsRoulette from './Offchain/Roulette'
-import ChipsCoinFlip from './Offchain/CoinFlip'
-import { useNWStore } from 'lib/store/main'
+import { Flex, Tooltip } from '@chakra-ui/react'
+import type { IconProp } from '@fortawesome/fontawesome-svg-core'
+import { faBank, faCoins, faDharmachakra, faDice } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
+import CasinoAuth from '#/components/Casino/Offchain/_/CasinoAuth'
+import ChipsBalance from '#/components/Casino/Offchain/_/ChipsBalance'
+import CasinoBank from '#/components/Casino/Offchain/Bank'
+import ChipsCoinFlip from '#/components/Casino/Offchain/CoinFlip'
+import ChipsRoulette from '#/components/Casino/Offchain/Roulette'
+import { useNWStore } from '#/lib/store/main'
 
 export const GAMES_ICONS = {
   coinflip: faCoins,
@@ -21,7 +22,7 @@ export const GAMES_ICONS = {
 export type HandledCasinoGame = keyof typeof GAMES_ICONS
 
 //
-export default function Casino () {
+const Casino = () => {
   //
   const [tabIndex, setTabIndex] = useNWStore(s => [s.casinoTabIndex, s.setCasinoTabIndex])
 
@@ -77,14 +78,14 @@ export default function Casino () {
   )
 }
 
-function TabButton (props: {
+const TabButton = (props: {
     icon: IconProp,
     index: number,
     cIndex: number,
     title: string,
     iUpdater?: (index: number) => void
     isMainButton?: boolean
-}) {
+}) => {
   //
   const isSelected = useMemo(() => props.index === props.cIndex, [props.cIndex, props.index])
 
@@ -117,3 +118,5 @@ function TabButton (props: {
     </Tooltip>
   )
 }
+
+export default Casino;

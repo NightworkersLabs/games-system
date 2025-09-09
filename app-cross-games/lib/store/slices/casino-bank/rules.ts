@@ -1,6 +1,7 @@
 import { BigNumber } from 'ethers'
-import { StoreSlice } from 'lib/store/_'
-import { IWeb3Slice } from '../web3'
+
+import type { StoreSlice } from '#/lib/store/_'
+import type { IWeb3Slice } from '#/lib/store/slices/web3'
 
 export interface ICasinoBankRulesSlice {
     //
