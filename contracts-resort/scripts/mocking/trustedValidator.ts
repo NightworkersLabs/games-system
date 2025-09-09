@@ -3,16 +3,15 @@
 //
 // When running the script with `pnpm exec hardhat run <script>` you'll find the Hardhat
 // Runtime Environment's members available in the global scope.
-import { parseEther } from 'ethers/lib/utils'
+import { parseEther } from "ethers/lib/utils";
 
-import { SecretsStorage } from '@offchain-service/lib/provably-fair/secrets-provider'
+import { SecretsStorage } from "@nightworkerslabs/offchain-resort/src/lib/provably-fair/secrets-provider";
 
-import TVDInstance from 'scripts/deploy/framework/TVDHelper'
-import { deployNWP2E } from 'scripts/deploy/_'
+import { deployNWP2E } from "#/scripts/deploy/_";
+import TVDInstance from "#/scripts/deploy/framework/TVDHelper";
+import { MintOrderer } from "#/test/_helpers";
 
-import { MintOrderer } from 'test/_helpers'
-
-async function main () {
+const main = async () => {
   // Hardhat always runs the compile task when running scripts with its command
   // line interface.
   //
@@ -21,46 +20,68 @@ async function main () {
   // await hre.run('compile');
 
   // deploy contracts
-  const contracts = await deployNWP2E({ allowWorkingAndSneaking: true })
-  const payableMintPrice = parseEther('1.5')
+  const contracts = await deployNWP2E({ allowWorkingAndSneaking: true });
+  const payableMintPrice = parseEther("1.5");
 
   // order mints BEFORE trusted validator is ON
-  await contracts.nightworkersGame.contract.declarePublicLaunch().then(e => e.wait())
-  await MintOrderer.waitedS(contracts.nightworkersGame.contract, payableMintPrice)
-  await MintOrderer.waitedS(contracts.nightworkersGame.contract, payableMintPrice)
+  await contracts.nightworkersGame.contract
+    .declarePublicLaunch()
+    .then((e) => e.wait());
+  await MintOrderer.waitedS(
+    contracts.nightworkersGame.contract,
+    payableMintPrice,
+  );
+  await MintOrderer.waitedS(
+    contracts.nightworkersGame.contract,
+    payableMintPrice,
+  );
 
   // start the trusted validator daemon
   // TVLogger.mustLog = false;
-  const secretsStorage = new SecretsStorage()
+  const secretsStorage = new SecretsStorage();
   const daemonInstance = TVDInstance.fromContracts(
     contracts,
     secretsStorage,
-    await contracts.nightworkersGame.contract.provider.getBlockNumber()
-  )
-  const payload = await daemonInstance.generateTrustfullOrderPayload()
+    await contracts.nightworkersGame.contract.provider.getBlockNumber(),
+  );
+  const payload = await daemonInstance.generateTrustfullOrderPayload();
 
   // order
-  await MintOrderer.waitedS(contracts.nightworkersGame.contract, payableMintPrice, { payload })
-  await MintOrderer.waitedS(contracts.nightworkersGame.contract, payableMintPrice, { payload })
+  await MintOrderer.waitedS(
+    contracts.nightworkersGame.contract,
+    payableMintPrice,
+    { payload },
+  );
+  await MintOrderer.waitedS(
+    contracts.nightworkersGame.contract,
+    payableMintPrice,
+    { payload },
+  );
 
-  const job = daemonInstance.exec()
+  const job = daemonInstance.exec();
 
   // order mints AFTER trusted validator started
-  await MintOrderer.waitedS(contracts.nightworkersGame.contract, payableMintPrice)
-  await MintOrderer.waitedS(contracts.nightworkersGame.contract, payableMintPrice)
+  await MintOrderer.waitedS(
+    contracts.nightworkersGame.contract,
+    payableMintPrice,
+  );
+  await MintOrderer.waitedS(
+    contracts.nightworkersGame.contract,
+    payableMintPrice,
+  );
 
   // may stop
-  daemonInstance.stop()
+  daemonInstance.stop();
 
   // await for daemon to stop handling events
-  await job
-}
+  await job;
+};
 
 // We recommend this pattern to be able to use async/await everywhere
 // and properly handle errors.
 main()
   .then(() => process.exit(0))
   .catch((error) => {
-    console.error(error)
-    process.exit(1)
-  })
+    console.error(error);
+    process.exit(1);
+  });

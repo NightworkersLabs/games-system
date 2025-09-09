@@ -3,10 +3,11 @@
 //
 // When running the script with `pnpm exec hardhat run <script>` you'll find the Hardhat
 // Runtime Environment's members available in the global scope.
-import { parseEther } from 'ethers/lib/utils'
-import { deployNWP2E, tryVerifyContracts } from './_'
+import { parseEther } from "ethers/lib/utils";
 
-async function main () {
+import { deployNWP2E, tryVerifyContracts } from "#/scripts/deploy/_";
+
+const main = async () => {
   // Hardhat always runs the compile task when running scripts with its command
   // line interface.
   //
@@ -15,7 +16,7 @@ async function main () {
   // await hre.run('compile');
 
   //
-  const mintMultisigAddress = '0xde7b15A2139c2FD7911071C9A79C04669FF79399' // TO FILL
+  const mintMultisigAddress = "0xde7b15A2139c2FD7911071C9A79C04669FF79399"; // TO FILL
 
   //
   const contracts = await deployNWP2E({
@@ -25,29 +26,29 @@ async function main () {
     maxMints: 300, // TO REMOVE ONCE MAINNET
     ERC20WiningsPerDayStaking: parseEther((20_000_000).toString()), // TO REMOVE ONCE MAINNET
     minimumVestingPeriodInSecs: 2 * 60, // TO REMOVE ONCE MAINNET
-    defaultPayableMintPrice: parseEther('0.15'), // TO REMOVE ONCE MAINNET
+    defaultPayableMintPrice: parseEther("0.15"), // TO REMOVE ONCE MAINNET
     allowWorkingAndSneaking: true, // TO REMOVE ONCE MAINNET
     publicLaunch: true, // TO REMOVE ONCE MAINNET
     /* ADDRESSES */
     taxesAndRevenueRecipientAddress: mintMultisigAddress,
-    trustedValidatorAddress: '0x544a3AC7FF74F1f7AD6e41FcAc4CF98d657675B2', // TO FILL
-    ERC20TokenContractAddress: '0x06215f669e44b82922A58D786Ea1C53627386a76', // TO FILL (optional)
+    trustedValidatorAddress: "0x544a3AC7FF74F1f7AD6e41FcAc4CF98d657675B2", // TO FILL
+    ERC20TokenContractAddress: "0x06215f669e44b82922A58D786Ea1C53627386a76", // TO FILL (optional)
     /* DOMAIN & URLs */
-    tokenURIBase: 'https://nightworkers.vercel.app/api/ERC721?md=' // TO FILL
-  })
+    tokenURIBase: "https://nightworkers.vercel.app/api/ERC721?md=", // TO FILL
+  });
 
   //
-  await contracts.transferOwnershipTo(mintMultisigAddress)
+  await contracts.transferOwnershipTo(mintMultisigAddress);
 
   //
-  await tryVerifyContracts(contracts.ALL_CONTEXTS)
-}
+  await tryVerifyContracts(contracts.ALL_CONTEXTS);
+};
 
 // We recommend this pattern to be able to use async/await everywhere
 // and properly handle errors.
 main()
   .then(() => process.exit(0))
   .catch((error) => {
-    console.error(error)
-    process.exit(1)
-  })
+    console.error(error);
+    process.exit(1);
+  });

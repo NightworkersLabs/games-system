@@ -1,11 +1,8 @@
 {
   "compilerOptions": {
     "resolveJsonModule": true,
-    "baseUrl": ".",
     "paths": {
-        "@offchain-service/*": [
-            "./offchain-service/src/*"
-        ]
+        "#/*": ["./*"]
     },
     "types": [
       "mocha"

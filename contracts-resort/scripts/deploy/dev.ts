@@ -3,10 +3,11 @@
 //
 // When running the script with `pnpm exec hardhat run <script>` you'll find the Hardhat
 // Runtime Environment's members available in the global scope.
-import { parseEther } from 'ethers/lib/utils'
-import { deployNWP2E } from './_'
+import { parseEther } from "ethers/lib/utils";
 
-async function main () {
+import { deployNWP2E } from "#/scripts/deploy/_";
+
+const main = async () => {
   // Hardhat always runs the compile task when running scripts with its command
   // line interface.
   //
@@ -26,15 +27,15 @@ async function main () {
     ERC20WiningsPerDayStaking: parseEther((20_000_000).toString()),
     minimumVestingPeriodInSecs: 1, // 2 * 60
     /* DOMAIN & URLs */
-    tokenURIBase: 'http://127.0.0.1:3000/api/ERC721?md='
-  })
-}
+    tokenURIBase: "http://127.0.0.1:3000/api/ERC721?md=",
+  });
+};
 
 // We recommend this pattern to be able to use async/await everywhere
 // and properly handle errors.
 main()
   .then(() => process.exit(0))
   .catch((error) => {
-    console.error(error)
-    process.exit(1)
-  })
+    console.error(error);
+    process.exit(1);
+  });

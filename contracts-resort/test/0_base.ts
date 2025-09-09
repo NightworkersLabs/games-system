@@ -1,15 +1,14 @@
-import './_context'
+import "#/test/_context";
 
-import { NightworkersContext } from 'scripts/deploy/framework/NWContext'
+import { NightworkersContext } from "#/scripts/deploy/framework/NWContext";
+import { testFramework } from "#/test/1_testFramework";
+import { testGame } from "#/test/2_game";
 
-import { testFramework } from './1_testFramework'
-import { testGame } from './2_game'
-
-describe('Nightworkers P2E', function () {
+describe("Nightworkers P2E", function () {
   before(async function () {
-    this.nwContext = new NightworkersContext('./deployment_history.txt', true)
-  })
+    this.nwContext = new NightworkersContext("./deployment_history.txt", true);
+  });
 
-  testFramework()
-  testGame()
-})
+  testFramework();
+  testGame();
+});

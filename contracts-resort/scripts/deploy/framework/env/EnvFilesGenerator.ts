@@ -1,52 +1,59 @@
-import { writeFileSync, writeJSONSync } from 'fs-extra'
-import { resolve } from 'path'
-import { NightworkersContext } from 'scripts/deploy/framework/NWContext'
+import { writeFileSync, writeJSONSync } from "fs-extra";
+import { resolve } from "path";
 
-import { DAppEnvGenerator } from './generators/DApp'
-import { getHandledNetworks } from './generators/Networks'
-import { TrustedValidatorEnvGenerator } from './generators/TrustedValidator'
+import { DAppEnvGenerator } from "#/scripts/deploy/framework/env/generators/DApp";
+import { getHandledNetworks } from "#/scripts/deploy/framework/env/generators/Networks";
+import { TrustedValidatorEnvGenerator } from "#/scripts/deploy/framework/env/generators/TrustedValidator";
+import type { NightworkersContext } from "#/scripts/deploy/framework/NWContext";
 
-function buildEnvFileAsString (envObj: any) : string {
-  const entries = Object.entries(envObj)
-  let buf = ''
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const buildEnvFileAsString = (envObj: any): string => {
+  const entries = Object.entries(envObj);
+  let buf = "";
   for (const [key, value] of entries) {
-    buf += `\n${key}="${value}"`
+    buf += `\n${key}="${value}"`;
   }
-  return buf.substring(1)
-}
+  return buf.substring(1);
+};
 
 //
-function produceConsumerConfiguration (toProduce: object, atFilePath: string) {
-  writeFileSync(atFilePath, buildEnvFileAsString(toProduce))
-  _logGenerated(atFilePath)
-}
+const produceConsumerConfiguration = (
+  toProduce: object,
+  atFilePath: string,
+) => {
+  writeFileSync(atFilePath, buildEnvFileAsString(toProduce));
+  _logGenerated(atFilePath);
+};
 
 //
-function produceConsumerJSONConfig (toProduce: object, atFilePaths: string[]) {
+const produceConsumerJSONConfig = (
+  toProduce: object,
+  atFilePaths: string[],
+) => {
   for (const path of atFilePaths) {
-    writeJSONSync(path, toProduce, { spaces: 2 })
-    _logGenerated(path)
+    writeJSONSync(path, toProduce, { spaces: 2 });
+    _logGenerated(path);
   }
-}
+};
 
 //
-function _logGenerated (atFilePath: string) {
-  console.log(`==> "${resolve(atFilePath)}" successfully generated !`)
-}
+const _logGenerated = (atFilePath: string) => {
+  console.log(`==> "${resolve(atFilePath)}" successfully generated !`);
+};
 
 /**
  * generate configuration files to be used in dApp and Trusted Validator Bot
  */
-export function produceConsumerConfigurations (context: NightworkersContext) {
+export const produceConsumerConfigurations = (context: NightworkersContext) => {
   //
-  const dAppEnv = new DAppEnvGenerator().generate(context)
-  produceConsumerConfiguration(dAppEnv, 'artifacts/.env.dApp')
+  const dAppEnv = new DAppEnvGenerator().generate(context);
+  produceConsumerConfiguration(dAppEnv, "artifacts/.env.dApp");
 
   //
-  const tvEnvFile = new TrustedValidatorEnvGenerator().generate(context)
-  produceConsumerConfiguration(tvEnvFile, 'offchain-service/.env')
+  const tvEnvFile = new TrustedValidatorEnvGenerator().generate(context);
+  produceConsumerConfiguration(tvEnvFile, "offchain-service/.env");
 
   //
-  const handledNetworks = getHandledNetworks()
-  produceConsumerJSONConfig(handledNetworks, ['artifacts/networks.json'])
-}
+  const handledNetworks = getHandledNetworks();
+  produceConsumerJSONConfig(handledNetworks, ["artifacts/networks.json"]);
+};
