@@ -1,9 +1,0 @@
-[submodule "doc/owner-guide"]
-	path = doc/owner-guide
-	url = https://github.com/NightworkersLabs/owner-guide.git
-[submodule "nft-assets"]
-	path = nft-assets
-	url = https://github.com/NightworkersLabs/nft-assets.git
-[submodule "offchain-service"]
-	path = offchain-service
-	url = https://github.com/NightworkersLabs/offchain-service.git
