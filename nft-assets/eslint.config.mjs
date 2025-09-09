@@ -5,7 +5,6 @@ import simpleImportSort from "eslint-plugin-simple-import-sort";
 import tseslint from "typescript-eslint";
 
 import eslint from "@eslint/js";
-import tsParser from "@typescript-eslint/parser";
 
 export default defineConfig(
   eslint.configs.recommended,
@@ -66,11 +65,6 @@ export default defineConfig(
   {
     linterOptions: {
       reportUnusedDisableDirectives: true,
-    },
-    languageOptions: {
-      parser: tsParser,
-      ecmaVersion: "latest",
-      sourceType: "module",
     },
     rules: {
       "@typescript-eslint/no-namespace": "off",
