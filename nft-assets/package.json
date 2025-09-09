@@ -9,7 +9,15 @@
     },
     "devDependencies": {
         "@types/node": "^22",
-        "sort-package-json": "^3"
+        "sort-package-json": "^3",
+        "eslint": "^9.35.0",
+        "@eslint/js": "^9.35.0",
+        "eslint-config-prettier": "^10.1.8",
+        "eslint-plugin-no-relative-import-paths": "^1.6.1",
+        "eslint-plugin-prettier": "^5.5.4",
+        "eslint-plugin-simple-import-sort": "^12.1.1",
+        "typescript": "^5.7.2",
+        "typescript-eslint": "^8.43.0"
     },
     "packageManager": "pnpm@10.13.1+sha512.37ebf1a5c7a30d5fabe0c5df44ee8da4c965ca0c5af3dbab28c3a1681b70a256218d05c81c9c0dcf767ef6b8551eb5b960042b9ed4300c59242336377e01cfad"
 }
