@@ -30,15 +30,16 @@
     "tsconfig-paths": "^4.2.0"
   },
   "devDependencies": {
+    "@eslint/js": "^9.35.0",
     "@types/fs-extra": "^11.0.4",
     "@types/node": "^22.10.2",
     "dpdm-fast": "^1.0.7",
     "eslint": "^9.35.0",
-    "@eslint/js": "^9.35.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-no-relative-import-paths": "^1.6.1",
     "eslint-plugin-prettier": "^5.5.4",
     "eslint-plugin-simple-import-sort": "^12.1.1",
+    "prettier": "^3.5.3",
     "sort-package-json": "^3",
     "typescript": "^5.7.2",
     "typescript-eslint": "^8.43.0"

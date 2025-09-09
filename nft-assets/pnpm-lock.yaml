@@ -29,6 +29,9 @@ importers:
       eslint-plugin-simple-import-sort:
         specifier: ^12.1.1
         version: 12.1.1(eslint@9.35.0)
+      prettier:
+        specifier: ^3.5.3
+        version: 3.6.2
       sort-package-json:
         specifier: ^3
         version: 3.4.0
