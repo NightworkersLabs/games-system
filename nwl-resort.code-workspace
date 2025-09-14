@@ -1,9 +1,9 @@
 {
 	"folders": [
-		{
-			"path": "./",
-			"name": "[root]"
-		},
+		// {
+		// 	"path": "./",
+		// 	"name": "[root]"
+		// },
 		{
 			"path": "./app-resort",
 		},

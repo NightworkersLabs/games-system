@@ -20,7 +20,10 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "paths": {
-      "#/*": ["./*"]
+      "#/src/*": ["./src/*"],
+      "#/config/*": ["./config/*"],
+      "#/contrib/*": ["./contrib/*"],
+      "#/public/*": ["./public/*"]
     }
   },
   "include": [

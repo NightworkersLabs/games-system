@@ -34,9 +34,6 @@ pnpm-error.log*
 #
 .env*
 
-# vercel
-.vercel
-
 # we use pnpm instead of npm
 package-lock.json
 
@@ -44,7 +41,7 @@ package-lock.json
 .chrome-vscode-debug-profile
 
 # auto generated
-networks.compiled.json
+config/networks.compiled.json
 
 #
 tsconfig.tsbuildinfo
