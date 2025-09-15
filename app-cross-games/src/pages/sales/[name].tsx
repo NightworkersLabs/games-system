@@ -1,11 +1,11 @@
-import type { GetServerSideProps } from 'next'
+import type { GetStaticProps } from 'next'
 import { useMemo } from 'react'
 import { SWRConfig, unstable_serialize } from 'swr'
 
 import { Flex, Link,Tab, TabList, TabPanel, TabPanels, Tabs, Text } from '@chakra-ui/react'
 
 import { CollabImage, getSponsorImageUrl, NWNakedTitleContent } from '#/src/components/App/NWTitle'
-import { fetchTrackersData } from '#/src/components/Data/Trackers/_'
+import { type BuyData, type BuyTotalData, fetchTrackersData, type PaymentData,type PaymentTotalData } from '#/src/components/Data/Trackers/_'
 import SalesAnalyticsBuys from '#/src/components/Data/Trackers/Buys'
 import SalesAnalyticsPayments from '#/src/components/Data/Trackers/Payments'
 import type { BacklinkReference, BacklinkTracker } from '#/src/lib/Backlinking';
@@ -17,13 +17,19 @@ import { domainUrl, mainProduct } from '#/src/pages/_document'
 //
 //
 
+
+/** gives empty data if `promise` has failed */
+export const safeResultsArr = <T,>(promise: PromiseSettledResult<T[]>) : T[] => promise.status === 'fulfilled' ? promise.value : []
+export const safeResultsObj = <T,>(promise: PromiseSettledResult<T>) : T => promise.status === 'fulfilled' ? promise.value : { } as T
+
+
 //
 const refreshedEveryMin = 10
 
 // This function gets called at build time on server-side.
 // It may be called again, on a serverless function, if
 // revalidation is enabled and a new request comes in
-export const getStaticProps : GetServerSideProps = async (context) => {
+export const getStaticProps : GetStaticProps = async (context) => {
   // make sure name is the last route arg
   const { name } = context.params
   if (typeof name !== 'string') {
@@ -44,21 +50,21 @@ export const getStaticProps : GetServerSideProps = async (context) => {
     paymentsTotal,
     buys,
     buysTotal
-  ] = await Promise.all([
-    fetchTrackersData('/payments', backlinkRef.trackerId),
-    fetchTrackersData('/paymentsTotal', backlinkRef.trackerId),
-    fetchTrackersData('/buys', backlinkRef.trackerId),
-    fetchTrackersData('/buysTotal', backlinkRef.trackerId)
-  ] as const)
+  ] = await Promise.allSettled([
+    fetchTrackersData<PaymentData[]>('/payments', backlinkRef.trackerId),
+    fetchTrackersData<PaymentTotalData[]>('/paymentsTotal', backlinkRef.trackerId),
+    fetchTrackersData<BuyData[]>('/buys', backlinkRef.trackerId),
+    fetchTrackersData<BuyTotalData[]>('/buysTotal', backlinkRef.trackerId)
+  ])
 
   //
   return {
     props: {
       fallback: {
-        [unstable_serialize(['/payments', backlinkRef.trackerId])]: payments,
-        [unstable_serialize(['/paymentsTotal', backlinkRef.trackerId])]: paymentsTotal,
-        [unstable_serialize(['/buys', backlinkRef.trackerId])]: buys,
-        [unstable_serialize(['/buysTotal', backlinkRef.trackerId])]: buysTotal
+        [unstable_serialize(['/payments', backlinkRef.trackerId])]: safeResultsArr(payments),
+        [unstable_serialize(['/paymentsTotal', backlinkRef.trackerId])]: safeResultsArr(paymentsTotal),
+        [unstable_serialize(['/buys', backlinkRef.trackerId])]: safeResultsArr(buys),
+        [unstable_serialize(['/buysTotal', backlinkRef.trackerId])]: safeResultsArr(buysTotal)
       },
       /** */
       backlinkRef

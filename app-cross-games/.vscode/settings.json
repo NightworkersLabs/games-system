@@ -4,5 +4,11 @@
     "editor.tabSize": 2,
     "editor.detectIndentation": false,
     "eslint.format.enable": true,
-	  "[javascript]": { "editor.defaultFormatter": "dbaeumer.vscode-eslint" }
+	  "[javascript]": { "editor.defaultFormatter": "dbaeumer.vscode-eslint" },
+    "search.exclude": {
+      "**/node_modules": true,
+      "**/bower_components": true,
+      "**/*.code-search": true,
+      "**/.next": true
+    }
 }

@@ -1,4 +1,4 @@
-import type { GetServerSideProps } from 'next'
+import type { GetStaticProps } from 'next'
 import type { ReactElement } from 'react';
 import { SWRConfig } from 'swr'
 
@@ -13,6 +13,7 @@ import GamesStatsUI from '#/src/components/Data/Stats/Games'
 import GamesEvolCharts from '#/src/components/Data/Stats/GamesEvol'
 import { NWHead } from '#/src/pages/_app'
 import { mainProduct } from '#/src/pages/_document'
+import { safeResultsArr, safeResultsObj } from '#/src/pages/sales/[name]';
 
 //
 const refreshedEveryMin = 5
@@ -20,7 +21,7 @@ const refreshedEveryMin = 5
 // This function gets called at build time on server-side.
 // It may be called again, on a serverless function, if
 // revalidation is enabled and a new request comes in
-export const getStaticProps : GetServerSideProps = async () => {
+export const getStaticProps : GetStaticProps = async () => {
   //
   const balancesP = fetchStatsData<BalanceData[]>('/balances-total')
 
@@ -31,9 +32,12 @@ export const getStaticProps : GetServerSideProps = async () => {
     balancesEvol,
     gamesStats,
     gamesEvol
-  ] = await Promise.all([
+  ] = await Promise.allSettled([
     balancesP,
-    balancesP.then(results => getSingleChipValues(results.map(w => w.chainId))),
+    balancesP.then(results => {
+      const chainIds = results.map(w => w.chainId);
+      return getSingleChipValues(chainIds);
+    }),
     fetchStatsData<BalanceEvol>('/balances-evol'),
     fetchStatsData<PackedGamesStats>('/games-stats'),
     fetchStatsData<GamesEvol>('/games-evol')
@@ -42,12 +46,12 @@ export const getStaticProps : GetServerSideProps = async () => {
   //
   return {
     props: {
-      singleChipValues,
+      singleChipValues: safeResultsObj(singleChipValues),
       fallback: {
-        '/balances-total': balances,
-        '/balances-evol': balancesEvol,
-        '/games-stats': gamesStats,
-        '/games-evol': gamesEvol
+        '/balances-total': safeResultsArr(balances),
+        '/balances-evol': safeResultsObj(balancesEvol),
+        '/games-stats': safeResultsObj(gamesStats),
+        '/games-evol': safeResultsObj(gamesEvol)
       }
     },
     // Next.js will attempt to re-generate the page:

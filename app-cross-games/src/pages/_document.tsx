@@ -5,8 +5,7 @@ import Document, { Head, Html, Main, NextScript } from 'next/document'
 const googleOwnDomainTag = 'LhBN99NI_16ahBQ5ywbOYfMnte3hiZD8UHhIv8xOzpo' /** liked to nightworkers.vercel.app */
 
 //
-export const domain = process.env.NEXT_PUBLIC_DOMAIN ?? 'nightworkers.vercel.app'
-export const domainUrl = `https://${domain}/`
+export const domainUrl = process.env.NEXT_PUBLIC_DOMAIN_URL;
 export const mainProduct = 'Night Workers'
 export const appName = `${mainProduct} - Multichain Casino`
 
@@ -73,7 +72,6 @@ class NWDocument extends Document {
           <meta name="apple-mobile-web-app-status-bar-style" content="default" />
 
           {/** Twitter specifics ['name' + 'content'] (https://developer.twitter.com/en/docs/twitter-for-websites/cards/guides/getting-started) */}
-          <meta name="twitter:domain" content={domain} />
           <meta name="twitter:url" content={domainUrl} />
 
           {/** basic Open Graph Metadata (https://ogp.me/) ['property' + 'content'] */}

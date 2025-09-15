@@ -1,7 +1,7 @@
 // This function gets called at build time on server-side.
 // It may be called again, on a serverless function, if
 
-import type { GetServerSideProps } from 'next'
+import type { GetStaticProps } from 'next'
 import { useMemo } from 'react'
 
 import { Flex,Link, Text } from '@chakra-ui/react'
@@ -24,7 +24,7 @@ import { mainProduct } from '#/src/pages/_document'
 const TITLE_TEXT = 'Trackers & Partners'
 
 // revalidation is enabled and a new request comes in
-export const getStaticProps : GetServerSideProps = async () => {
+export const getStaticProps : GetStaticProps = async () => {
   //
   return {
     props: {

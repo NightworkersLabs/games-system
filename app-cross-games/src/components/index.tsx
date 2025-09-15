@@ -97,7 +97,7 @@ const NWEntryPoint = (props: {
 
   //
   return (
-    <AnimatePresence exitBeforeEnter>
+    <AnimatePresence mode='wait'>
       <motion.div
         style={!validatedDisclaimer ? { display: 'flex', flex: 1, justifyContent: 'center' } : { flex: 1 }}
         key={validatedDisclaimer ? 'app' : 'disclaimer'}

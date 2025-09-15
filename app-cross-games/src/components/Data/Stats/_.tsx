@@ -11,16 +11,19 @@ import { getDataServiceUrl } from '#/src/consts'
 import { deployed, handledNetworks } from '#/src/lib/TypedNetworks'
 
 //
+
+type SingleChipPrice = {
+  readonly currencyName: string
+  /** @dev stringified BigNumber for parsing */
+  readonly chipValue: string
+  /** @dev stringified BigNumber for parsing */
+  readonly balance: string
+  /** @dev stringified BigNumber for parsing */
+  readonly tax: string
+}
+
 export type SingleChipsPrices = {
-  [chainId: number] : {
-    readonly currencyName: string
-    /** @dev stringified BigNumber for parsing */
-    readonly chipValue: string
-    /** @dev stringified BigNumber for parsing */
-    readonly balance: string
-    /** @dev stringified BigNumber for parsing */
-    readonly tax: string
-   }
+  [chainId: number] : SingleChipPrice
 }
 
 //
@@ -95,28 +98,29 @@ export const chipsAmountRenderer = (
 /**
  * @param chainsToFetch array of chain Ids that filters the available networks
  */
-export const getSingleChipValues = (chainsToFetch: number[]) : Promise<SingleChipsPrices>  => {
-  /** @dev why do i need this ? */
-  const wtf = deployed
-
+export const getSingleChipValues = (chainsToFetch: number[]) : Promise<SingleChipsPrices> => {
   //
-  return Promise.allSettled(
+  const requestFilteredBlockchains = () => 
     Object.entries(handledNetworks)
-      // filter to optimize
-      .filter(([, i]) => chainsToFetch.includes(i.chainId))
-      // promised fetch of values from BC
-      .map(async ([n, i]) => {
-        //
-        const contractAddr = wtf?.CasinoBank?.[n]?.[0]
+      // only requests for selected chains
+      .filter(([, { chainId }]) => chainsToFetch.includes(chainId))
+      .map(async ([chainName, { url, chainId, currencyName }]) => {
+        // check if we got a contract address bound to this chain
+        const contractAddr = deployed?.CasinoBank?.[chainName]?.[0]
+        if (contractAddr == null) {
+          // if not, silently skip
+          return null
+        }
 
-        //
+        // instantiate contract...
         const contract = new Contract(contractAddr, CasinoBankABI,
           new ethers.providers.JsonRpcProvider(
-            i.url,
-            i.chainId
+            url,
+            chainId
           )
         )
 
+        // request values...
         const [
           chipValue,
           balance,
@@ -128,21 +132,18 @@ export const getSingleChipValues = (chainsToFetch: number[]) : Promise<SingleChi
         ])
 
         //
-        return [
-          i.chainId,
-          {
-            currencyName: i.currencyName,
-            chipValue,
-            balance,
-            tax
-          }
-        ] as const
+        return [chainId, { currencyName, chipValue, balance, tax }] as const
       })
-  // get only fufilled
-  ).then(e => e
-    .filter(w => w.status === 'fulfilled')
-    .map(w => w.status === 'fulfilled' && w.value)
-  ).then(t => Object.fromEntries(t))
+      .filter(Boolean) // removes blockchains without contracts associated
+  
+
+  //
+  return Promise.allSettled(requestFilteredBlockchains())
+    .then(e => e
+      .filter(w => w.status === 'fulfilled')
+      .map(w => w.value)
+    )
+    .then(Object.fromEntries)
 }
 
 //

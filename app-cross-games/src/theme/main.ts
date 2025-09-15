@@ -1,5 +1,5 @@
 
-import { StepsStyleConfig as Steps } from 'chakra-ui-steps'
+import { StepsTheme as Steps } from 'chakra-ui-steps'
 
 import { extendTheme } from '@chakra-ui/react'
 

@@ -1,6 +1,9 @@
 // @ts-check
  
 // eslint-disable-next-line @typescript-eslint/no-require-imports
+require('./env.cjs');
+
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const { version } = require('./package.json');
 
 /** @type {import('next').NextConfig} */

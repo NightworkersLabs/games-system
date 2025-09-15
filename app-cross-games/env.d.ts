@@ -8,7 +8,8 @@ declare global {
       /** @dev points to the server with all game API functions (provably-fair, coinflip, balance...) */
       NEXT_PUBLIC_SECRET_PROVIDER_URL: string
 
-      NEXT_PUBLIC_DOMAIN: string
+      /** SEO exposed domain of the app */
+      NEXT_PUBLIC_DOMAIN_URL: string
 
       /** `package.json` version of the app */
       NEXT_PUBLIC_VERSION: string
